@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Windows.Input;
 using Controller.Interfaces;
+using DataClass.Interfaces;
 using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
 using ViewActionState.Interfaces;
 
 namespace Commands.Implementation
 {
-    public abstract class CRUDCommandBase<TDomainClass> : ICommand
-        where TDomainClass : IStorable
+    public abstract class CRUDCommandBase<TDataClass> : ICommand 
     {
-        protected IDomainObjectWrapper<TDomainClass> DomainObjectWrapper;
+        protected IDTOWrapper<TDataClass> ObjectWrapper;
         protected IHasActionViewState ViewStateObject;
-        protected IInMemoryCollection<TDomainClass> Collection;
+        protected IConvertibleInMemoryCollection<TDataClass> Collection;
 
         protected ICRUDController Controller;
 
         protected CRUDCommandBase(
-            IDomainObjectWrapper<TDomainClass> domainObjectWrapper,
+            IDTOWrapper<TDataClass> objectWrapper,
             IHasActionViewState viewStateObject,
-            IInMemoryCollection<TDomainClass> collection)
+            IConvertibleInMemoryCollection<TDataClass> collection)
         {
-            DomainObjectWrapper = domainObjectWrapper;
+            ObjectWrapper = objectWrapper;
             ViewStateObject = viewStateObject;
             Collection = collection;
         }

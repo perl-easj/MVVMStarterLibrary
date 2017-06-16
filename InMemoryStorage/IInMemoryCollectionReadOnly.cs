@@ -2,10 +2,15 @@
 
 namespace InMemoryStorage.Interfaces
 {
-    public interface IInMemoryCollectionReadOnly<T> 
-        where T : IStorable
+    /// <summary>
+    /// Interface for read-only, in-memory collection of objects
+    /// implementing the IStorable interface
+    /// </summary>
+    /// <typeparam name="TDO">Type of stored objects</typeparam>
+    public interface IInMemoryCollectionReadOnly<TDO>
     {
-        List<T> All { get; }
-        T Read(int key);
+        List<TDO> All { get; }
+        TDO Read(int key);
+        TDO this[int key] { get; }
     }
 }

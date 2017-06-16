@@ -8,12 +8,14 @@ using Persistency.Interfaces;
 
 namespace ModelCollection.Implementation
 {
-    public class PersistableCatalog<T> : ObservableInMemoryCollection<T>, IPersistable
-        where T : class, IStorable
+    public abstract class PersistableCatalog<TDO> : 
+        ObservableInMemoryCollection<TDO>, 
+        IPersistable
+        where TDO : class, IStorable
     {
-        private IPersistentSource<T> _source;
+        private IPersistentSource<TDO> _source;
 
-        public PersistableCatalog(IPersistentSource<T> source)
+        protected PersistableCatalog(IPersistentSource<TDO> source)
         {
             _source = source;
 
@@ -21,7 +23,7 @@ namespace ModelCollection.Implementation
             PersistencyManager.Instance.SaveDelegate += Save;
         }
 
-        public PersistableCatalog(Action loadAction, Action saveAction, IPersistentSource<T> source)
+        protected PersistableCatalog(Action loadAction, Action saveAction, IPersistentSource<TDO> source)
         {
             _source = source;
 
@@ -39,7 +41,7 @@ namespace ModelCollection.Implementation
             {
                 if (_source != null)
                 {
-                    List<T> objects = await _source.Load();
+                    List<TDO> objects = await _source.Load();
                     InsertAll(objects, false);
                 }
             }

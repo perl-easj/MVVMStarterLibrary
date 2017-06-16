@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ModelClass.Interfaces;
+using DataClass.Implementation;
 
 namespace ViewModel.Implementation
 {
-    public class DetailsViewModelBase<TDomainClass> : 
-        DomainObjectWrapper<TDomainClass>,
+    public class DetailsViewModelBase<TDataClass> : 
+        DTOWrapper<TDataClass>, 
         INotifyPropertyChanged
-        where TDomainClass : class, IDomainClass
     {
 
-        public DetailsViewModelBase(TDomainClass obj) : base(obj)
+        public DetailsViewModelBase(TDataClass obj) : base(obj)
         {
         }
 

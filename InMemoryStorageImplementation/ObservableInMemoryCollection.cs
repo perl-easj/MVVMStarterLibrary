@@ -3,8 +3,15 @@ using InMemoryStorage.Interfaces;
 
 namespace InMemoryStorage.Implementation
 {
-    public class ObservableInMemoryCollection<T> : InMemoryCollection<T>, IObservableInMemoryCollection<T>
-        where T : class, IStorable
+    /// <summary>
+    /// This class extends the implementation of an in-memory collection
+    /// with events and event invoker methods. A client object can register
+    /// an eventy handler at the On.. events.
+    /// </summary>
+    public abstract class ObservableInMemoryCollection<TDO> : 
+        InMemoryCollection<TDO>, 
+        IObservableInMemoryCollection
+        where TDO : class, IStorable
     {
         public event EventHandler OnObjectCreated;
         public event EventHandler OnObjectUpdated;

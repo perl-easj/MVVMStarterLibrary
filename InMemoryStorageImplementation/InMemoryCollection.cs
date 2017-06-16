@@ -4,20 +4,27 @@ using InMemoryStorage.Interfaces;
 
 namespace InMemoryStorage.Implementation
 {
-    public class InMemoryCollection<T> : IInMemoryCollection<T>
-        where T : class, IStorable
+    /// <summary>
+    /// Implementation of the in-memory collection interface for an
+    /// unobserved collection. Derived classes can choose to override
+    /// the After.. methods, if actions need to be invoked after
+    /// alteration of the collection.
+    /// </summary>
+    /// <typeparam name="TDO">Type of stored objects</typeparam>
+    public class InMemoryCollection<TDO> : IInMemoryCollection<TDO>
+        where TDO : class, IStorable
     {
-        private Dictionary<int, T> _collection;
+        private Dictionary<int, TDO> _collection;
 
         public InMemoryCollection()
         {
-            _collection = new Dictionary<int, T>();
+            _collection = new Dictionary<int, TDO>();
         }
 
         /// <summary>
         /// Returns all objects stored in the collection as a List
         /// </summary>
-        public List<T> All
+        public List<TDO> All
         {
             get { return _collection.Values.ToList(); }
         }
@@ -25,13 +32,11 @@ namespace InMemoryStorage.Implementation
         /// <summary>
         /// Inserts a single storable object into the collection
         /// </summary>
-        /// <param name="obj">
-        /// Storable object to insert.
-        /// </param>
+        /// <param name="obj">Storable object to insert.</param>
         /// <param name="replaceKey">
         /// Specifies if the Key value should be overwritten.
         /// </param>
-        public void Insert(T obj, bool replaceKey = true)
+        public void Insert(TDO obj, bool replaceKey = true)
         {
             if (replaceKey)
             {
@@ -41,7 +46,15 @@ namespace InMemoryStorage.Implementation
             AfterObjectCreated();
         }
 
-        public void InsertAll(List<T> objects, bool replaceKey = true)
+        /// <summary>
+        /// Insert a set of storable objects into the collection. The
+        /// existing objects are all deleted.
+        /// </summary>
+        /// <param name="objects">Storable objects to insert</param>
+        /// <param name="replaceKey">
+        /// Specifies if the Key value should be overwritten for each object.
+        /// </param>
+        public void InsertAll(List<TDO> objects, bool replaceKey = true)
         {
             DeleteAll();
             foreach (var obj in objects)
@@ -57,9 +70,6 @@ namespace InMemoryStorage.Implementation
         /// <param name="key">
         /// Key for object to delete from collection
         /// </param>
-        /// <returns>
-        /// Return true if an object was actually deleted.
-        /// </returns>
         public void Delete(int key)
         {
             _collection.Remove(key);
@@ -79,10 +89,26 @@ namespace InMemoryStorage.Implementation
         /// Retrieves the object corresponding to the given key
         /// </summary>
         /// <param name="key">Key of object to retrieve</param>
-        /// <returns>The storable object corresponding to the given key</returns>
-        public T Read(int key)
+        /// <returns>
+        /// The storable object corresponding to the given key.
+        /// Null is returned if no matching object is found.
+        /// </returns>
+        public TDO Read(int key)
         {
             return _collection.ContainsKey(key) ? _collection[key] : null;
+        }
+
+        /// <summary>
+        /// Retrieves the object corresponding to the given key
+        /// </summary>
+        /// <param name="key">Key of object to retrieve</param>
+        /// <returns>
+        /// The storable object corresponding to the given key.
+        /// Null is returned if no matching object is found.
+        /// </returns>
+        public TDO this[int key]
+        {
+            get { return Read(key); }
         }
 
         public virtual void AfterObjectCreated()

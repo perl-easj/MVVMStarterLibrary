@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Implementation\DomainClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
+    <Compile Include="Implementation\FilePersistableConvertibleCatalog.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
@@ -138,6 +139,11 @@
       <Project>{dbab9016-24bd-4a0a-a8c8-19459d3eea9c}</Project>
       <Name>Persistency</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DataClass">
+      <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

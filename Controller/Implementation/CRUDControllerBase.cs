@@ -1,18 +1,17 @@
 ﻿using Controller.Interfaces;
+using DataClass.Interfaces;
 using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
 
 namespace Controller.Implementation
 {
-    public abstract class CRUDControllerBase<TDomainClass> : ICRUDController 
-        where TDomainClass : IStorable
+    public abstract class CRUDControllerBase<TDTO> : ICRUDController 
     {
-        protected IDomainObjectWrapper<TDomainClass> DomainObjectWrapper;
-        protected IInMemoryCollection<TDomainClass> Collection;
+        protected IDTOWrapper<TDTO> ObjectWrapper;
+        protected IConvertibleInMemoryCollection<TDTO> Collection;
 
-        protected CRUDControllerBase(IDomainObjectWrapper<TDomainClass> domainObjectWrapper, IInMemoryCollection<TDomainClass> collection)
+        protected CRUDControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
         {
-            DomainObjectWrapper = domainObjectWrapper;
+            ObjectWrapper = objectWrapper;
             Collection = collection;
         }
 

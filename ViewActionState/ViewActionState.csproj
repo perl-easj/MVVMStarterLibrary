@@ -107,10 +107,17 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\ViewActionStateService.cs" />
     <Compile Include="Interfaces\IHasActionViewState.cs" />
+    <Compile Include="Interfaces\IViewActionStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ViewActionStateType.cs" />
     <EmbeddedResource Include="Properties\ViewActionState.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Commands">
+      <HintPath>..\Commands\bin\Debug\Commands.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

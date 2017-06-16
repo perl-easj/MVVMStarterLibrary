@@ -1,11 +1,11 @@
-﻿using ModelClass.Interfaces;
+﻿using InMemoryStorage.Interfaces;
 
 namespace ModelClass.Implementation
 {
     /// <summary>
     /// Base class for domain classes.
     /// </summary>
-    public abstract class DomainClassBase : IDomainClass
+    public abstract class DomainClassBase : IStorable
     {
         public const int NullKey = -1;
 
@@ -15,20 +15,9 @@ namespace ModelClass.Implementation
         /// </summary>
         public int Key { get; set; }
 
-        /// <summary>
-        /// Ensures that default values are set when a domain
-        /// object is created.
-        /// </summary>
-        protected DomainClassBase()
+        protected DomainClassBase(int key)
         {
-            SetDefaultValues();
+            Key = key;
         }
-
-        public IDomainClass Clone()
-        {
-            return (IDomainClass)MemberwiseClone();
-        }
-
-        public abstract void SetDefaultValues();
     }
 }

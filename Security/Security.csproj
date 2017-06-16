@@ -119,12 +119,6 @@
     <Compile Include="Types\AccessType.cs" />
     <EmbeddedResource Include="Properties\Security.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Commands\Commands.csproj">
-      <Project>{f53f598e-ade5-47ae-a94a-64c6bda7d565}</Project>
-      <Name>Commands</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

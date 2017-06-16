@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F029EF8-63FA-43B0-96EB-98E17E8FCD56}</ProjectGuid>
+    <ProjectGuid>{AECB4FDF-EC72-4622-9E9F-B31FFCF93FFB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtensionsViewModel</RootNamespace>
-    <AssemblyName>ExtensionsViewModel</AssemblyName>
+    <RootNamespace>ViewCommands</RootNamespace>
+    <AssemblyName>ViewCommands</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
@@ -107,39 +107,29 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
-    <Compile Include="Implementation\ItemViewModelWithImage.cs" />
-    <Compile Include="Implementation\MasterDetailsViewModelBaseWithDefaults.cs" />
+    <Compile Include="Implementation\CreateCommandBase.cs" />
+    <Compile Include="Implementation\CRUDCommandBase.cs" />
+    <Compile Include="Implementation\DeleteCommandBase.cs" />
+    <Compile Include="Implementation\UpdateCommandBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\ExtensionsViewModel.rd.xml" />
+    <EmbeddedResource Include="Properties\ViewCommands.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExtensionsServices\ExtensionsServices.csproj">
-      <Project>{C3F9989C-B690-47B5-8671-CB232AB62C97}</Project>
-      <Name>ExtensionsServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Images\Images.csproj">
-      <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
-      <Name>Images</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewControlState\ViewControlState.csproj">
-      <Project>{84CED7B1-7AF1-4B40-9BD8-134F0E3071EC}</Project>
-      <Name>ViewControlState</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModelImplementation\ViewModelImplementation.csproj">
-      <Project>{96bfa0bf-65be-4c2f-a149-81132daf483a}</Project>
-      <Name>ViewModelImplementation</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="Commands, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Commands\bin\Debug\Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="Controller">
+      <HintPath>..\Controller\bin\Debug\Controller.dll</HintPath>
+    </Reference>
     <Reference Include="DataClass">
       <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
     </Reference>
     <Reference Include="InMemoryStorageInterfaces">
       <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ViewActionState">
+      <HintPath>..\ViewActionState\bin\Debug\ViewActionState.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,23 +1,22 @@
-﻿using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
+﻿using DataClass.Implementation;
+using DataClass.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class UpdateControllerBase<TDomainClass> : CRUDControllerBase<TDomainClass>
-        where TDomainClass : class, IDomainClass
+    public class UpdateControllerBase<TDTO> : CRUDControllerBase<TDTO>
+        where TDTO : DTOBaseWithKey
     {
-        public UpdateControllerBase(
-            IDomainObjectWrapper<TDomainClass> domainObjectWrapper,
-            IInMemoryCollection<TDomainClass> collection)
-            : base(domainObjectWrapper, collection)
+        public UpdateControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+            : base(objectWrapper, collection)
         {
         }
 
         public override void Run()
         {
-            IDomainClass obj = DomainObjectWrapper.DomainObject.Clone();
-            Collection.Delete(obj.Key);
-            Collection.Insert(obj as TDomainClass, false);
+            TDTO updateObj = ObjectWrapper.DataObject.Clone() as TDTO;
+            Collection.DeleteDTO(ObjectWrapper.DataObject.Key);
+            Collection.InsertDTO(updateObj, false);
         }
     }
 }

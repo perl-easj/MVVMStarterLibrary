@@ -114,9 +114,9 @@
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ModelClass\ModelClass.csproj">
-      <Project>{79d94e05-444d-4100-8a91-265ebbf65201}</Project>
-      <Name>ModelClass</Name>
+    <ProjectReference Include="..\DataClass\DataClass.csproj">
+      <Project>{B66B93A5-A454-4412-B540-E3EA1A5EC1DC}</Project>
+      <Name>DataClass</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

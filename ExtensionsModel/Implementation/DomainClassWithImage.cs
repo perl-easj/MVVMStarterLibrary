@@ -13,9 +13,9 @@ namespace ExtensionsModel.Implementation
             set { _imageKey = value; }
         }
 
-        public override void SetDefaultValues()
+        protected DomainClassWithImage(int key, int imageKey) : base(key)
         {
-            ImageKey = NullKey;
+            ImageKey = imageKey;
         }
     }
 }

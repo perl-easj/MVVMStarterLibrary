@@ -4,10 +4,10 @@ using FilePersistency.Implementation;
 
 namespace ExtensionsModel.Implementation
 {
-    public class FilePersistableCatalog<TDomainClass> : PersistableCatalog<TDomainClass>
-        where TDomainClass : class, IStorable
+    public abstract class FilePersistableCatalog<TDO> : PersistableCatalog<TDO>
+        where TDO : class, IStorable
     {
-        public FilePersistableCatalog() : base(new FileSource<TDomainClass>())
+        protected FilePersistableCatalog() : base(new FileSource<TDO>())
         {
         }
     }

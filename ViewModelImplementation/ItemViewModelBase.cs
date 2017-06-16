@@ -1,16 +1,16 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using DataClass.Implementation;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class ItemViewModelBase<TDomainClass> : 
-        DomainObjectWrapper<TDomainClass>, 
+    public abstract class ItemViewModelBase<TDataClass> : 
+        DTOWrapper<TDataClass>, 
         IItemViewModelDescription,
         IItemViewModelImage
     {
         #region Properties (override in model-specific item view model)
-
         /// <summary>
         /// Override this property to provide a string description of a domain object. 
         /// This description is then displayed for each item in the Master part of the view.
@@ -59,7 +59,7 @@ namespace ViewModel.Implementation
         }
         #endregion
 
-        protected ItemViewModelBase(TDomainClass obj) : base(obj)
+        protected ItemViewModelBase(TDataClass obj) : base(obj)
         {
         }
     }

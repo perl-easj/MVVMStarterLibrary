@@ -1,21 +1,18 @@
-﻿using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
+﻿using DataClass.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class CreateControllerBase<TDomainClass> : CRUDControllerBase<TDomainClass>
-        where TDomainClass : class, IDomainClass
+    public class CreateControllerBase<TDTO> : CRUDControllerBase<TDTO>
     {
-        public CreateControllerBase(
-            IDomainObjectWrapper<TDomainClass> domainObjectWrapper,
-            IInMemoryCollection<TDomainClass> collection)
-            : base(domainObjectWrapper, collection)
+        public CreateControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+            : base(objectWrapper, collection)
         {
         }
 
         public override void Run()
         {
-            Collection.Insert(DomainObjectWrapper.DomainObject.Clone() as TDomainClass);
+            Collection.InsertDTO(ObjectWrapper.DataObject);
         }
     }
 }

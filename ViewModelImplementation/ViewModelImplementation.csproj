@@ -119,17 +119,13 @@
       <Project>{f53f598e-ade5-47ae-a94a-64c6bda7d565}</Project>
       <Name>Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Controller\Controller.csproj">
-      <Project>{69cd2f21-bc37-4417-8d1a-f6dc5e91c4c9}</Project>
-      <Name>Controller</Name>
+    <ProjectReference Include="..\DataClass\DataClass.csproj">
+      <Project>{B66B93A5-A454-4412-B540-E3EA1A5EC1DC}</Project>
+      <Name>DataClass</Name>
     </ProjectReference>
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
       <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
       <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ModelClass\ModelClass.csproj">
-      <Project>{79d94e05-444d-4100-8a91-265ebbf65201}</Project>
-      <Name>ModelClass</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewActionState\ViewActionState.csproj">
       <Project>{52d9eff4-5f91-43d5-8de7-b908574e34ef}</Project>
@@ -143,6 +139,11 @@
       <Project>{bef15c7f-6222-453c-b233-8b12921e3c6a}</Project>
       <Name>ViewModelInterfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ViewCommands">
+      <HintPath>..\ViewCommands\bin\Debug\ViewCommands.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

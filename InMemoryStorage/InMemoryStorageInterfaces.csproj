@@ -7,8 +7,8 @@
     <ProjectGuid>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InMemoryStorage</RootNamespace>
-    <AssemblyName>InMemoryStorage</AssemblyName>
+    <RootNamespace>InMemoryStorageInterfaces</RootNamespace>
+    <AssemblyName>InMemoryStorageInterfaces</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
@@ -107,6 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IConvertibleInMemoryCollection.cs" />
+    <Compile Include="IConvertibleObservableInMemoryCollection.cs" />
     <Compile Include="IInMemoryCollection.cs" />
     <Compile Include="IInMemoryCollectionReadOnly.cs" />
     <Compile Include="IObservableInMemoryCollection.cs" />

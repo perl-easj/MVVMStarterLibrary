@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Commands.Implementation;
+using DataClass.Implementation;
+using DataClass.Interfaces;
 using InMemoryStorage.Interfaces;
-using ModelClass.Implementation;
-using ModelClass.Interfaces;
 using ViewActionState.Interfaces;
 using ViewActionState.Types;
 using ViewControlState.Implementation;
@@ -17,33 +17,26 @@ using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    /// <summary>
-    /// This class is a base class for any colllection-oriented view model, 
-    /// i.e. a view model that wraps a collection of domain objects.
-    /// </summary>
-    /// <typeparam name="TDomainClass">
-    /// Type of domain objects wrapped by the class.
-    /// </typeparam>
-    public abstract class MasterDetailsViewModelBase<TDomainClass> : 
+    public abstract class MasterDetailsViewModelBase<TDTO> : 
         INotifyPropertyChanged, 
         IHasActionViewState,
-        IDomainObjectWrapper<TDomainClass>,
-        IMasterDetailsViewModel<TDomainClass>
-        where TDomainClass : DomainClassBase, new()
+        IDTOWrapper<TDTO>,
+        IMasterDetailsViewModel<TDTO>
+        where TDTO : DTOBaseWithKey, new()
     {
         #region Instance fields
-        private IObservableInMemoryCollection<TDomainClass> _collection;
-        private ViewModelFactoryBase<TDomainClass> _viewModelFactory;
+        private IConvertibleObservableInMemoryCollection<TDTO> _collection;
+        private ViewModelFactoryBase<TDTO> _viewModelFactory;
 
-        private IDomainObjectWrapper<TDomainClass> _detailsViewModel;
-        private IDomainObjectWrapper<TDomainClass> _itemViewModelSelected;
+        private IDTOWrapper<TDTO> _detailsViewModel;
+        private IDTOWrapper<TDTO> _itemViewModelSelected;
 
         private ViewActionStateType _viewState;
         private IViewControlStateService _stateService;
 
-        private CRUDCommandBase<TDomainClass> _deleteCommand;
-        private CRUDCommandBase<TDomainClass> _updateCommand;
-        private CRUDCommandBase<TDomainClass> _createCommand;
+        private CRUDCommandBase<TDTO> _deleteCommand;
+        private CRUDCommandBase<TDTO> _updateCommand;
+        private CRUDCommandBase<TDTO> _createCommand;
 
         private RelayCommand _selectCreateCommand;
         private RelayCommand _selectReadCommand;
@@ -65,7 +58,7 @@ namespace ViewModel.Implementation
                 }
                 if (_viewState == ViewActionStateType.Update && ItemViewModelSelected != null)
                 {
-                    DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromClone(ItemViewModelSelected.DomainObject);
+                    DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromExisting(ItemViewModelSelected.DataObject);
                 }
 
                 NotifyCommands();
@@ -78,12 +71,12 @@ namespace ViewModel.Implementation
         #endregion
 
         #region IMasterDetailsViewModel implementation
-        public virtual ObservableCollection<IDomainObjectWrapper<TDomainClass>> ItemViewModelCollection
+        public virtual ObservableCollection<IDTOWrapper<TDTO>> ItemViewModelCollection
         {
-            get { return _viewModelFactory.CreateItemViewModelCollection(_collection); }
+            get { return _viewModelFactory.CreateItemViewModelCollection(_collection.AllDTO); }
         }
 
-        public virtual IDomainObjectWrapper<TDomainClass> ItemViewModelSelected
+        public virtual IDTOWrapper<TDTO> ItemViewModelSelected
         {
             get { return _itemViewModelSelected; }
             set
@@ -96,9 +89,9 @@ namespace ViewModel.Implementation
                 }
                 else
                 {
-                    TDomainClass obj = _itemViewModelSelected.DomainObject;
+                    TDTO obj = _itemViewModelSelected.DataObject;
                     DetailsViewModel = (ActionViewState == ViewActionStateType.Update) ?
-                        _viewModelFactory.CreateDetailsViewModelFromClone(obj) :
+                        _viewModelFactory.CreateDetailsViewModelFromExisting(obj) :
                         _viewModelFactory.CreateDetailsViewModel(obj);
                 }
 
@@ -108,7 +101,7 @@ namespace ViewModel.Implementation
             }
         }
 
-        public virtual IDomainObjectWrapper<TDomainClass> DetailsViewModel
+        public virtual IDTOWrapper<TDTO> DetailsViewModel
         {
             get { return _detailsViewModel; }
             set
@@ -130,12 +123,12 @@ namespace ViewModel.Implementation
         }
         #endregion
 
-        #region IDomainObjectWrapper implementation
-        public TDomainClass DomainObject
+        #region IDataObjectWrapper implementation
+        public TDTO DataObject
         {
             get
             {
-                return DetailsViewModel?.DomainObject;
+                return DetailsViewModel?.DataObject;
             }
         }
         #endregion
@@ -154,11 +147,12 @@ namespace ViewModel.Implementation
 
         #region Initialisation
         protected MasterDetailsViewModelBase(
-            ViewModelFactoryBase<TDomainClass> viewModelFactory,
-            IObservableInMemoryCollection<TDomainClass> catalog)
+            ViewModelFactoryBase<TDTO> viewModelFactory,
+            IConvertibleObservableInMemoryCollection<TDTO> collection)
         {
             // Sanity checks, so we don't need null checks elsewhere
-            _collection = catalog ?? throw new ArgumentNullException(nameof(catalog));
+
+            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
             _collection.OnObjectCreated += AfterModelModified;
@@ -185,9 +179,9 @@ namespace ViewModel.Implementation
 
         protected virtual void SetupViewActionControllers()
         {
-            _deleteCommand = new DeleteCommandBase<TDomainClass>(this, this, _collection);
-            _updateCommand = new UpdateCommandBase<TDomainClass>(this, this, _collection);
-            _createCommand = new CreateCommandBase<TDomainClass>(this, this, _collection);
+            _deleteCommand = new DeleteCommandBase<TDTO>(this, this, _collection);
+            _updateCommand = new UpdateCommandBase<TDTO>(this, this, _collection);
+            _createCommand = new CreateCommandBase<TDTO>(this, this, _collection);
         }
         #endregion
 

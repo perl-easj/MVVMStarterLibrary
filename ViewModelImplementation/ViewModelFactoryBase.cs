@@ -1,30 +1,29 @@
-﻿using System.Collections.ObjectModel;
-using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using DataClass.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class ViewModelFactoryBase<TDomainClass>
-        where TDomainClass : class, IDomainClass, new()
+    public abstract class ViewModelFactoryBase<T> 
+        where T : new()
     {
-        public abstract IDomainObjectWrapper<TDomainClass> CreateDetailsViewModel(TDomainClass obj);
-        public abstract IDomainObjectWrapper<TDomainClass> CreateItemViewModel(TDomainClass obj);
+        public abstract IDTOWrapper<T> CreateDetailsViewModel(T obj);
+        public abstract IDTOWrapper<T> CreateItemViewModel(T obj);
 
-        public IDomainObjectWrapper<TDomainClass> CreateDetailsViewModelFromNew()
+        public IDTOWrapper<T> CreateDetailsViewModelFromNew()
         {
-            return CreateDetailsViewModel(new TDomainClass());
+            return CreateDetailsViewModel(new T());
         }
 
-        public IDomainObjectWrapper<TDomainClass> CreateDetailsViewModelFromClone(IDomainClass obj)
+        public IDTOWrapper<T> CreateDetailsViewModelFromExisting(T obj)
         {
-            return CreateDetailsViewModel(obj.Clone() as TDomainClass);
+            return CreateDetailsViewModel(obj);
         }
 
-        public virtual ObservableCollection<IDomainObjectWrapper<TDomainClass>> CreateItemViewModelCollection(
-            IInMemoryCollectionReadOnly<TDomainClass> collection)
+        public virtual ObservableCollection<IDTOWrapper<T>> CreateItemViewModelCollection(IEnumerable<T> dataObjects)
         {
-            var itemViewModels = new ObservableCollection<IDomainObjectWrapper<TDomainClass>>();
-            foreach (TDomainClass obj in collection.All)
+            var itemViewModels = new ObservableCollection<IDTOWrapper<T>>();
+            foreach (T obj in dataObjects)
             {
                 itemViewModels.Add(CreateItemViewModel(obj));
             }

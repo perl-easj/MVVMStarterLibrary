@@ -1,21 +1,20 @@
-﻿using InMemoryStorage.Interfaces;
-using ModelClass.Interfaces;
+﻿using DataClass.Implementation;
+using DataClass.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class DeleteControllerBase<TDomainClass> : CRUDControllerBase<TDomainClass>
-        where TDomainClass : IStorable
+    public class DeleteControllerBase<TDTO> : CRUDControllerBase<TDTO>
+        where TDTO : DTOBaseWithKey
     {
-        public DeleteControllerBase(
-            IDomainObjectWrapper<TDomainClass> domainObjectWrapper, 
-            IInMemoryCollection<TDomainClass> collection) 
-            : base(domainObjectWrapper, collection)
+        public DeleteControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+            : base(objectWrapper, collection)
         {
         }
 
         public override void Run()
         {
-            Collection.Delete(DomainObjectWrapper.DomainObject.Key);
+            Collection.DeleteDTO(ObjectWrapper.DataObject.Key);
         }
     }
 }

@@ -116,13 +116,13 @@
     <EmbeddedResource Include="Properties\Controller.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataClass\DataClass.csproj">
+      <Project>{B66B93A5-A454-4412-B540-E3EA1A5EC1DC}</Project>
+      <Name>DataClass</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
       <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
       <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ModelClass\ModelClass.csproj">
-      <Project>{79d94e05-444d-4100-8a91-265ebbf65201}</Project>
-      <Name>ModelClass</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using DataClass.Implementation;
 using InMemoryStorage.Interfaces;
-using ModelClass.Implementation;
 using ViewModel.Implementation;
 
 namespace ExtensionsViewModel.Implementation
 {
-    public abstract class MasterDetailsViewModelBaseWithDefaults<TDomainClass> : MasterDetailsViewModelBase<TDomainClass> 
-        where TDomainClass : DomainClassBase, new()
+    public abstract class MasterDetailsViewModelBaseWithDefaults<TDTO> : 
+        MasterDetailsViewModelBase<TDTO> 
+        where TDTO : DTOBaseWithKey, new()
     {
         protected MasterDetailsViewModelBaseWithDefaults(
-            ViewModelFactoryBase<TDomainClass> viewModelFactory, 
-            IObservableInMemoryCollection<TDomainClass> catalog,
+            ViewModelFactoryBase<TDTO> viewModelFactory,
+            IConvertibleObservableInMemoryCollection<TDTO> catalog,
             List<string> immutableControls,
             List<string> mutableControls) 
             : base(viewModelFactory, catalog)

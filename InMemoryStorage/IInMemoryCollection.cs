@@ -2,15 +2,16 @@
 
 namespace InMemoryStorage.Interfaces
 {
-    public interface IInMemoryCollection<T> : IInMemoryCollectionReadOnly<T>
-        where T : IStorable
+    /// <summary>
+    /// Extends the read-only interface with methods for modifying
+    /// the collection of stored objects.
+    /// </summary>
+    /// <typeparam name="TDO">Type of stored objects</typeparam>
+    public interface IInMemoryCollection<TDO> : IInMemoryCollectionReadOnly<TDO>
     {
-        void Insert(T obj, bool replaceKey = true);
-        void InsertAll(List<T> objects, bool replaceKey = true);
+        void Insert(TDO obj, bool replaceKey = true);
+        void InsertAll(List<TDO> objects, bool replaceKey = true);
         void Delete(int key);
         void DeleteAll();
-        void AfterObjectCreated();
-        void AfterObjectUpdated();
-        void AfterObjectDeleted();
     }
 }

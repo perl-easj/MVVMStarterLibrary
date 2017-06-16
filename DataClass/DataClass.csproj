@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F029EF8-63FA-43B0-96EB-98E17E8FCD56}</ProjectGuid>
+    <ProjectGuid>{B66B93A5-A454-4412-B540-E3EA1A5EC1DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtensionsViewModel</RootNamespace>
-    <AssemblyName>ExtensionsViewModel</AssemblyName>
+    <RootNamespace>DataClass</RootNamespace>
+    <AssemblyName>DataClass</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
@@ -107,40 +107,13 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
-    <Compile Include="Implementation\ItemViewModelWithImage.cs" />
-    <Compile Include="Implementation\MasterDetailsViewModelBaseWithDefaults.cs" />
+    <Compile Include="Implementation\DTOWrapper.cs" />
+    <Compile Include="Implementation\DTOBase.cs" />
+    <Compile Include="Implementation\DTOBaseWithKey.cs" />
+    <Compile Include="Interfaces\IDTOWrapper.cs" />
+    <Compile Include="Interfaces\IDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\ExtensionsViewModel.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExtensionsServices\ExtensionsServices.csproj">
-      <Project>{C3F9989C-B690-47B5-8671-CB232AB62C97}</Project>
-      <Name>ExtensionsServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Images\Images.csproj">
-      <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
-      <Name>Images</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewControlState\ViewControlState.csproj">
-      <Project>{84CED7B1-7AF1-4B40-9BD8-134F0E3071EC}</Project>
-      <Name>ViewControlState</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModelImplementation\ViewModelImplementation.csproj">
-      <Project>{96bfa0bf-65be-4c2f-a149-81132daf483a}</Project>
-      <Name>ViewModelImplementation</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="DataClass">
-      <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
-    </Reference>
-    <Reference Include="InMemoryStorageInterfaces">
-      <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>
-    </Reference>
+    <EmbeddedResource Include="Properties\DataClass.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
