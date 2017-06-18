@@ -1,15 +1,16 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using DataClass.Implementation;
+using DTO.Implementation;
+using DTO.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public class DetailsViewModelBase<TDataClass> : 
-        DTOWrapper<TDataClass>, 
-        INotifyPropertyChanged
+    public class DetailsViewModelBase<TDTO> :
+        TypedDTOWrapper<TDTO>,
+        INotifyPropertyChanged 
+        where TDTO : class
     {
-
-        public DetailsViewModelBase(TDataClass obj) : base(obj)
+        public DetailsViewModelBase(IDTO obj) : base(obj)
         {
         }
 

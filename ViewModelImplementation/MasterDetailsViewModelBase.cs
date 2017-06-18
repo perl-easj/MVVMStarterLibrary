@@ -4,79 +4,73 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 using Commands.Implementation;
-using DataClass.Implementation;
-using DataClass.Interfaces;
-using InMemoryStorage.Interfaces;
+using DTO.Interfaces;
+using Persistency.Interfaces;
 using ViewActionState.Interfaces;
 using ViewActionState.Types;
-using ViewControlState.Implementation;
+using ViewCommands.Interfaces;
 using ViewControlState.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class MasterDetailsViewModelBase<TDTO> : 
+    public abstract class MasterDetailsViewModelBase<T, TDTO> : 
         INotifyPropertyChanged, 
-        IHasActionViewState,
-        IDTOWrapper<TDTO>,
-        IMasterDetailsViewModel<TDTO>
-        where TDTO : DTOBaseWithKey, new()
+        IHasViewActionState,
+        IDTOWrapper,
+        IMasterDetailsViewModel 
+        where TDTO : IDTO, new()
     {
         #region Instance fields
-        private IConvertibleObservableInMemoryCollection<TDTO> _collection;
+        private ICollectionAggregate<T> _collection;
         private ViewModelFactoryBase<TDTO> _viewModelFactory;
 
-        private IDTOWrapper<TDTO> _detailsViewModel;
-        private IDTOWrapper<TDTO> _itemViewModelSelected;
+        private IDTOWrapper _detailsViewModel;
+        private IDTOWrapper _itemViewModelSelected;
 
-        private ViewActionStateType _viewState;
-        private IViewControlStateService _stateService;
-
-        private CRUDCommandBase<TDTO> _deleteCommand;
-        private CRUDCommandBase<TDTO> _updateCommand;
-        private CRUDCommandBase<TDTO> _createCommand;
-
-        private RelayCommand _selectCreateCommand;
-        private RelayCommand _selectReadCommand;
-        private RelayCommand _selectUpdateCommand;
-        private RelayCommand _selectDeleteCommand;
+        private IViewActionService _actionService;
+        private IViewActionStateService _actionStateService;
+        private IViewControlStateService _controlStateService;
         #endregion
 
-        #region IHasActionViewState implementation
-        public ViewActionStateType ActionViewState
+        #region IHasViewActionState implementation
+        public ViewActionStateType ViewActionState
         {
-            get { return _viewState; }
-            set
+            get { return _actionStateService.ViewActionState; }
+        }
+
+        private void ViewActionStateChanged(object sender, EventArgs eventArgs)
+        {
+            if (_actionStateService.ViewActionState == ViewActionStateType.Create)
             {
-                _viewState = value;
-
-                if (_viewState == ViewActionStateType.Create)
-                {
-                    DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromNew();
-                }
-                if (_viewState == ViewActionStateType.Update && ItemViewModelSelected != null)
-                {
-                    DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromExisting(ItemViewModelSelected.DataObject);
-                }
-
-                NotifyCommands();
-                OnPropertyChanged(nameof(ViewControlStates));
-                OnPropertyChanged(nameof(ItemSelectorEnabled));
-                OnPropertyChanged(nameof(ItemSelectorVisible));
-                OnPropertyChanged();
+                DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromNew();
             }
+            if (_actionStateService.ViewActionState == ViewActionStateType.Update && ItemViewModelSelected != null)
+            {
+                DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromExisting(ItemViewModelSelected.DataObject);
+            }
+
+            _actionService.Notify();
+            OnPropertyChanged(nameof(ViewControlStates));
+            OnPropertyChanged();
+        }
+        #endregion
+
+        #region IDataObjectWrapper implementation
+        public IDTO DataObject
+        {
+            get { return DetailsViewModel?.DataObject; }
         }
         #endregion
 
         #region IMasterDetailsViewModel implementation
-        public virtual ObservableCollection<IDTOWrapper<TDTO>> ItemViewModelCollection
+        public virtual ObservableCollection<IDTOWrapper> ItemViewModelCollection
         {
             get { return _viewModelFactory.CreateItemViewModelCollection(_collection.AllDTO); }
         }
 
-        public virtual IDTOWrapper<TDTO> ItemViewModelSelected
+        public virtual IDTOWrapper ItemViewModelSelected
         {
             get { return _itemViewModelSelected; }
             set
@@ -89,69 +83,50 @@ namespace ViewModel.Implementation
                 }
                 else
                 {
-                    TDTO obj = _itemViewModelSelected.DataObject;
-                    DetailsViewModel = (ActionViewState == ViewActionStateType.Update) ?
+                    IDTO obj = _itemViewModelSelected.DataObject;
+                    DetailsViewModel = (ViewActionState == ViewActionStateType.Update) ?
                         _viewModelFactory.CreateDetailsViewModelFromExisting(obj) :
                         _viewModelFactory.CreateDetailsViewModel(obj);
                 }
 
-                NotifyCommands();
+                _actionService.Notify();
                 OnPropertyChanged(nameof(DetailsViewModel));
                 OnPropertyChanged();
             }
         }
 
-        public virtual IDTOWrapper<TDTO> DetailsViewModel
+        public virtual IDTOWrapper DetailsViewModel
         {
             get { return _detailsViewModel; }
             set
             {
                 _detailsViewModel = value;
-                NotifyCommands();
+                _actionService.Notify();
                 OnPropertyChanged();
             }
         }
-
-        public virtual bool ItemSelectorEnabled
-        {
-            get { return (ActionViewState != ViewActionStateType.Create); }
-        }
-
-        public virtual Visibility ItemSelectorVisible
-        {
-            get { return Visibility.Visible; }
-        }
         #endregion
 
-        #region IDataObjectWrapper implementation
-        public TDTO DataObject
+        #region Properties for view binding and derived classes
+        public virtual IViewControlStateService ControlStateService
         {
-            get
-            {
-                return DetailsViewModel?.DataObject;
-            }
-        }
-        #endregion
-
-        #region Properties for view binding
-        public virtual IViewControlStateService StateService
-        {
-            get { return _stateService; }
+            get { return _controlStateService; }
         }
 
         public virtual Dictionary<string, IViewControlState> ViewControlStates
         {
-            get { return _stateService.GetViewControlStates(ActionViewState); }
+            get { return _controlStateService.GetViewControlStates(ViewActionState); }
         }
         #endregion
 
         #region Initialisation
         protected MasterDetailsViewModelBase(
             ViewModelFactoryBase<TDTO> viewModelFactory,
-            IConvertibleObservableInMemoryCollection<TDTO> collection)
+            ICollectionAggregate<T> collection,
+            IViewActionStateService actionStateService,
+            IViewControlStateService controlStateService)
         {
             // Sanity checks, so we don't need null checks elsewhere
-
             _collection = collection ?? throw new ArgumentNullException(nameof(collection));
             _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
@@ -162,88 +137,33 @@ namespace ViewModel.Implementation
             _detailsViewModel = null;
             _itemViewModelSelected = null;
 
-            _stateService = new ViewControlStateService();
-            _viewState = ViewActionStateType.Read;
+            _controlStateService = controlStateService;
+            _actionStateService = actionStateService;
+            _actionStateService.OnViewActionStateChanged += ViewActionStateChanged;
 
-            SetupViewStateCommands();
-            SetupViewActionControllers();
-        }
-
-        protected virtual void SetupViewStateCommands()
-        {
-            _selectCreateCommand = new RelayCommand(() => { ActionViewState = ViewActionStateType.Create; }, () => true);
-            _selectReadCommand = new RelayCommand(() => { ActionViewState = ViewActionStateType.Read; }, () => true);
-            _selectUpdateCommand = new RelayCommand(() => { ActionViewState = ViewActionStateType.Update; }, () => true);
-            _selectDeleteCommand = new RelayCommand(() => { ActionViewState = ViewActionStateType.Delete; }, () => true);
-        }
-
-        protected virtual void SetupViewActionControllers()
-        {
-            _deleteCommand = new DeleteCommandBase<TDTO>(this, this, _collection);
-            _updateCommand = new UpdateCommandBase<TDTO>(this, this, _collection);
-            _createCommand = new CreateCommandBase<TDTO>(this, this, _collection);
+            _actionService = new ViewActionService(this, this, _collection);
         }
         #endregion
 
-        #region Helper methods
-        /// <summary>
-        /// Notifies all commands that the CanExecute
-        /// status may have changed.
-        /// </summary>
-        protected virtual void NotifyCommands()
+        #region ICommand properties
+        public virtual Dictionary<string, ICommand> ViewActionCommand
         {
-            _createCommand.RaiseCanExecuteChanged();
-            _updateCommand.RaiseCanExecuteChanged();
-            _deleteCommand.RaiseCanExecuteChanged();
+            get { return _actionService.Commands; }
+        }
+
+        public virtual Dictionary<string, ICommand> ViewActionStateCommand
+        {
+            get { return _actionStateService.Commands; }
         }
         #endregion
 
-        #region ICommand action controller properties
-        public ICommand DeleteCommand
-        {
-            get { return _deleteCommand; }
-        }
-
-        public ICommand UpdateCommand
-        {
-            get { return _updateCommand; }
-        }
-
-        public ICommand CreateCommand
-        {
-            get { return _createCommand; }
-        }
-        #endregion
-
-        #region ICommand state properties
-        public ICommand SelectCreateCommand
-        {
-            get { return _selectCreateCommand; }
-        }
-
-        public ICommand SelectReadCommand
-        {
-            get { return _selectReadCommand; }
-        }
-
-        public ICommand SelectUpdateCommand
-        {
-            get { return _selectUpdateCommand; }
-        }
-
-        public ICommand SelectDeleteCommand
-        {
-            get { return _selectDeleteCommand; }
-        }
-        #endregion
-
-        #region AfterModelModified code (called on Catalog change events)
+        #region AfterModelModified code (called on collection change events)
         private void AfterModelModified(object sender, EventArgs eventArgs)
         {
             ItemViewModelSelected = null;
             OnPropertyChanged(nameof(ItemViewModelCollection));
 
-            if (ActionViewState == ViewActionStateType.Create)
+            if (ViewActionState == ViewActionStateType.Create)
             {
                 DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromNew();
             }

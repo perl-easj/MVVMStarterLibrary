@@ -1,27 +1,15 @@
-﻿using Controller.Implementation;
-using DataClass.Implementation;
-using DataClass.Interfaces;
+﻿using System;
+using Controller.Implementation;
+using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
-using ViewActionState.Interfaces;
-using ViewActionState.Types;
 
 namespace Commands.Implementation
 {
-    public class DeleteCommandBase<TDTO> : CRUDCommandBase<TDTO>
-        where TDTO : DTOBaseWithKey
+    public class DeleteCommandBase : CRUDCommandBase
     {
-        public DeleteCommandBase(
-            IDTOWrapper<TDTO> objectWrapper,
-            IHasActionViewState viewStateObject,
-            IConvertibleInMemoryCollection<TDTO> collection)
-            : base(objectWrapper, viewStateObject, collection)
+        public DeleteCommandBase(IDTOWrapper source, IConvertibleCollection target, Func<bool> condition)
+            : base(source, target, new DeleteControllerBase(source, target), condition)
         {
-            Controller = new DeleteControllerBase<TDTO>(objectWrapper, collection);
-        }
-
-        public override bool CanExecute()
-        {
-            return (ObjectWrapper.DataObject != null) && (ViewStateObject.ActionViewState == ViewActionStateType.Delete);
         }
     }
 }

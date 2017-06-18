@@ -1,20 +1,18 @@
-﻿using DataClass.Implementation;
-using DataClass.Interfaces;
+﻿using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class UpdateControllerBase<TDTO> : CRUDControllerBase<TDTO>
-        where TDTO : DTOBaseWithKey
+    public class UpdateControllerBase : CRUDControllerBase
     {
-        public UpdateControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+        public UpdateControllerBase(IDTOWrapper objectWrapper, IConvertibleCollection collection)
             : base(objectWrapper, collection)
         {
         }
 
         public override void Run()
         {
-            TDTO updateObj = ObjectWrapper.DataObject.Clone() as TDTO;
+            IDTO updateObj = ObjectWrapper.DataObject.Clone();
             Collection.DeleteDTO(ObjectWrapper.DataObject.Key);
             Collection.InsertDTO(updateObj, false);
         }

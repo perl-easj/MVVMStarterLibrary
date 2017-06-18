@@ -107,9 +107,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\DTOBaseWithKey.cs" />
     <Compile Include="Implementation\DTOWrapper.cs" />
     <Compile Include="Implementation\DTOBase.cs" />
-    <Compile Include="Implementation\DTOBaseWithKey.cs" />
+    <Compile Include="Interfaces\IDTOWithKey.cs" />
     <Compile Include="Interfaces\IDTOWrapper.cs" />
     <Compile Include="Interfaces\IDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

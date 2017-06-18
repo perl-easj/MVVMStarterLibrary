@@ -1,11 +1,11 @@
-﻿using DataClass.Interfaces;
+﻿using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class CreateControllerBase<TDTO> : CRUDControllerBase<TDTO>
+    public class CreateControllerBase : CRUDControllerBase
     {
-        public CreateControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+        public CreateControllerBase(IDTOWrapper objectWrapper, IConvertibleCollection collection)
             : base(objectWrapper, collection)
         {
         }

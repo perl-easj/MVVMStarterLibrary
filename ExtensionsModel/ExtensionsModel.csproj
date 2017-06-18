@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Implementation\DomainClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
-    <Compile Include="Implementation\FilePersistableConvertibleCatalog.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
@@ -127,22 +126,14 @@
       <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
       <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModelClass\ModelClass.csproj">
-      <Project>{79d94e05-444d-4100-8a91-265ebbf65201}</Project>
-      <Name>ModelClass</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ModelCollection\ModelCollection.csproj">
-      <Project>{1ee29420-7493-4ae3-9a7a-e8b366c9b115}</Project>
-      <Name>ModelCollection</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Persistency\Persistency.csproj">
       <Project>{dbab9016-24bd-4a0a-a8c8-19459d3eea9c}</Project>
       <Name>Persistency</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DataClass">
-      <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
+    <Reference Include="DTOInterfaces">
+      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

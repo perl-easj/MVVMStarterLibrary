@@ -1,11 +1,8 @@
 ﻿using InMemoryStorage.Interfaces;
 
-namespace ModelClass.Implementation
+namespace InMemoryStorage.Implementation
 {
-    /// <summary>
-    /// Base class for domain classes.
-    /// </summary>
-    public abstract class DomainClassBase : IStorable
+    public abstract class StorableBase : IStorable
     {
         public const int NullKey = -1;
 
@@ -15,7 +12,7 @@ namespace ModelClass.Implementation
         /// </summary>
         public int Key { get; set; }
 
-        protected DomainClassBase(int key)
+        protected StorableBase(int key)
         {
             Key = key;
         }

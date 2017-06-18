@@ -1,15 +1,12 @@
 ﻿using System.Collections.ObjectModel;
-using Windows.UI.Xaml;
-using DataClass.Interfaces;
+using DTO.Interfaces;
 
 namespace ViewModel.Interfaces
 {
-    public interface IMasterDetailsViewModel<T>
+    public interface IMasterDetailsViewModel
     {
-        ObservableCollection<IDTOWrapper<T>> ItemViewModelCollection { get; }
-        IDTOWrapper<T> ItemViewModelSelected { get; set; }
-        IDTOWrapper<T> DetailsViewModel { get; set; }
-        bool ItemSelectorEnabled { get; }
-        Visibility ItemSelectorVisible { get; }
+        ObservableCollection<IDTOWrapper> ItemViewModelCollection { get; }
+        IDTOWrapper ItemViewModelSelected { get; set; }
+        IDTOWrapper DetailsViewModel { get; set; }
     }
 }

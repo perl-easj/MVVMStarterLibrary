@@ -110,10 +110,15 @@
     <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
     <Compile Include="Implementation\ItemViewModelWithImage.cs" />
     <Compile Include="Implementation\MasterDetailsViewModelBaseWithDefaults.cs" />
+    <Compile Include="Implementation\TypedDTOWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsViewModel.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DTOImplementation\DTOImplementation.csproj">
+      <Project>{7E8D829E-E76B-4D7D-80FD-A05842812975}</Project>
+      <Name>DTOImplementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtensionsServices\ExtensionsServices.csproj">
       <Project>{C3F9989C-B690-47B5-8671-CB232AB62C97}</Project>
       <Name>ExtensionsServices</Name>
@@ -121,6 +126,10 @@
     <ProjectReference Include="..\Images\Images.csproj">
       <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
       <Name>Images</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewActionState\ViewActionState.csproj">
+      <Project>{52D9EFF4-5F91-43D5-8DE7-B908574E34EF}</Project>
+      <Name>ViewActionState</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewControlState\ViewControlState.csproj">
       <Project>{84CED7B1-7AF1-4B40-9BD8-134F0E3071EC}</Project>
@@ -130,16 +139,23 @@
       <Project>{96bfa0bf-65be-4c2f-a149-81132daf483a}</Project>
       <Name>ViewModelImplementation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModelInterfaces\ViewModelInterfaces.csproj">
+      <Project>{BEF15C7F-6222-453C-B233-8B12921E3C6A}</Project>
+      <Name>ViewModelInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DataClass">
-      <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
+    <Reference Include="DTOInterfaces">
+      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="InMemoryStorageInterfaces">
       <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Persistency">
+      <HintPath>..\Persistency\bin\Debug\Persistency.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

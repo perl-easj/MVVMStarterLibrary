@@ -1,24 +1,26 @@
 ﻿using System.Collections.Generic;
-using DataClass.Implementation;
-using InMemoryStorage.Interfaces;
+using DTO.Interfaces;
+using Persistency.Interfaces;
+using ViewActionState.Implementation;
+using ViewControlState.Implementation;
 using ViewModel.Implementation;
 
 namespace ExtensionsViewModel.Implementation
 {
-    public abstract class MasterDetailsViewModelBaseWithDefaults<TDTO> : 
-        MasterDetailsViewModelBase<TDTO> 
-        where TDTO : DTOBaseWithKey, new()
+    public abstract class MasterDetailsViewModelDefault<T, TDTO> : MasterDetailsViewModelBase<T, TDTO> 
+        where TDTO : IDTO, new()
     {
-        protected MasterDetailsViewModelBaseWithDefaults(
+        protected MasterDetailsViewModelDefault(
             ViewModelFactoryBase<TDTO> viewModelFactory,
-            IConvertibleObservableInMemoryCollection<TDTO> catalog,
+            ICollectionAggregate<T> catalog,
             List<string> immutableControls,
             List<string> mutableControls) 
-            : base(viewModelFactory, catalog)
+            : base(viewModelFactory, catalog, new ViewActionStateService(), new ViewControlStateService())
         {
-            StateService.AddImmutableControlsDefaultStates(immutableControls);
-            StateService.AddMutableControlsDefaultStates(mutableControls);
-            StateService.AddButtonDefaultStates();
+            ControlStateService.AddImmutableControlsDefaultStates(immutableControls);
+            ControlStateService.AddMutableControlsDefaultStates(mutableControls);
+            ControlStateService.AddButtonDefaultStates();
+            ControlStateService.AddItemSelectorDefaultStates();
         }
     }
 }

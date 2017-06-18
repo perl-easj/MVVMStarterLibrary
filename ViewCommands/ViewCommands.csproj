@@ -111,6 +111,8 @@
     <Compile Include="Implementation\CRUDCommandBase.cs" />
     <Compile Include="Implementation\DeleteCommandBase.cs" />
     <Compile Include="Implementation\UpdateCommandBase.cs" />
+    <Compile Include="Implementation\ViewActionService.cs" />
+    <Compile Include="Interfaces\IViewActionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewCommands.rd.xml" />
   </ItemGroup>
@@ -122,8 +124,8 @@
     <Reference Include="Controller">
       <HintPath>..\Controller\bin\Debug\Controller.dll</HintPath>
     </Reference>
-    <Reference Include="DataClass">
-      <HintPath>..\DataClass\bin\Debug\DataClass.dll</HintPath>
+    <Reference Include="DTOInterfaces">
+      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="InMemoryStorageInterfaces">
       <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>

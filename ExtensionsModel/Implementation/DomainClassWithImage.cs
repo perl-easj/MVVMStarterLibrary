@@ -1,9 +1,9 @@
 ﻿using ExtensionsModel.Interfaces;
-using ModelClass.Implementation;
+using InMemoryStorage.Implementation;
 
 namespace ExtensionsModel.Implementation
 {
-    public abstract class DomainClassWithImage : DomainClassBase, IClassWithImage
+    public abstract class DomainClassWithImage : StorableBase, IClassWithImage
     {
         private int _imageKey;
 

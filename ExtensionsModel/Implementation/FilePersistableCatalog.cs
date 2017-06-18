@@ -1,13 +1,16 @@
-﻿using InMemoryStorage.Interfaces;
-using ModelCollection.Implementation;
+﻿using DTO.Interfaces;
+using InMemoryStorage.Interfaces;
+using Persistency.Implementation;
 using FilePersistency.Implementation;
+using InMemoryStorage.Implementation;
 
 namespace ExtensionsModel.Implementation
 {
-    public abstract class FilePersistableCatalog<TDO> : PersistableCatalog<TDO>
-        where TDO : class, IStorable
+    public abstract class FilePersistableCatalog<T> : PersistentCollection<T>
+        where T : class, IStorable
     {
-        protected FilePersistableCatalog() : base(new FileSource<TDO>())
+        protected FilePersistableCatalog(IDTOFactory<T> dtoFactory) 
+            : base(new FileSource<T>(), new InMemoryCollection<T>(), dtoFactory)
         {
         }
     }

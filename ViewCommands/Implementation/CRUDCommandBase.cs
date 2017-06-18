@@ -1,38 +1,34 @@
 ﻿using System;
 using System.Windows.Input;
 using Controller.Interfaces;
-using DataClass.Interfaces;
+using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
-using ViewActionState.Interfaces;
 
 namespace Commands.Implementation
 {
-    public abstract class CRUDCommandBase<TDataClass> : ICommand 
+    public abstract class CRUDCommandBase : ICommand 
     {
-        protected IDTOWrapper<TDataClass> ObjectWrapper;
-        protected IHasActionViewState ViewStateObject;
-        protected IConvertibleInMemoryCollection<TDataClass> Collection;
-
+        protected IDTOWrapper Source;
+        protected IConvertibleCollection Target;
         protected ICRUDController Controller;
+        protected Func<bool> Condition;
 
-        protected CRUDCommandBase(
-            IDTOWrapper<TDataClass> objectWrapper,
-            IHasActionViewState viewStateObject,
-            IConvertibleInMemoryCollection<TDataClass> collection)
+        protected CRUDCommandBase(IDTOWrapper source, IConvertibleCollection target, ICRUDController controller, Func<bool> condition)
         {
-            ObjectWrapper = objectWrapper;
-            ViewStateObject = viewStateObject;
-            Collection = collection;
+            Source = source;
+            Target = target;
+            Controller = controller;
+            Condition = condition;
         }
 
-        public virtual void Execute()
+        public void Execute()
         {
             Controller.Run();
         }
 
-        public virtual bool CanExecute()
+        public bool CanExecute()
         {
-            return true;
+            return Condition();
         }
 
         public bool CanExecute(object parameter)

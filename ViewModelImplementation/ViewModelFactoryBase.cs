@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using DataClass.Interfaces;
+using DTO.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class ViewModelFactoryBase<T> 
-        where T : new()
+    public abstract class ViewModelFactoryBase<TDTO> 
+        where TDTO : IDTO, new()
     {
-        public abstract IDTOWrapper<T> CreateDetailsViewModel(T obj);
-        public abstract IDTOWrapper<T> CreateItemViewModel(T obj);
+        public abstract IDTOWrapper CreateDetailsViewModel(IDTO obj);
+        public abstract IDTOWrapper CreateItemViewModel(IDTO obj);
 
-        public IDTOWrapper<T> CreateDetailsViewModelFromNew()
+        public IDTOWrapper CreateDetailsViewModelFromNew()
         {
-            return CreateDetailsViewModel(new T());
+            return CreateDetailsViewModel(new TDTO());
         }
 
-        public IDTOWrapper<T> CreateDetailsViewModelFromExisting(T obj)
+        public IDTOWrapper CreateDetailsViewModelFromExisting(IDTO obj)
         {
             return CreateDetailsViewModel(obj);
         }
 
-        public virtual ObservableCollection<IDTOWrapper<T>> CreateItemViewModelCollection(IEnumerable<T> dataObjects)
+        public virtual ObservableCollection<IDTOWrapper> CreateItemViewModelCollection(IEnumerable<IDTO> dataObjects)
         {
-            var itemViewModels = new ObservableCollection<IDTOWrapper<T>>();
-            foreach (T obj in dataObjects)
+            var itemViewModels = new ObservableCollection<IDTOWrapper>();
+            foreach (IDTO obj in dataObjects)
             {
                 itemViewModels.Add(CreateItemViewModel(obj));
             }

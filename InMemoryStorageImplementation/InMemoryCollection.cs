@@ -1,30 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using InMemoryStorage.Interfaces;
+// ReSharper disable NotAccessedField.Local
 
 namespace InMemoryStorage.Implementation
 {
     /// <summary>
     /// Implementation of the in-memory collection interface for an
-    /// unobserved collection. Derived classes can choose to override
-    /// the After.. methods, if actions need to be invoked after
-    /// alteration of the collection.
+    /// unobserved collection.
     /// </summary>
-    /// <typeparam name="TDO">Type of stored objects</typeparam>
-    public class InMemoryCollection<TDO> : IInMemoryCollection<TDO>
-        where TDO : class, IStorable
+    /// <typeparam name="T">Type of stored objects</typeparam>
+    public class InMemoryCollection<T> : IInMemoryCollection<T>
+        where T : class, IStorable
     {
-        private Dictionary<int, TDO> _collection;
+        private Dictionary<int, T> _collection;
+        private Action _afterObjectCreated;
+        private Action _afterObjectUpdated;
+        private Action _afterObjectDeleted;
 
         public InMemoryCollection()
         {
-            _collection = new Dictionary<int, TDO>();
+            _collection = new Dictionary<int, T>();
+
+            _afterObjectCreated = null;
+            _afterObjectUpdated = null;
+            _afterObjectDeleted = null;
+
+        }
+
+        public InMemoryCollection(Action afterObjectCreated, Action afterObjectUpdated, Action afterObjectDeleted)
+        {
+            _collection = new Dictionary<int, T>();
+
+            _afterObjectCreated = afterObjectCreated;
+            _afterObjectUpdated = afterObjectUpdated;
+            _afterObjectDeleted = afterObjectDeleted;
         }
 
         /// <summary>
         /// Returns all objects stored in the collection as a List
         /// </summary>
-        public List<TDO> All
+        public List<T> All
         {
             get { return _collection.Values.ToList(); }
         }
@@ -36,14 +53,14 @@ namespace InMemoryStorage.Implementation
         /// <param name="replaceKey">
         /// Specifies if the Key value should be overwritten.
         /// </param>
-        public void Insert(TDO obj, bool replaceKey = true)
+        public void Insert(T obj, bool replaceKey = true)
         {
             if (replaceKey)
             {
                 obj.Key = NextKey();
             }
             _collection.Add(obj.Key, obj);
-            AfterObjectCreated();
+            _afterObjectCreated?.Invoke();
         }
 
         /// <summary>
@@ -54,14 +71,14 @@ namespace InMemoryStorage.Implementation
         /// <param name="replaceKey">
         /// Specifies if the Key value should be overwritten for each object.
         /// </param>
-        public void InsertAll(List<TDO> objects, bool replaceKey = true)
+        public void InsertAll(List<T> objects, bool replaceKey = true)
         {
             DeleteAll();
             foreach (var obj in objects)
             {
                 Insert(obj, replaceKey);
             }
-            AfterObjectCreated();
+            _afterObjectCreated?.Invoke();
         }
 
         /// <summary>
@@ -73,7 +90,7 @@ namespace InMemoryStorage.Implementation
         public void Delete(int key)
         {
             _collection.Remove(key);
-            AfterObjectDeleted();
+            _afterObjectDeleted?.Invoke();
         }
 
         /// <summary>
@@ -82,7 +99,7 @@ namespace InMemoryStorage.Implementation
         public void DeleteAll()
         {
             _collection.Clear();
-            AfterObjectDeleted();
+            _afterObjectDeleted?.Invoke();
         }
 
         /// <summary>
@@ -93,7 +110,7 @@ namespace InMemoryStorage.Implementation
         /// The storable object corresponding to the given key.
         /// Null is returned if no matching object is found.
         /// </returns>
-        public TDO Read(int key)
+        public T Read(int key)
         {
             return _collection.ContainsKey(key) ? _collection[key] : null;
         }
@@ -106,24 +123,16 @@ namespace InMemoryStorage.Implementation
         /// The storable object corresponding to the given key.
         /// Null is returned if no matching object is found.
         /// </returns>
-        public TDO this[int key]
+        public T this[int key]
         {
             get { return Read(key); }
         }
 
-        public virtual void AfterObjectCreated()
+        public void SetCallbacks(Action afterCreate, Action afterUpdate, Action afterDelete)
         {
-            // Derived classes may override this method
-        }
-
-        public virtual void AfterObjectUpdated()
-        {
-            // Derived classes may override this method
-        }
-
-        public virtual void AfterObjectDeleted()
-        {
-            // Derived classes may override this method
+            _afterObjectCreated = afterCreate;
+            _afterObjectUpdated = afterUpdate;
+            _afterObjectDeleted = afterDelete;
         }
 
         /// <summary>

@@ -114,9 +114,18 @@
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataClass\DataClass.csproj">
-      <Project>{B66B93A5-A454-4412-B540-E3EA1A5EC1DC}</Project>
-      <Name>DataClass</Name>
+    <Reference Include="DTOInterfaces">
+      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
+      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
+      <Name>InMemoryStorageInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistency\Persistency.csproj">
+      <Project>{DBAB9016-24BD-4A0A-A8C8-19459D3EEA9C}</Project>
+      <Name>Persistency</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

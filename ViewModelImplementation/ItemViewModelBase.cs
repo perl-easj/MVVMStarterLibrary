@@ -1,14 +1,16 @@
 ﻿using System;
 using Windows.UI.Xaml;
-using DataClass.Implementation;
+using DTO.Implementation;
+using DTO.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class ItemViewModelBase<TDataClass> : 
-        DTOWrapper<TDataClass>, 
+    public abstract class ItemViewModelBase<TDTO> : 
+        TypedDTOWrapper<TDTO>, 
         IItemViewModelDescription,
-        IItemViewModelImage
+        IItemViewModelImage 
+        where TDTO : class
     {
         #region Properties (override in model-specific item view model)
         /// <summary>
@@ -59,7 +61,7 @@ namespace ViewModel.Implementation
         }
         #endregion
 
-        protected ItemViewModelBase(TDataClass obj) : base(obj)
+        protected ItemViewModelBase(IDTO obj) : base(obj)
         {
         }
     }

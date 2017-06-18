@@ -1,15 +1,15 @@
 ﻿using Controller.Interfaces;
-using DataClass.Interfaces;
+using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public abstract class CRUDControllerBase<TDTO> : ICRUDController 
+    public abstract class CRUDControllerBase : ICRUDController 
     {
-        protected IDTOWrapper<TDTO> ObjectWrapper;
-        protected IConvertibleInMemoryCollection<TDTO> Collection;
+        protected IDTOWrapper ObjectWrapper;
+        protected IConvertibleCollection Collection;
 
-        protected CRUDControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+        protected CRUDControllerBase(IDTOWrapper objectWrapper, IConvertibleCollection collection)
         {
             ObjectWrapper = objectWrapper;
             Collection = collection;

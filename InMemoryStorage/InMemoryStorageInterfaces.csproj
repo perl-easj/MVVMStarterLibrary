@@ -107,16 +107,19 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IConvertibleInMemoryCollection.cs" />
-    <Compile Include="IConvertibleObservableInMemoryCollection.cs" />
+    <Compile Include="IConvertibleCollection.cs" />
     <Compile Include="IInMemoryCollection.cs" />
-    <Compile Include="IInMemoryCollectionReadOnly.cs" />
-    <Compile Include="IObservableInMemoryCollection.cs" />
+    <Compile Include="IObservable.cs" />
     <Compile Include="IStorable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\InMemoryStorage.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DTOInterfaces\DTOInterfaces.csproj">
+      <Project>{A22C1090-1513-497F-8DB3-12C3E8742EED}</Project>
+      <Name>DTOInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,13 +1,11 @@
-﻿using DataClass.Implementation;
-using DataClass.Interfaces;
+﻿using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 
 namespace Controller.Implementation
 {
-    public class DeleteControllerBase<TDTO> : CRUDControllerBase<TDTO>
-        where TDTO : DTOBaseWithKey
+    public class DeleteControllerBase : CRUDControllerBase
     {
-        public DeleteControllerBase(IDTOWrapper<TDTO> objectWrapper, IConvertibleInMemoryCollection<TDTO> collection)
+        public DeleteControllerBase(IDTOWrapper objectWrapper, IConvertibleCollection collection)
             : base(objectWrapper, collection)
         {
         }

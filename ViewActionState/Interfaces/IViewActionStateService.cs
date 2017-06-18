@@ -1,15 +1,15 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 using ViewActionState.Types;
 
 namespace ViewActionState.Interfaces
 {
     public interface IViewActionStateService
     {
-        ViewActionStateType ActionState { get; set; }
+        ViewActionStateType ViewActionState { get; set; }
+        Dictionary<string, ICommand> Commands { get; }
 
-        ICommand SetCreateStateCommand { get; }
-        ICommand SetReadStateCommand { get; }
-        ICommand SetUpdateStateCommand { get; }
-        ICommand SetDeleteStateCommand { get; }
+        event EventHandler OnViewActionStateChanged;
     }
 }

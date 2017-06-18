@@ -1,4 +1,4 @@
-﻿namespace ModelCollection.Interfaces
+﻿namespace Persistency.Interfaces
 {
     public interface IPersistable
     {

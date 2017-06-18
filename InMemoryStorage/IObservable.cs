@@ -7,7 +7,7 @@ namespace InMemoryStorage.Interfaces
     /// CUD functionality. An observer should be able to
     /// tie a callback method to the events.
     /// </summary>
-    public interface IObservableInMemoryCollection
+    public interface IObservable
     {
         void AfterObjectCreated();
         void AfterObjectUpdated();

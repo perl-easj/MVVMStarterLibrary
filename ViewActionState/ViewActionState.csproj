@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\ViewActionStateService.cs" />
-    <Compile Include="Interfaces\IHasActionViewState.cs" />
+    <Compile Include="Interfaces\IHasViewActionState.cs" />
     <Compile Include="Interfaces\IViewActionStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\ViewActionStateType.cs" />

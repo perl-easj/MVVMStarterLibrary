@@ -1,27 +1,15 @@
-﻿using Controller.Implementation;
-using DataClass.Implementation;
-using DataClass.Interfaces;
+﻿using System;
+using Controller.Implementation;
+using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
-using ViewActionState.Interfaces;
-using ViewActionState.Types;
 
 namespace Commands.Implementation
 {
-    public class CreateCommandBase<TDTO> : CRUDCommandBase<TDTO> 
-        where TDTO : DTOBase
+    public class CreateCommandBase : CRUDCommandBase
     {
-        public CreateCommandBase(
-            IDTOWrapper<TDTO> objectWrapper,
-            IHasActionViewState viewStateObject,
-            IConvertibleInMemoryCollection<TDTO> collection) 
-            : base(objectWrapper, viewStateObject, collection)
+        public CreateCommandBase(IDTOWrapper source, IConvertibleCollection target, Func<bool> condition)
+            : base(source, target, new CreateControllerBase(source, target), condition)
         {
-            Controller = new CreateControllerBase<TDTO>(objectWrapper, collection);
-        }
-
-        public override bool CanExecute()
-        {
-            return (ObjectWrapper.DataObject != null) && (ViewStateObject.ActionViewState == ViewActionStateType.Create);
         }
     }
 }

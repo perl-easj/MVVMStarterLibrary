@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 using Commands.Implementation;
 using ViewActionState.Interfaces;
 using ViewActionState.Types;
@@ -7,45 +9,33 @@ namespace ViewActionState.Implementation
 {
     public class ViewActionStateService : IViewActionStateService
     {
+        public event EventHandler OnViewActionStateChanged;
         private ViewActionStateType _actionState;
-        private ICommand _setCreateStateCommand;
-        private ICommand _setReadStateCommand;
-        private ICommand _setUpdateStateCommand;
-        private ICommand _setDeleteStateCommand;
+        private Dictionary<string, ICommand> _commands;
 
-        public ViewActionStateType ActionState
+        public ViewActionStateType ViewActionState
         {
-            get { return ViewActionStateType.Create; }
-            set { }
+            get { return _actionState; }
+            set
+            {
+                _actionState = value;
+                OnViewActionStateChanged?.Invoke(this,EventArgs.Empty);
+            }
         }
 
-        public ICommand SetCreateStateCommand
+        public Dictionary<string, ICommand> Commands
         {
-            get { return null; }
-        }
-
-        public ICommand SetReadStateCommand
-        {
-            get { return null; }
-        }
-
-        public ICommand SetUpdateStateCommand
-        {
-            get { return null; }
-        }
-
-        public ICommand SetDeleteStateCommand
-        {
-            get { return null; }
+            get { return _commands; }
         }
 
         public ViewActionStateService(ViewActionStateType actionState = ViewActionStateType.Read)
         {
             _actionState = actionState;
-            _setCreateStateCommand = new RelayCommand(() => { _actionState = ViewActionStateType.Create; }, () => true);
-            _setReadStateCommand = new RelayCommand(() => { _actionState = ViewActionStateType.Read; }, () => true);
-            _setUpdateStateCommand = new RelayCommand(() => { _actionState = ViewActionStateType.Update; }, () => true);
-            _setDeleteStateCommand = new RelayCommand(() => { _actionState = ViewActionStateType.Delete; }, () => true);
+            _commands = new Dictionary<string, ICommand>();
+            _commands.Add("Create", new RelayCommand(() => { ViewActionState = ViewActionStateType.Create; }, () => true));
+            _commands.Add("Read", new RelayCommand(() => { ViewActionState = ViewActionStateType.Read; }, () => true));
+            _commands.Add("Update", new RelayCommand(() => { ViewActionState = ViewActionStateType.Update; }, () => true));
+            _commands.Add("Delete", new RelayCommand(() => { ViewActionState = ViewActionStateType.Delete; }, () => true));
         }
     }
 }

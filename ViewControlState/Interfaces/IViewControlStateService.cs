@@ -14,5 +14,6 @@ namespace ViewControlState.Interfaces
         void AddImmutableControlsDefaultStates(List<string> ids);
         void AddMutableControlsDefaultStates(List<string> ids);
         void AddButtonDefaultStates();
+        void AddItemSelectorDefaultStates();
     }
 }

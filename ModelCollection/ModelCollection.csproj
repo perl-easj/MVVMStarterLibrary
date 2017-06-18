@@ -107,8 +107,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\PersistableCatalog.cs" />
-    <Compile Include="Interfaces\IPersistable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ModelCollection.rd.xml" />
   </ItemGroup>
@@ -125,6 +123,9 @@
       <Project>{dbab9016-24bd-4a0a-a8c8-19459d3eea9c}</Project>
       <Name>Persistency</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

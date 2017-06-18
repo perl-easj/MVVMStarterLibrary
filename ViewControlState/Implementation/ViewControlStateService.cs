@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Windows.UI.Xaml;
 using ViewActionState.Types;
 using ViewControlState.Interfaces;
 using ViewControlState.Types;
@@ -84,6 +85,14 @@ namespace ViewControlState.Implementation
             AddViewControlState(new ViewControlState("Create"));
             AddViewControlState(new ViewControlState("Update"));
             AddViewControlState(new ViewControlState("Delete"));
+        }
+
+        public void AddItemSelectorDefaultStates()
+        {
+            AddViewControlState(ViewActionStateType.Create, new ViewControlState("ItemSelector", false, Visibility.Collapsed));
+            AddViewControlState(ViewActionStateType.Read, new ViewControlState("ItemSelector", true, Visibility.Visible));
+            AddViewControlState(ViewActionStateType.Delete, new ViewControlState("ItemSelector", true, Visibility.Visible));
+            AddViewControlState(ViewActionStateType.Update, new ViewControlState("ItemSelector", true, Visibility.Visible));
         }
     }
 }
