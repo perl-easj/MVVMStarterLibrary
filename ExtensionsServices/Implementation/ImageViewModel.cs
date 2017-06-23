@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Images.Interfaces;
-using InMemoryStorage.Interfaces;
 
 namespace ExtensionsServices.Implementation
 {
@@ -18,11 +17,11 @@ namespace ExtensionsServices.Implementation
             _tagSelectedIndex = 0;
         }
 
-        public ObservableCollection<IStorable> ImageCollection
+        public ObservableCollection<IImage> ImageCollection
         {
             get
             {
-                var collection = new ObservableCollection<IStorable>();
+                var collection = new ObservableCollection<IImage>();
                 if (_tagSelectedIndex == 0)
                 {
 

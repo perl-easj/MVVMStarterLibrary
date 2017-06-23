@@ -107,17 +107,18 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\ViewActionStateService.cs" />
-    <Compile Include="Interfaces\IHasViewActionState.cs" />
-    <Compile Include="Interfaces\IViewActionStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\ViewActionStateType.cs" />
     <EmbeddedResource Include="Properties\ViewActionState.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Commands">
-      <HintPath>..\Commands\bin\Debug\Commands.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
+      <Project>{F9A5EDDF-E3D7-49CF-BC63-74C1532415B4}</Project>
+      <Name>CommandImplementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommandInterfaces\CommandInterfaces.csproj">
+      <Project>{52BE3CDA-97E8-4030-BEEB-B6E343C809FE}</Project>
+      <Name>CommandInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

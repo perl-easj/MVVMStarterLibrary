@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using InMemoryStorage.Interfaces;
-// ReSharper disable NotAccessedField.Local
 
 namespace InMemoryStorage.Implementation
 {
@@ -15,27 +13,10 @@ namespace InMemoryStorage.Implementation
         where T : class, IStorable
     {
         private Dictionary<int, T> _collection;
-        private Action _afterObjectCreated;
-        private Action _afterObjectUpdated;
-        private Action _afterObjectDeleted;
 
         public InMemoryCollection()
         {
             _collection = new Dictionary<int, T>();
-
-            _afterObjectCreated = null;
-            _afterObjectUpdated = null;
-            _afterObjectDeleted = null;
-
-        }
-
-        public InMemoryCollection(Action afterObjectCreated, Action afterObjectUpdated, Action afterObjectDeleted)
-        {
-            _collection = new Dictionary<int, T>();
-
-            _afterObjectCreated = afterObjectCreated;
-            _afterObjectUpdated = afterObjectUpdated;
-            _afterObjectDeleted = afterObjectDeleted;
         }
 
         /// <summary>
@@ -60,7 +41,6 @@ namespace InMemoryStorage.Implementation
                 obj.Key = NextKey();
             }
             _collection.Add(obj.Key, obj);
-            _afterObjectCreated?.Invoke();
         }
 
         /// <summary>
@@ -78,7 +58,6 @@ namespace InMemoryStorage.Implementation
             {
                 Insert(obj, replaceKey);
             }
-            _afterObjectCreated?.Invoke();
         }
 
         /// <summary>
@@ -90,7 +69,6 @@ namespace InMemoryStorage.Implementation
         public void Delete(int key)
         {
             _collection.Remove(key);
-            _afterObjectDeleted?.Invoke();
         }
 
         /// <summary>
@@ -99,7 +77,6 @@ namespace InMemoryStorage.Implementation
         public void DeleteAll()
         {
             _collection.Clear();
-            _afterObjectDeleted?.Invoke();
         }
 
         /// <summary>
@@ -126,13 +103,6 @@ namespace InMemoryStorage.Implementation
         public T this[int key]
         {
             get { return Read(key); }
-        }
-
-        public void SetCallbacks(Action afterCreate, Action afterUpdate, Action afterDelete)
-        {
-            _afterObjectCreated = afterCreate;
-            _afterObjectUpdated = afterUpdate;
-            _afterObjectDeleted = afterDelete;
         }
 
         /// <summary>

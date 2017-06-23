@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDTOCollection.cs" />
     <Compile Include="IDTO.cs" />
     <Compile Include="IDTOFactory.cs" />
     <Compile Include="IDTOWrapper.cs" />

@@ -107,8 +107,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\DirectAccessCatalog.cs" />
     <Compile Include="Implementation\DomainClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
+    <Compile Include="Implementation\PersistentCollection.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />

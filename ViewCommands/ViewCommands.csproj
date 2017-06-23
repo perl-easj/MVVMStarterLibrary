@@ -107,19 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\CreateCommandBase.cs" />
-    <Compile Include="Implementation\CRUDCommandBase.cs" />
-    <Compile Include="Implementation\DeleteCommandBase.cs" />
-    <Compile Include="Implementation\UpdateCommandBase.cs" />
-    <Compile Include="Implementation\ViewActionService.cs" />
-    <Compile Include="Interfaces\IViewActionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewCommands.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Commands, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Commands\bin\Debug\Commands.dll</HintPath>
+    <Reference Include="CommandInterfaces">
+      <HintPath>..\CommandInterfaces\bin\Debug\CommandInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Controller">
       <HintPath>..\Controller\bin\Debug\Controller.dll</HintPath>
@@ -133,6 +126,15 @@
     <Reference Include="ViewActionState">
       <HintPath>..\ViewActionState\bin\Debug\ViewActionState.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
+      <Project>{F9A5EDDF-E3D7-49CF-BC63-74C1532415B4}</Project>
+      <Name>CommandImplementation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

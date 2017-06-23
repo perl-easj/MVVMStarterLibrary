@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using Commands.Implementation;
+using Command.Implementation;
 using Security.Implementation;
 
 namespace ExtensionsServices.Implementation

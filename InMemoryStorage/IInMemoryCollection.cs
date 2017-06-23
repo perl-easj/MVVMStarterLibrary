@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace InMemoryStorage.Interfaces
 {
@@ -17,6 +16,5 @@ namespace InMemoryStorage.Interfaces
         void InsertAll(List<T> objects, bool replaceKey = true);
         void Delete(int key);
         void DeleteAll();
-        void SetCallbacks(Action afterCreate, Action afterUpdate, Action afterDelete);
     }
 }

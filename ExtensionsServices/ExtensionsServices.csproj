@@ -114,17 +114,17 @@
     <EmbeddedResource Include="Properties\ExtensionsServices.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commands\Commands.csproj">
-      <Project>{f53f598e-ade5-47ae-a94a-64c6bda7d565}</Project>
-      <Name>Commands</Name>
+    <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
+      <Project>{F9A5EDDF-E3D7-49CF-BC63-74C1532415B4}</Project>
+      <Name>CommandImplementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommandInterfaces\CommandInterfaces.csproj">
+      <Project>{52BE3CDA-97E8-4030-BEEB-B6E343C809FE}</Project>
+      <Name>CommandInterfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Images\Images.csproj">
       <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
       <Name>Images</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
-      <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
-      <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Security\Security.csproj">
       <Project>{82f24f17-2fae-4a54-b128-ce47d939c7f1}</Project>

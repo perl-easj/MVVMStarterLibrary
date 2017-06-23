@@ -107,20 +107,18 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\ViewControlState.cs" />
-    <Compile Include="Implementation\ViewControlStateService.cs" />
-    <Compile Include="Interfaces\IViewControlState.cs" />
-    <Compile Include="Interfaces\IViewControlStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\ControlStateType.cs" />
-    <Compile Include="Types\MutableType.cs" />
     <EmbeddedResource Include="Properties\ViewControlState.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ViewActionState\ViewActionState.csproj">
-      <Project>{52d9eff4-5f91-43d5-8de7-b908574e34ef}</Project>
-      <Name>ViewActionState</Name>
-    </ProjectReference>
+    <Reference Include="ControlState">
+      <HintPath>..\ControlState\bin\Debug\ControlState.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Types\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

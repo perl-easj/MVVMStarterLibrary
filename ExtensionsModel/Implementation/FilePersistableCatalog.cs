@@ -10,7 +10,7 @@ namespace ExtensionsModel.Implementation
         where T : class, IStorable
     {
         protected FilePersistableCatalog(IDTOFactory<T> dtoFactory) 
-            : base(new FileSource<T>(), new InMemoryCollection<T>(), dtoFactory)
+            : base(new FileSource<T>(new FileStringPersistence(), new JSONConverter<T>()), new InMemoryCollection<T>(), dtoFactory)
         {
         }
     }

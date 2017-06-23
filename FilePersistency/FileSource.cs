@@ -7,13 +7,17 @@ namespace FilePersistency.Implementation
     public class FileSource<T> : IPersistentSource<T>
     {
         private string _fileName;
+        private IStringPersistence _stringPersistence;
+        private IDataConverter<T> _dataConverter;
 
         /// <summary>
         /// Data is stored in a text file called (NameOfClass)Model.dat,
         /// for instance CarModel.dat
         /// </summary>
-        public FileSource()
+        public FileSource(IStringPersistence stringPersistence, IDataConverter<T> dataConverter)
         {
+            _stringPersistence = stringPersistence;
+            _dataConverter = dataConverter;
             _fileName = typeof(T).Name + "Model.dat";
         }
 
@@ -25,7 +29,8 @@ namespace FilePersistency.Implementation
         /// </returns>
         public async Task<List<T>> Load()
         {
-            return await FileDomainObjectsToJSON<T>.Load(_fileName);
+            string data = await _stringPersistence.LoadAsync(_fileName);
+            return _dataConverter.ConvertFromString(data);
         }
 
         /// <summary>
@@ -36,7 +41,8 @@ namespace FilePersistency.Implementation
         /// </param>
         public void Save(List<T> objects)
         {
-            FileDomainObjectsToJSON<T>.Save(objects, _fileName);
+            string data = _dataConverter.ConvertToString(objects);
+            _stringPersistence.SaveAsync(_fileName, data);
         }
     }
 }

@@ -115,22 +115,6 @@
     <EmbeddedResource Include="Properties\ViewModelImplementation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
-      <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
-      <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Persistency\Persistency.csproj">
-      <Project>{DBAB9016-24BD-4A0A-A8C8-19459D3EEA9C}</Project>
-      <Name>Persistency</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewActionState\ViewActionState.csproj">
-      <Project>{52d9eff4-5f91-43d5-8de7-b908574e34ef}</Project>
-      <Name>ViewActionState</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewControlState\ViewControlState.csproj">
-      <Project>{84ced7b1-7af1-4b40-9bd8-134f0e3071ec}</Project>
-      <Name>ViewControlState</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModelInterfaces\ViewModelInterfaces.csproj">
       <Project>{bef15c7f-6222-453c-b233-8b12921e3c6a}</Project>
       <Name>ViewModelInterfaces</Name>

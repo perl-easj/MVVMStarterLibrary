@@ -121,12 +121,6 @@
     <EmbeddedResource Include="Properties\Images.rd.xml" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
-      <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
-      <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

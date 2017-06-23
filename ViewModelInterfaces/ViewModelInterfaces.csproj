@@ -110,6 +110,7 @@
     <Compile Include="IItemViewModelDescription.cs" />
     <Compile Include="IMasterDetailsViewModel.cs" />
     <Compile Include="IItemViewModelImage.cs" />
+    <Compile Include="IMasterDetailsViewModelMediator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>
@@ -117,16 +118,6 @@
     <Reference Include="DTOInterfaces">
       <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
-      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
-      <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Persistency\Persistency.csproj">
-      <Project>{DBAB9016-24BD-4A0A-A8C8-19459D3EEA9C}</Project>
-      <Name>Persistency</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

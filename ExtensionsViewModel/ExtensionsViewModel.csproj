@@ -107,17 +107,39 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\CRUDControlStateService.cs" />
+    <Compile Include="Implementation\CRUDViewStateService.cs" />
     <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
     <Compile Include="Implementation\ItemViewModelWithImage.cs" />
-    <Compile Include="Implementation\MasterDetailsViewModelBaseWithDefaults.cs" />
-    <Compile Include="Implementation\TypedDTOWrapper.cs" />
+    <Compile Include="Implementation\MasterDetailsViewModelDefault.cs" />
+    <Compile Include="Implementation\MasterDetailsViewModelMediator.cs" />
+    <Compile Include="Implementation\MasterDetailsViewModelWithState.cs" />
+    <Compile Include="Interfaces\ICRUDControlStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\CRUDControls.cs" />
+    <Compile Include="Types\CRUDStateControls.cs" />
     <EmbeddedResource Include="Properties\ExtensionsViewModel.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControlState\ControlState.csproj">
+      <Project>{730EA5FC-918C-4D85-B5AC-96F92BBA174C}</Project>
+      <Name>ControlState</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataCommandImplementation\DataCommandImplementation.csproj">
+      <Project>{AA7779A0-33D8-45C0-B0FF-6A24E054CC3A}</Project>
+      <Name>DataCommandImplementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTOImplementation\DTOImplementation.csproj">
       <Project>{7E8D829E-E76B-4D7D-80FD-A05842812975}</Project>
       <Name>DTOImplementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtensionsCommands\ExtensionsCommands.csproj">
+      <Project>{C7A83E53-4AB6-4F81-9B77-C1C6AC6F9E5A}</Project>
+      <Name>ExtensionsCommands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtensionsModel\ExtensionsModel.csproj">
+      <Project>{DD362B5A-7603-4480-8D5E-8A003DAFB614}</Project>
+      <Name>ExtensionsModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExtensionsServices\ExtensionsServices.csproj">
       <Project>{C3F9989C-B690-47B5-8671-CB232AB62C97}</Project>
@@ -127,14 +149,6 @@
       <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
       <Name>Images</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewActionState\ViewActionState.csproj">
-      <Project>{52D9EFF4-5F91-43D5-8DE7-B908574E34EF}</Project>
-      <Name>ViewActionState</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewControlState\ViewControlState.csproj">
-      <Project>{84CED7B1-7AF1-4B40-9BD8-134F0E3071EC}</Project>
-      <Name>ViewControlState</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModelImplementation\ViewModelImplementation.csproj">
       <Project>{96bfa0bf-65be-4c2f-a149-81132daf483a}</Project>
       <Name>ViewModelImplementation</Name>
@@ -143,11 +157,23 @@
       <Project>{BEF15C7F-6222-453C-B233-8B12921E3C6A}</Project>
       <Name>ViewModelInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewState\ViewState.csproj">
+      <Project>{943F1C5A-9189-40AF-AAC4-3C3E0B45DA11}</Project>
+      <Name>ViewState</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CommandImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CommandImplementation\bin\Debug\CommandImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ViewCommands\bin\Debug\CommandInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="DTOInterfaces">
       <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
