@@ -174,18 +174,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CommandImplementation\bin\Debug\CommandImplementation.dll</HintPath>
     </Reference>
-    <Reference Include="CommandInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ViewCommands\bin\Debug\CommandInterfaces.dll</HintPath>
+    <Reference Include="CommandInterfaces">
+      <HintPath>..\CommandInterfaces\bin\Debug\CommandInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="DTOInterfaces">
       <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="InMemoryStorageInterfaces">
       <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Persistency">
-      <HintPath>..\Persistency\bin\Debug\Persistency.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -133,9 +133,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CommandImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ViewCommands\bin\Debug\CommandImplementation.dll</HintPath>
+    <Reference Include="CommandImplementation">
+      <HintPath>..\CommandImplementation\bin\Debug\CommandImplementation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

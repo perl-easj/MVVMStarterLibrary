@@ -131,9 +131,6 @@
     <Reference Include="DTOInterfaces">
       <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ViewCommands">
-      <HintPath>..\ViewCommands\bin\Debug\ViewCommands.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

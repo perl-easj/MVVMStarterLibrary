@@ -39,6 +39,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsModel", "Extensio
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsViewModel", "ExtensionsViewModel\ExtensionsViewModel.csproj", "{9F029EF8-63FA-43B0-96EB-98E17E8FCD56}"
+	ProjectSection(ProjectDependencies) = postProject
+		{52BE3CDA-97E8-4030-BEEB-B6E343C809FE} = {52BE3CDA-97E8-4030-BEEB-B6E343C809FE}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F11BBEBD-881B-489D-87DE-1A8BA12CA235}"
 EndProject
@@ -79,6 +82,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewState", "ViewState\ViewState.csproj", "{943F1C5A-9189-40AF-AAC4-3C3E0B45DA11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsCommands", "ExtensionsCommands\ExtensionsCommands.csproj", "{C7A83E53-4AB6-4F81-9B77-C1C6AC6F9E5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F9A5EDDF-E3D7-49CF-BC63-74C1532415B4} = {F9A5EDDF-E3D7-49CF-BC63-74C1532415B4}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataControllers", "DataControllers", "{DB9EAFEB-2DE7-480E-845C-9DCFFF31C009}"
 EndProject
