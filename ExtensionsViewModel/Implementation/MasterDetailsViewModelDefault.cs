@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using DTO.Interfaces;
-using ExtensionsCommands.Types;
 using ExtensionsCommands.Implementation;
 using ExtensionsModel.Implementation;
 using InMemoryStorage.Interfaces;
 using ViewModel.Implementation;
-using ViewState.Implementation;
 
 namespace ExtensionsViewModel.Implementation
 {
@@ -32,7 +30,7 @@ namespace ExtensionsViewModel.Implementation
             ControlStateService = CRUDcontrolStateService;
 
             DataCommandManager =  new CRUDCommandManagerViewStateDependent(this, catalog , this);
-            StateCommandManager = new ViewStateCommandManager(ViewStateService);
+            StateCommandManager = new CRUDViewStateSelectCommandManager(ViewStateService);
         }
     }
 }

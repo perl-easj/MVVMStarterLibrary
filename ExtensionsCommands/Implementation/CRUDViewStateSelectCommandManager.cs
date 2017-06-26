@@ -4,11 +4,11 @@ using ExtensionsCommands.Types;
 
 namespace ExtensionsCommands.Implementation
 {
-    public class ViewStateCommandManager : CommandManager
+    public class CRUDViewStateSelectCommandManager : CommandManager
     {
         private IViewStateService _stateService;
 
-        public ViewStateCommandManager(IViewStateService stateService)
+        public CRUDViewStateSelectCommandManager(IViewStateService stateService)
         {
             _stateService = stateService;
 

@@ -1,5 +1,5 @@
-﻿using Persistency.Interfaces;
-using Persistency.Types;
+﻿using System;
+using Persistency.Interfaces;
 
 namespace Persistency.Implementation
 {
@@ -11,8 +11,8 @@ namespace Persistency.Implementation
             get { return _instance ?? (_instance = new PersistencyManager()); }
         }
 
-        public event PersistencyTypes.SourceDelegate LoadDelegate;
-        public event PersistencyTypes.SourceDelegate SaveDelegate;
+        public event Action LoadDelegate;
+        public event Action SaveDelegate;
 
         private PersistencyManager()
         {

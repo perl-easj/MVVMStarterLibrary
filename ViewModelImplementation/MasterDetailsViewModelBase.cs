@@ -14,8 +14,8 @@ namespace ViewModel.Implementation
         protected IDTOCollection DTOCollection;
         protected ViewModelFactoryBase<TDTO> ViewModelFactory;
 
-        private IDTOWrapper _detailsViewModel;
-        private IDTOWrapper _itemViewModelSelected;
+        private IDTOWrapper _itemDetails;
+        private IDTOWrapper _itemSelected;
         #endregion
 
         #region Initialisation
@@ -25,41 +25,41 @@ namespace ViewModel.Implementation
             DTOCollection = dtoCollection ?? throw new ArgumentNullException(nameof(dtoCollection));
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
-            _detailsViewModel = null;
-            _itemViewModelSelected = null;
+            _itemDetails = null;
+            _itemSelected = null;
         }
         #endregion
 
         #region IDTOWrapper implementation
         public IDTO DataObject
         {
-            get { return DetailsViewModel?.DataObject; }
+            get { return ItemDetails?.DataObject; }
         }
         #endregion
 
         #region IMasterDetailsViewModel implementation
-        public virtual ObservableCollection<IDTOWrapper> ItemViewModelCollection
+        public virtual ObservableCollection<IDTOWrapper> ItemCollection
         {
             get { return ViewModelFactory.CreateItemViewModelCollection(DTOCollection.AllDTO); }
         }
 
-        public virtual IDTOWrapper ItemViewModelSelected
+        public virtual IDTOWrapper ItemSelected
         {
-            get { return _itemViewModelSelected; }
+            get { return _itemSelected; }
             set
             {
-                _itemViewModelSelected = value;
-                OnItemSelectionChanged(_itemViewModelSelected);
+                _itemSelected = value;
+                OnItemSelectionChanged(_itemSelected);
                 OnPropertyChanged();
             }
         }
 
-        public virtual IDTOWrapper DetailsViewModel
+        public virtual IDTOWrapper ItemDetails
         {
-            get { return _detailsViewModel; }
+            get { return _itemDetails; }
             set
             {
-                _detailsViewModel = value;
+                _itemDetails = value;
                 OnPropertyChanged();
             }
         }

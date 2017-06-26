@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\DirectAccessCatalog.cs" />
+    <Compile Include="Implementation\NoDTOCatalog.cs" />
     <Compile Include="Implementation\DomainClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
     <Compile Include="Implementation\PersistentCollection.cs" />
@@ -128,14 +128,16 @@
       <Project>{0b72a614-5927-4db8-8b88-2c67f882e0f6}</Project>
       <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Persistency\Persistency.csproj">
-      <Project>{dbab9016-24bd-4a0a-a8c8-19459d3eea9c}</Project>
-      <Name>Persistency</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DTOInterfaces">
       <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="PersistencyImplementation">
+      <HintPath>..\PersistencyImplementation\bin\Debug\PersistencyImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="PersistencyInterfaces">
+      <HintPath>..\PersistencyInterfaces\bin\Debug\PersistencyInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

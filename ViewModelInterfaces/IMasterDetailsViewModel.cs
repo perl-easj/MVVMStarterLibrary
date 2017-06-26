@@ -5,8 +5,8 @@ namespace ViewModel.Interfaces
 {
     public interface IMasterDetailsViewModel
     {
-        ObservableCollection<IDTOWrapper> ItemViewModelCollection { get; }
-        IDTOWrapper ItemViewModelSelected { get; set; }
-        IDTOWrapper DetailsViewModel { get; set; }
+        ObservableCollection<IDTOWrapper> ItemCollection { get; }
+        IDTOWrapper ItemSelected { get; set; }
+        IDTOWrapper ItemDetails { get; set; }
     }
 }

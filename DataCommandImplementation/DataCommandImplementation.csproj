@@ -120,8 +120,8 @@
     <Reference Include="CommandInterfaces">
       <HintPath>..\CommandInterfaces\bin\Debug\CommandInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Controller">
-      <HintPath>..\Controller\bin\Debug\Controller.dll</HintPath>
+    <Reference Include="ControllerInterfaces">
+      <HintPath>..\ControllerInterfaces\bin\Debug\ControllerInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="DataControllerImplementation">
       <HintPath>..\DataControllerImplementation\bin\Debug\DataControllerImplementation.dll</HintPath>

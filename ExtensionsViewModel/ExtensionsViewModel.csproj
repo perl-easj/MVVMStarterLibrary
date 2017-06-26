@@ -149,6 +149,10 @@
       <Project>{7deac086-8971-4bb8-96cb-f9fd45eb8adf}</Project>
       <Name>Images</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PersistencyInterfaces\PersistencyInterfaces.csproj">
+      <Project>{09DA2731-E192-4315-A99A-C3673578C5F1}</Project>
+      <Name>PersistencyInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModelImplementation\ViewModelImplementation.csproj">
       <Project>{96bfa0bf-65be-4c2f-a149-81132daf483a}</Project>
       <Name>ViewModelImplementation</Name>

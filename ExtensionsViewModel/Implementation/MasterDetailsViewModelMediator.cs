@@ -23,11 +23,11 @@ namespace ExtensionsViewModel.Implementation
         {
             if (dtoWrapper == null)
             {
-                _masterDetailsViewModel.DetailsViewModel = null;
+                _masterDetailsViewModel.ItemDetails = null;
             }
             else
             {
-                _masterDetailsViewModel.DetailsViewModel = (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState) ?
+                _masterDetailsViewModel.ItemDetails = (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState) ?
                     _viewModelFactory.CreateDetailsViewModelFromExisting(dtoWrapper.DataObject) :
                     _viewModelFactory.CreateDetailsViewModel(dtoWrapper.DataObject);
             }
@@ -37,12 +37,12 @@ namespace ExtensionsViewModel.Implementation
 
         public void OnModelChanged()
         {
-            _masterDetailsViewModel.ItemViewModelSelected = null;
-            _masterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModel.ItemViewModelCollection));
+            _masterDetailsViewModel.ItemSelected = null;
+            _masterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModel.ItemCollection));
 
             if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
             {
-                _masterDetailsViewModel.DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromNew();
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNew();
             }
         }
 
@@ -51,11 +51,11 @@ namespace ExtensionsViewModel.Implementation
             // Set DetailsViewModel according to new state
             if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
             {
-                _masterDetailsViewModel.DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromNew();
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNew();
             }
-            if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState && _masterDetailsViewModel.ItemViewModelSelected != null)
+            if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState && _masterDetailsViewModel.ItemSelected != null)
             {
-                _masterDetailsViewModel.DetailsViewModel = _viewModelFactory.CreateDetailsViewModelFromExisting(_masterDetailsViewModel.ItemViewModelSelected.DataObject);
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromExisting(_masterDetailsViewModel.ItemSelected.DataObject);
             }
 
             // All commands are notified

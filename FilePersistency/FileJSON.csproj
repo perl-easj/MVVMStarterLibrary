@@ -114,10 +114,9 @@
     <EmbeddedResource Include="Properties\FilePersistency.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Persistency\Persistency.csproj">
-      <Project>{dbab9016-24bd-4a0a-a8c8-19459d3eea9c}</Project>
-      <Name>Persistency</Name>
-    </ProjectReference>
+    <Reference Include="PersistencyInterfaces">
+      <HintPath>..\PersistencyInterfaces\bin\Debug\PersistencyInterfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

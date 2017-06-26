@@ -4,6 +4,7 @@ using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Implementation;
 using Persistency.Interfaces;
+
 // ReSharper disable NotAccessedField.Local
 
 namespace ExtensionsModel.Implementation

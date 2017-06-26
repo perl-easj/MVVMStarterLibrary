@@ -107,17 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\PersistencyManager.cs" />
-    <Compile Include="Implementation\PersistentCollection.cs" />
-    <Compile Include="Interfaces\IDataConverter.cs" />
-    <Compile Include="Interfaces\IManaged.cs" />
-    <Compile Include="Interfaces\IPersistable.cs" />
-    <Compile Include="Interfaces\IPersistencyManager.cs" />
-    <Compile Include="Interfaces\IPersistentSource.cs" />
-    <Compile Include="Interfaces\IStringPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\PersistencyTypes.cs" />
     <EmbeddedResource Include="Properties\Persistency.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

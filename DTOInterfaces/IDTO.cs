@@ -1,10 +1,10 @@
 ﻿using System;
+using InMemoryStorage.Interfaces;
 
 namespace DTO.Interfaces
 {
-    public interface IDTO
+    public interface IDTO : IStorable
     {
-        int Key { get; set; }
         void SetDefaultValues();
         void SetValuesFromObject(Object obj);
         IDTO Clone();
