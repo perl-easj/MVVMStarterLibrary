@@ -2,19 +2,16 @@
 
 namespace DTO.Implementation
 {
+    /// <summary>
+    /// Simple implementation of IDTOWrapper
+    /// </summary>
     public class DTOWrapper : IDTOWrapper
     {
-        private IDTO _object;
-
-        public IDTO DataObject
-        {
-            get { return _object; }
-            private set { _object = value; }
-        }
+        public IDTO DataObject { get; }
 
         protected DTOWrapper(IDTO obj)
         {
-            _object = obj;
+            DataObject = obj;
         }
     }
 }

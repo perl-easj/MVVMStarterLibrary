@@ -4,8 +4,21 @@ using Images.Interfaces;
 
 namespace Images.Implementation
 {
+    /// <summary>
+    /// Implements the ITaggedImageCollection interface, by 
+    /// extending the ImageCollection implementation
+    /// </summary>
     public class TaggedImageCollection : ImageCollection, ITaggedImageCollection
     {
+        /// <summary>
+        /// Retrieves all Image objects tagged with the given tag.
+        /// </summary>
+        /// <param name="tag">
+        /// Tag used for selecting Image objects.
+        /// </param>
+        /// <returns>
+        /// List of Image objects tagged with the given tag.
+        /// </returns>
         public List<IImage> AllWithTag(string tag)
         {
             List<IImage> filteredImages = new List<IImage>();
@@ -21,6 +34,9 @@ namespace Images.Implementation
             return filteredImages;
         }
 
+        /// <summary>
+        /// Returns the union of all tags for all Image objects.
+        /// </summary>
         public List<string> AllTags
         {
             get
@@ -29,12 +45,10 @@ namespace Images.Implementation
                 foreach (IImage obj in All)
                 {
                     ITaggedImage tObj = obj as ITaggedImage;
-
                     if (tObj != null)
                     {
                         allTags.AddRange(tObj.Tags);
                     }
-
                 }
 
                 return allTags.Distinct().ToList();

@@ -6,6 +6,15 @@ using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
+    /// <summary>
+    /// Base class for Item ViewModel classes. It is assumed that any Item
+    /// ViewModel object will wrap a DTO. The DTO will be strongly typed, 
+    /// such that DTO-specific properties can be directly accessed for
+    /// implementing the "generic" Item ViewModel properties.
+    /// </summary>
+    /// <typeparam name="TDTO">
+    /// Actual type of DTO.
+    /// </typeparam>
     public abstract class ItemViewModelBase<TDTO> : 
         TypedDTOWrapper<TDTO>, 
         IItemViewModelDescription,
@@ -14,7 +23,7 @@ namespace ViewModel.Implementation
     {
         #region Properties (override in model-specific item view model)
         /// <summary>
-        /// Override this property to provide a string description of a domain object. 
+        /// Override this property to provide a string description of a DTO. 
         /// This description is then displayed for each item in the Master part of the view.
         /// </summary>
         public virtual string Description
@@ -24,7 +33,7 @@ namespace ViewModel.Implementation
         }
 
         /// <summary>
-        /// Override this property to provide an image source for a domain object. 
+        /// Override this property to provide an image source for a DTO. 
         /// This image is then displayed for each item in the Master part of the view.
         /// </summary>
         public virtual string ImageSource

@@ -1,5 +1,9 @@
 ﻿namespace DataCommand.Implementation
 {
+    /// <summary>
+    /// Holds string constants for CRUD commands, to catch 
+    /// spelling errors at compile-time.
+    /// </summary>
     public class CRUDCommands
     {
         public const string CreateCommand = "CreateCommand";

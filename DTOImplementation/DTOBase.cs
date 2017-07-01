@@ -1,32 +1,37 @@
 ﻿using System;
 using DTO.Interfaces;
+using InMemoryStorage.Implementation;
 
 namespace DTO.Implementation
 {
-    public abstract class DTOBase : IDTO
+    /// <summary>
+    /// Implementation of IDTO interface, using StorableBase implementation
+    /// </summary>
+    public abstract class DTOBase : StorableBase, IDTO
     {
-        public const int NullKey = -1;
-
-        private int _key;
-
-        public int Key
-        {
-            get { return _key; }
-            set { _key = value; }
-        }
-
+        /// <summary>
+        /// Constructor. Actual implementation of SetDefaultValues is
+        /// deferred to sub-classes.
+        /// </summary>
         protected DTOBase()
         {
-            _key = NullKey;
             SetDefaultValues();
         }
 
+        /// <summary>
+        /// Creates a bit-wise identical copy of the DTO, i.e. a shallow copy.
+        /// </summary>
+        /// <returns>
+        /// Shallow clone of object.
+        /// </returns>
         public IDTO Clone()
         {
             return (MemberwiseClone() as IDTO);
         }
 
+        #region Abstract methods to be implemented in sub-classes
         public abstract void SetDefaultValues();
-        public abstract void SetValuesFromObject(Object obj);
+        public abstract void SetValuesFromObject(Object obj); 
+        #endregion
     }
 }

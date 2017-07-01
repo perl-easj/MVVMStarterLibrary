@@ -3,10 +3,14 @@
 namespace InMemoryStorage.Interfaces
 {
     /// <summary>
-    /// Extends the read-only interface with methods for modifying
-    /// the collection of stored objects.
+    /// Interface for a key-based in-memory collection, supporting
+    /// basic insertion, retrieval and deletion
     /// </summary>
-    /// <typeparam name="T">Type of stored objects</typeparam>
+    /// <typeparam name="T">
+    /// Type of stored objects. The type itself does not need to 
+    /// inherit from IStorable, if an alternative key management
+    /// strategy is desired.
+    /// </typeparam>
     public interface IInMemoryCollection<T>
     {
         List<T> All { get; }

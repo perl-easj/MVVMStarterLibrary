@@ -10,12 +10,22 @@ using ViewState.Interfaces;
 
 namespace ExtensionsViewModel.Implementation
 {
-    public abstract class MasterDetailsViewModelWithState<TDTO> : 
-        MasterDetailsViewModelBase<TDTO>, 
+    /// <summary>
+    /// This class adds several functionalities to the Master/Details base class.
+    /// 1) View state service
+    /// 2) Control state service
+    /// 3) Data commands (commands for invoking CRUD operations)
+    /// 4) State commands (commands for setting the view in a specific view state)
+    /// 5) A Mediator implementation, which manages the actions performed when a
+    ///    certain aspect of the object state changes (i,e, a change in collection, 
+    ///    item selection, or view state).
+    /// </summary>
+    public abstract class MasterDetailsViewModelWithState : 
+        MasterDetailsViewModelBase, 
         IHasViewState, 
         IHasControlStates
-        where TDTO : IDTO, new()
     {
+        #region Instance fields
         protected IMonitorable _collection;
 
         private IControlStateService _controlStateService;
@@ -24,31 +34,38 @@ namespace ExtensionsViewModel.Implementation
         private ICommandManager _dataCommands;
         private ICommandManager _stateCommands;
 
-        private IMasterDetailsViewModelMediator _masterDetailsViewModelMediator;
+        private IMasterDetailsViewModelWithStateMediator _mediator; 
+        #endregion
 
+        #region Constructor
         protected MasterDetailsViewModelWithState(
-            ViewModelFactoryBase<TDTO> viewModelFactory, 
-            IMonitorable collection, 
-            IDTOCollection dtoCollection) 
+            IViewModelFactory viewModelFactory,
+            IMonitorable collection,
+            IDTOCollection dtoCollection)
             : base(viewModelFactory, dtoCollection)
         {
-            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
+            // Sanity checks, to avoid null-checking later.
+            _collection = collection ?? throw new ArgumentNullException(nameof(MasterDetailsViewModelWithState));
+            _mediator = new MasterDetailsViewModelWithStateMediator(this, viewModelFactory);
 
-            _masterDetailsViewModelMediator = new MasterDetailsViewModelMediator<TDTO>(this, viewModelFactory);
+            // Let Mediator be notified when collection changes.
+            _collection.AddOnObjectCreatedCallback(_mediator.OnModelChanged);
+            _collection.AddOnObjectUpdatedCallback(_mediator.OnModelChanged);
+            _collection.AddOnObjectDeletedCallback(_mediator.OnModelChanged);
 
-            _collection.AddOnObjectCreatedCallback(_masterDetailsViewModelMediator.OnModelChanged);
-            _collection.AddOnObjectUpdatedCallback(_masterDetailsViewModelMediator.OnModelChanged);
-            _collection.AddOnObjectDeletedCallback(_masterDetailsViewModelMediator.OnModelChanged);
+            // Let Mediator be notified when item selection changes.
+            ItemSelectionChanged += _mediator.OnItemSelectionChanged;
 
-            ItemSelectionChanged += _masterDetailsViewModelMediator.OnItemSelectionChanged;
-
+            // These are set in sub-classes, since they involve references to the
+            // Master/Details ViewModel object itself.
             _controlStateService = null;
             _viewStateService = null;
-
             _dataCommands = null;
             _stateCommands = null;
-        }
+        } 
+        #endregion
 
+        #region Exposure of State servies (View and Control)
         public IControlStateService ControlStateService
         {
             get { return _controlStateService; }
@@ -62,10 +79,14 @@ namespace ExtensionsViewModel.Implementation
             {
                 _viewStateService = value;
                 _viewStateService.ViewState = "ReadState";
-                _viewStateService.ViewStateChanged += _masterDetailsViewModelMediator.OnViewStateChanged;
-            }
-        }
 
+                // Let Mediator be notified when view state changes.
+                _viewStateService.ViewStateChanged += _mediator.OnViewStateChanged;
+            }
+        } 
+        #endregion
+
+        #region Exposure of Command managers (State and Data)
         public ICommandManager DataCommandManager
         {
             get { return _dataCommands; }
@@ -76,8 +97,10 @@ namespace ExtensionsViewModel.Implementation
         {
             get { return _stateCommands; }
             protected set { _stateCommands = value; }
-        }
+        } 
+        #endregion
 
+        #region Exposure of Commands (view state selection and data operations)
         public Dictionary<string, INotifiableCommand> StateCommand
         {
             get { return _stateCommands.Commands; }
@@ -87,7 +110,9 @@ namespace ExtensionsViewModel.Implementation
         {
             get { return _dataCommands.Commands; }
         }
+        #endregion
 
+        #region Exposure of State (view state and control state)
         public Dictionary<string, IControlState> ControlStates
         {
             get { return _controlStateService.GetControlStates(ViewState); }
@@ -96,6 +121,7 @@ namespace ExtensionsViewModel.Implementation
         public string ViewState
         {
             get { return _viewStateService.ViewState; }
-        }
+        } 
+        #endregion
     }
 }

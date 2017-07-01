@@ -1,16 +1,21 @@
-﻿using Command.Implementation;
+﻿using System;
+using Command.Implementation;
 using ViewState.Interfaces;
 using ExtensionsCommands.Types;
 
 namespace ExtensionsCommands.Implementation
 {
+    /// <summary>
+    /// Command manager for selecting a view state through a command.
+    /// Needs a reference to an object implementing IViewStateService.
+    /// </summary>
     public class CRUDViewStateSelectCommandManager : CommandManager
     {
         private IViewStateService _stateService;
 
         public CRUDViewStateSelectCommandManager(IViewStateService stateService)
         {
-            _stateService = stateService;
+            _stateService = stateService ?? throw new ArgumentException(nameof(CRUDViewStateSelectCommandManager));
 
             AddCommand(CRUDStateCommands.CreateStateCommand, new RelayCommand(() => { _stateService.ViewState = CRUDStates.CreateState; }, () => true));
             AddCommand(CRUDStateCommands.ReadStateCommand, new RelayCommand(() => { _stateService.ViewState = CRUDStates.ReadState; }, () => true));

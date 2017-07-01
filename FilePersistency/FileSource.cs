@@ -4,6 +4,13 @@ using Persistency.Interfaces;
 
 namespace FilePersistency.Implementation
 {
+    /// <summary>
+    /// File-specific implementation of the IPersistentSource interface.
+    /// Ties a IStringPersistence implementation to a IDataConverter implementation.
+    /// </summary>
+    /// <typeparam name="T">
+    /// Type of objects to load/save.
+    /// </typeparam>
     public class FileSource<T> : IPersistentSource<T>
     {
         private string _fileName;
@@ -11,21 +18,21 @@ namespace FilePersistency.Implementation
         private IDataConverter<T> _dataConverter;
 
         /// <summary>
-        /// Data is stored in a text file called (NameOfClass)Model.dat,
-        /// for instance CarModel.dat
+        /// If nothing else is specified, data is stored in a text file 
+        /// called (NameOfClass)Model.dat, for instance CarModel.dat.
         /// </summary>
-        public FileSource(IStringPersistence stringPersistence, IDataConverter<T> dataConverter)
+        public FileSource(IStringPersistence stringPersistence, IDataConverter<T> dataConverter, string fileSuffix = "Model.dat")
         {
             _stringPersistence = stringPersistence;
             _dataConverter = dataConverter;
-            _fileName = typeof(T).Name + "Model.dat";
+            _fileName = typeof(T).Name + fileSuffix;
         }
 
         /// <summary>
-        /// Reads objects from file
+        /// Loads objects from file
         /// </summary>
         /// <returns>
-        /// List of objects read from file
+        /// List of loaded objects, wrapped in an awaitable Task.
         /// </returns>
         public async Task<List<T>> Load()
         {

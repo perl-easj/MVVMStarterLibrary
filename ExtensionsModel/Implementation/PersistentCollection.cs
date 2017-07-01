@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DTO.Implementation;
 using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Implementation;
@@ -9,6 +10,16 @@ using Persistency.Interfaces;
 
 namespace ExtensionsModel.Implementation
 {
+    /// <summary>
+    /// This is a "fully dressed" implementation of a collection, 
+    /// with several features:
+    /// 1) Implements both the IInMemoryCollection and IDTOCollection interfaces.
+    /// 2) The collection is monitorable (clients can get notified when collection changes).
+    /// 3) The collection is persistable (can be saved to persistent storage).
+    /// </summary>
+    /// <typeparam name="T">
+    /// Type of stored objects
+    /// </typeparam>
     public abstract class PersistentCollection<T> : 
         IInMemoryCollection<T>, 
         IDTOCollection, 
@@ -20,15 +31,17 @@ namespace ExtensionsModel.Implementation
         private IPersistentSource<T> _source;
         private IInMemoryCollection<T> _collection;
         private IDTOFactory<T> _dtoFactory;
+        private DTOConverter<T> _dtoConverter;
         private Action _onObjectCreated;
         private Action _onObjectUpdated;
         private Action _onObjectDeleted;
         #endregion
 
         #region Constructor
-        protected PersistentCollection(IPersistentSource<T> source, IInMemoryCollection<T> collection, IDTOFactory<T> dtoFactory = null)
+        protected PersistentCollection(IPersistentSource<T> source, IInMemoryCollection<T> collection, IDTOFactory<T> dtoFactory)
         {
-            if (source == null || collection == null)
+            // Sanity checks, so no need to null-check later
+            if (source == null || collection == null || dtoFactory == null)
             {
                 throw new ArgumentException(nameof(PersistentCollection<T>));
             }
@@ -36,6 +49,7 @@ namespace ExtensionsModel.Implementation
             _source = source;
             _collection = collection;
             _dtoFactory = dtoFactory;
+            _dtoConverter = new DTOConverter<T>(collection, dtoFactory);
 
             _onObjectCreated = null;
             _onObjectUpdated = null;
@@ -46,6 +60,9 @@ namespace ExtensionsModel.Implementation
         #endregion
 
         #region IInMemoryCollection implementation
+        // All of the below IInMemoryCollection methods are implemented by
+        // 1) Delegating the call to the IInMemoryCollection implementation
+        // 2) Invoke relevant callback if collection is changed.
         public List<T> All
         {
             get { return _collection.All; }
@@ -88,7 +105,7 @@ namespace ExtensionsModel.Implementation
 
         #region IPersistable implementation
         /// <summary>
-        /// Loads storable objects from the source.
+        /// Loads objects from the source.
         /// </summary>
         public async void Load()
         {
@@ -100,7 +117,7 @@ namespace ExtensionsModel.Implementation
         }
 
         /// <summary>
-        /// Saves storable objects back to the source.
+        /// Saves objects back to the source.
         /// </summary>
         public void Save()
         {
@@ -109,57 +126,26 @@ namespace ExtensionsModel.Implementation
         #endregion
 
         #region IDTOCollection implementation
+        // IDTOCollection methods implemented by delegating to DTOConverter 
         public List<IDTO> AllDTO
         {
-            get
-            {
-                if (_dtoFactory == null)
-                {
-                    throw new ArgumentException(nameof(AllDTO));    
-                }
-
-                List<IDTO> dtoCollection = new List<IDTO>();
-                foreach (T obj in All)
-                {
-                    IDTO cObj = _dtoFactory.Create(obj);
-                    cObj.SetValuesFromObject(obj);
-                    dtoCollection.Add(cObj);
-                }
-
-                return dtoCollection;
-            }
+            get { return _dtoConverter.AllDTO;}
         }
 
         public IDTO ReadDTO(int key)
         {
-            if (_dtoFactory == null)
-            {
-                throw new ArgumentException(nameof(ReadDTO));
-            }
-
-            T obj = Read(key);
-            if (obj == null)
-            {
-                return null;
-            }
-
-            IDTO cObj = _dtoFactory.Create(obj);
-            cObj.SetValuesFromObject(obj);
-            return cObj;
+            return _dtoConverter.ReadDTO(key);
         }
 
         public void DeleteDTO(int key)
         {
-            if (_dtoFactory == null)
-            {
-                throw new ArgumentException(nameof(DeleteDTO));
-            }
-
-            Delete(key);
+            _dtoConverter.DeleteDTO(key);
+            _onObjectDeleted?.Invoke();
         }
         #endregion
 
         #region IManaged implementation
+        // Catalog registers Load/Save methods at the PersistencyManager
         public virtual void Manage()
         {
             PersistencyManager.Instance.LoadDelegate += Load;
@@ -168,6 +154,7 @@ namespace ExtensionsModel.Implementation
         #endregion
 
         #region IMonitorable implementation
+        // Management of callbacks for collection changes
         public void AddOnObjectCreatedCallback(Action callback)
         {
             _onObjectCreated += callback;
@@ -184,6 +171,7 @@ namespace ExtensionsModel.Implementation
         } 
         #endregion
 
+        // Type-specific Catalog classes will need to implement this method.
         public abstract void InsertDTO(IDTO obj, bool replaceKey = true);
     }
 }

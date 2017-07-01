@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOBase.cs" />
+    <Compile Include="DTOConverter.cs" />
     <Compile Include="DTOFactoryBase.cs" />
     <Compile Include="DTOWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InMemoryStorageImplementation\InMemoryStorageImplementation.csproj">
+      <Project>{7382BF81-C0D0-4661-8CD2-23EEFE8F1E5E}</Project>
+      <Name>InMemoryStorageImplementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
       <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
       <Name>InMemoryStorageInterfaces</Name>

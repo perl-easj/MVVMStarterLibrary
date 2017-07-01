@@ -3,46 +3,80 @@ using Images.Interfaces;
 
 namespace Images.Implementation
 {
+    /// <summary>
+    /// Implementation of the TaggedImage interface (we assume that 
+    /// all images are tagged).
+    /// </summary>
     public class Image : ITaggedImage
     {
-        private string _description;
-        private string _source;
-        private List<string> _tags;
-
+        #region Constructor
         public Image(string description, string source)
         {
-            _description = description;
-            _source = source;
-            _tags = new List<string>();
+            Description = description;
+            Source = source;
+            Tags = new List<string>();
         }
+        #endregion
 
+        #region Properties
+        /// <summary>
+        /// Unique identifier for the image.
+        /// </summary>
         public int Key { get; set; }
 
-        public string Source
-        {
-            get { return _source; }
-        }
+        /// <summary>
+        /// Source for the image. This could be a path to a file,
+        /// or a URL.
+        /// </summary>
+        public string Source { get; }
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        /// <summary>
+        /// Description of the image.
+        /// </summary>
+        public string Description { get; }
 
-        public List<string> Tags
-        {
-            get { return _tags; }
-        }
+        /// <summary>
+        /// List of tags associated with the image.
+        /// </summary>
+        public List<string> Tags { get; }
+        #endregion
 
+        #region Methods
+        /// <summary>
+        /// Add a single tag to the set of tags.
+        /// </summary>
+        /// <param name="tag">
+        /// Tag to add.
+        /// </param>
         public void AddTag(string tag)
         {
-            _tags.Add(tag);
+            Tags.Add(tag);
         }
 
+        /// <summary>
+        /// Checks if a given tag is part of the set of tags.
+        /// </summary>
+        /// <param name="tag">
+        /// Tag to check.
+        /// </param>
+        /// <returns>
+        /// True if given tag is part of the set of tags, otherwise false.
+        /// </returns>
         public bool ContainsTag(string tag)
         {
-            return _tags.Contains(tag);
+            return Tags.Contains(tag);
         }
 
+        /// <summary>
+        /// Checks if at least one of the given tags is part of the set of tags.
+        /// </summary>
+        /// <param name="tags">
+        /// Tags to check.
+        /// </param>
+        /// <returns>
+        /// True if at least one of the given tags is part of the set of tags, 
+        /// otherwise false.
+        /// </returns>
         public bool ContainsAnyTag(List<string> tags)
         {
             foreach (string tag in tags)
@@ -54,6 +88,7 @@ namespace Images.Implementation
             }
 
             return false;
-        }
+        } 
+        #endregion
     }
 }

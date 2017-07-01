@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\NoDTOCatalog.cs" />
-    <Compile Include="Implementation\DomainClassWithImage.cs" />
+    <Compile Include="Implementation\ClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
     <Compile Include="Implementation\PersistentCollection.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
@@ -116,6 +116,10 @@
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DTOImplementation\DTOImplementation.csproj">
+      <Project>{7E8D829E-E76B-4D7D-80FD-A05842812975}</Project>
+      <Name>DTOImplementation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FilePersistency\FileJSON.csproj">
       <Project>{4427ead7-0561-44c0-9294-2f4cde6cc9de}</Project>
       <Name>FileJSON</Name>

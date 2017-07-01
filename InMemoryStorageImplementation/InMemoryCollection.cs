@@ -5,10 +5,11 @@ using InMemoryStorage.Interfaces;
 namespace InMemoryStorage.Implementation
 {
     /// <summary>
-    /// Implementation of the in-memory collection interface for an
-    /// unobserved collection.
+    /// Implementation of the interface for an in-memory collection
     /// </summary>
-    /// <typeparam name="T">Type of stored objects</typeparam>
+    /// <typeparam name="T">
+    /// Type of stored objects. Type must inherit from IStorable.
+    /// </typeparam>
     public class InMemoryCollection<T> : IInMemoryCollection<T>
         where T : class, IStorable
     {
@@ -28,9 +29,11 @@ namespace InMemoryStorage.Implementation
         }
 
         /// <summary>
-        /// Inserts a single storable object into the collection
+        /// Inserts a single object into the collection.
         /// </summary>
-        /// <param name="obj">Storable object to insert.</param>
+        /// <param name="obj">
+        /// Object to insert.
+        /// </param>
         /// <param name="replaceKey">
         /// Specifies if the Key value should be overwritten.
         /// </param>
@@ -44,10 +47,12 @@ namespace InMemoryStorage.Implementation
         }
 
         /// <summary>
-        /// Insert a set of storable objects into the collection. The
-        /// existing objects are all deleted.
+        /// Insert a set of objects into the collection. The existing
+        /// objects are all deleted.
         /// </summary>
-        /// <param name="objects">Storable objects to insert</param>
+        /// <param name="objects">
+        /// Storable objects to insert.
+        /// </param>
         /// <param name="replaceKey">
         /// Specifies if the Key value should be overwritten for each object.
         /// </param>
@@ -61,7 +66,7 @@ namespace InMemoryStorage.Implementation
         }
 
         /// <summary>
-        /// Deletes a single storable object from the collection
+        /// Deletes a single object from the collection
         /// </summary>
         /// <param name="key">
         /// Key for object to delete from collection
@@ -72,7 +77,7 @@ namespace InMemoryStorage.Implementation
         }
 
         /// <summary>
-        /// Deletes all storable objects from the collection unconditionally.
+        /// Deletes all objects from the collection unconditionally.
         /// </summary>
         public void DeleteAll()
         {
@@ -82,9 +87,11 @@ namespace InMemoryStorage.Implementation
         /// <summary>
         /// Retrieves the object corresponding to the given key
         /// </summary>
-        /// <param name="key">Key of object to retrieve</param>
+        /// <param name="key">
+        /// Key of object to retrieve
+        /// </param>
         /// <returns>
-        /// The storable object corresponding to the given key.
+        /// The object corresponding to the given key.
         /// Null is returned if no matching object is found.
         /// </returns>
         public T Read(int key)
@@ -95,9 +102,10 @@ namespace InMemoryStorage.Implementation
         /// <summary>
         /// Retrieves the object corresponding to the given key
         /// </summary>
-        /// <param name="key">Key of object to retrieve</param>
+        /// <param name="key">
+        /// Key of object to retrieve</param>
         /// <returns>
-        /// The storable object corresponding to the given key.
+        /// The object corresponding to the given key.
         /// Null is returned if no matching object is found.
         /// </returns>
         public T this[int key]

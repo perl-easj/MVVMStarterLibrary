@@ -5,6 +5,14 @@ using DTO.Interfaces;
 
 namespace DataCommand.Implementation
 {
+    /// <summary>
+    /// Base class for commands performing CRUD 
+    /// (Create, Read, Update, Delete) operations.
+    /// It is assumed that the commands use a corresponding
+    /// controller, which operates on DTOs, obtains the 
+    /// source object from an IDTOWrapper, and performs 
+    /// the operation itself on an IDTOCOllection.
+    /// </summary>
     public abstract class CRUDCommandBase : INotifiableCommand 
     {
         protected IDTOWrapper Source;
@@ -20,26 +28,41 @@ namespace DataCommand.Implementation
             Condition = condition;
         }
 
+        /// <summary>
+        /// Invoke the controller corresponding to the command.
+        /// </summary>
         public void Execute()
         {
             Controller.Run();
         }
 
+        /// <summary>
+        /// Evaluate if command can be executed.
+        /// </summary>
         public bool CanExecute()
         {
             return Condition();
         }
 
+        /// <summary>
+        /// Currently not used - forwards to parameterless version.
+        /// </summary>
         public bool CanExecute(object parameter)
         {
             return CanExecute();
         }
 
+        /// <summary>
+        /// Currently not used - forwards to parameterless version.
+        /// </summary>
         public void Execute(object parameter)
         {
             Execute();
         }
 
+        /// <summary>
+        /// Invoke re-evaluation of CanExecuteChanged.
+        /// </summary>
         public event EventHandler CanExecuteChanged;
         public void RaiseCanExecuteChanged()
         {

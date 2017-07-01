@@ -2,16 +2,19 @@
 
 namespace DataController.Implementation
 {
+    /// <summary>
+    /// Implementation of a generic Insert operation.
+    /// </summary>
     public class CreateControllerBase : CRUDControllerBase
     {
-        public CreateControllerBase(IDTOWrapper objectWrapper, IDTOCollection collection)
-            : base(objectWrapper, collection)
+        public CreateControllerBase(IDTOWrapper source, IDTOCollection target)
+            : base(source, target)
         {
         }
 
         public override void Run()
         {
-            Collection.InsertDTO(ObjectWrapper.DataObject);
+            Target.InsertDTO(Source.DataObject);
         }
     }
 }

@@ -111,6 +111,7 @@
     <Compile Include="IMasterDetailsViewModel.cs" />
     <Compile Include="IItemViewModelImage.cs" />
     <Compile Include="IMasterDetailsViewModelMediator.cs" />
+    <Compile Include="IViewModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>

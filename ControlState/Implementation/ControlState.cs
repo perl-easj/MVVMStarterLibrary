@@ -4,19 +4,28 @@ using ControlState.Types;
 
 namespace ControlState.Implementation
 {
+    /// <summary>
+    /// Implementation of IControlState interface. Contains a number of
+    /// constructors for easy definition of typical control states.
+    /// </summary>
     public class GUIControlState : IControlState
     {
+        #region Default states for control types
         public const ControlStateType ListViewStateDefault = ControlStateType.Enabled;
         public const ControlStateType PropertyStateDefault = ControlStateType.Enabled;
         public const ControlStateType ButtonStateDefault = ControlStateType.Enabled;
         public static bool DefaultEnabled = ControlStateToEnabled(PropertyStateDefault);
         public static Visibility DefaultVisible = ControlStateToVisibility(PropertyStateDefault);
+        #endregion
 
+        #region Instance fields
         private string _id;
         private string _description;
         private bool _enabled;
         private Visibility _visibilityState;
+        #endregion
 
+        #region Public properties
         public string ID
         {
             get { return _id; }
@@ -39,10 +48,11 @@ namespace ControlState.Implementation
             get { return _visibilityState; }
             set { _visibilityState = value; }
         }
+        #endregion
 
+        #region Constructors
         /// <summary>
-        /// Description same as id, 
-        /// use default states
+        /// Description same as id, use default states.
         /// </summary>
         public GUIControlState(string id)
             : this(id, id)
@@ -50,7 +60,7 @@ namespace ControlState.Implementation
         }
 
         /// <summary>
-        /// Use default states
+        /// Use default states.
         /// </summary>
         public GUIControlState(string id, string description)
             : this(id, description, DefaultEnabled, DefaultVisible)
@@ -58,7 +68,7 @@ namespace ControlState.Implementation
         }
 
         /// <summary>
-        /// Description same as id, use default visibility
+        /// Description same as id, use default visibility.
         /// </summary>
         public GUIControlState(string id, bool enabled)
             : this(id, id, enabled, DefaultVisible)
@@ -66,7 +76,7 @@ namespace ControlState.Implementation
         }
 
         /// <summary>
-        /// Description same as id
+        /// Description same as id.
         /// </summary>
         public GUIControlState(string id, bool enabled, Visibility visibilityState)
             : this(id, id, enabled, visibilityState)
@@ -74,13 +84,16 @@ namespace ControlState.Implementation
         }
 
         /// <summary>
-        /// Explicit specification of all properties
+        /// Explicit specification of all properties.
         /// </summary>
         public GUIControlState(string id, string description, bool enabled, bool visible)
             : this(id, description, enabled, VisibleToVisibility(visible))
         {
         }
 
+        /// <summary>
+        /// Full constructor.
+        /// </summary>
         private GUIControlState(string id, string description, bool enabled, Visibility visibilityState)
         {
             _id = id;
@@ -88,6 +101,7 @@ namespace ControlState.Implementation
             _enabled = enabled;
             _visibilityState = visibilityState;
         }
+        #endregion
 
         #region Converters
         public static bool ControlStateToEnabled(ControlStateType state)

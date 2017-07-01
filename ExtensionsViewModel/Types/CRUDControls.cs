@@ -1,5 +1,9 @@
 ﻿namespace ExtensionsViewModel.Types
 {
+    /// <summary>
+    /// Valid CRUD control identifiers. To be used when binding to
+    /// control state and control description providers.
+    /// </summary>
     public class CRUDControls
     {
         public const string CreateControl = "CreateControl";

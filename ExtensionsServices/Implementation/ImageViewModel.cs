@@ -6,6 +6,11 @@ using Images.Interfaces;
 
 namespace ExtensionsServices.Implementation
 {
+    /// <summary>
+    /// This class is a ViewModel class for the Image service. If you wish
+    /// to include a GUI for the Image service in an application, you can
+    /// bind the view controls to properties in this class.
+    /// </summary>
     public class ImageViewModel : INotifyPropertyChanged
     {
         private ITaggedImage _imageSelected;
@@ -17,6 +22,10 @@ namespace ExtensionsServices.Implementation
             _tagSelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Returns either the entire set of images available (if no tag has
+        /// been selected), or the images matching the selected tag.
+        /// </summary>
         public ObservableCollection<IImage> ImageCollection
         {
             get
@@ -24,7 +33,7 @@ namespace ExtensionsServices.Implementation
                 var collection = new ObservableCollection<IImage>();
                 if (_tagSelectedIndex == 0)
                 {
-
+                    // The entry "(All)" is selected - return all tags
                     ServiceProvider.Images.All.ForEach(collection.Add);
                 }
                 else
@@ -35,6 +44,9 @@ namespace ExtensionsServices.Implementation
             }
         }
 
+        /// <summary>
+        /// Property for tracking the currently selected image.
+        /// </summary>
         public ITaggedImage ImageSelected
         {
             get { return _imageSelected; }
@@ -47,16 +59,28 @@ namespace ExtensionsServices.Implementation
             }
         }
 
+        /// <summary>
+        /// Property returning the description for the currently selected image.
+        /// </summary>
         public string ImageSelectedDescription
         {
             get { return _imageSelected != null ? _imageSelected.Description : string.Empty; }
         }
 
+        /// <summary>
+        /// Property returning the tags for the currently selected image.
+        /// </summary>
         public List<string> ImageSelectedTags
         {
             get { return _imageSelected?.Tags; }
         }
 
+        /// <summary>
+        /// Property returning the entire set of tags found on the 
+        /// set of available images. The entry "(All)" is added to
+        /// enable a selection indicating that all tags are selected.
+        /// This extra entry will have index 0 (zero), see ImageCollection.
+        /// </summary>
         public List<string> AllTags
         {
             get
@@ -67,6 +91,9 @@ namespace ExtensionsServices.Implementation
             }
         }
 
+        /// <summary>
+        /// Property returning the currently selected tag.
+        /// </summary>
         public int TagSelectedIndex
         {
             get { return _tagSelectedIndex; }
@@ -78,10 +105,12 @@ namespace ExtensionsServices.Implementation
             }
         }
 
+        #region INotifyPropertyChanged code
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        } 
+        #endregion
     }
 }

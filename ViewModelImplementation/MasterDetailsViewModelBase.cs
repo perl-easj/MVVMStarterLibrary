@@ -7,19 +7,26 @@ using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
 {
-    public abstract class MasterDetailsViewModelBase<TDTO> : INotifyPropertyChanged, IDTOWrapper, IMasterDetailsViewModel 
-        where TDTO : IDTO, new()
+    /// <summary>
+    /// Base class for Master/Details ViewModel classes. The class is kept as
+    /// "context-free" as possible; it only holds together a (DTO) collection
+    /// and a ViewModel object factory, and provides properties to which a
+    /// Master/Details view can bind. Since a Master/Details ViewModel object
+    /// can be used as a source for a data-releted operation, it implements
+    /// the IDTOWrapper interface.
+    /// </summary>
+    public abstract class MasterDetailsViewModelBase : INotifyPropertyChanged, IDTOWrapper, IMasterDetailsViewModel 
     {
         #region Instance fields
         protected IDTOCollection DTOCollection;
-        protected ViewModelFactoryBase<TDTO> ViewModelFactory;
+        protected IViewModelFactory ViewModelFactory;
 
         private IDTOWrapper _itemDetails;
         private IDTOWrapper _itemSelected;
         #endregion
 
         #region Initialisation
-        protected MasterDetailsViewModelBase(ViewModelFactoryBase<TDTO> viewModelFactory, IDTOCollection dtoCollection)
+        protected MasterDetailsViewModelBase(IViewModelFactory viewModelFactory, IDTOCollection dtoCollection)
         {
             // Sanity checks, so we don't need null checks elsewhere
             DTOCollection = dtoCollection ?? throw new ArgumentNullException(nameof(dtoCollection));
@@ -31,18 +38,31 @@ namespace ViewModel.Implementation
         #endregion
 
         #region IDTOWrapper implementation
-        public IDTO DataObject
+        /// <summary>
+        /// The object referred to by ItemDetails is considered the "wrapped"
+        /// DTO. This can be changed in a sub-class, if needed.
+        /// </summary>
+        public virtual IDTO DataObject
         {
             get { return ItemDetails?.DataObject; }
         }
         #endregion
 
         #region IMasterDetailsViewModel implementation
+        /// <summary>
+        /// Creation of an item collection is delegated to the provided
+        /// ViewModel object factory.
+        /// </summary>
         public virtual ObservableCollection<IDTOWrapper> ItemCollection
         {
             get { return ViewModelFactory.CreateItemViewModelCollection(DTOCollection.AllDTO); }
         }
 
+        /// <summary>
+        /// Standard implementation of bindable property, except the call to
+        /// OnItemSelectionChanged. Clients interested in knowing about selection
+        /// changes get notified about this change.
+        /// </summary>
         public virtual IDTOWrapper ItemSelected
         {
             get { return _itemSelected; }
@@ -54,6 +74,9 @@ namespace ViewModel.Implementation
             }
         }
 
+        /// <summary>
+        /// Standard implementation of bindable property.
+        /// </summary>
         public virtual IDTOWrapper ItemDetails
         {
             get { return _itemDetails; }
@@ -66,6 +89,10 @@ namespace ViewModel.Implementation
         #endregion
 
         #region Event implementation
+        /// <summary>
+        /// Clients interested in knowing about changes in item 
+        /// selection can register at this event.
+        /// </summary>
         public event Action<IDTOWrapper> ItemSelectionChanged;
         public virtual void OnItemSelectionChanged(IDTOWrapper dtoWrapper)
         {

@@ -6,6 +6,7 @@ namespace Command.Implementation
     /// <summary>
     /// This class is the "standard" implementation of RelayCommand,
     /// which originates from an open-source MVVM project (MVVMLight).
+    /// It has been extended with the RaiseCanExecuteChanged method.
     /// </summary>
     public class RelayCommand : INotifiableCommand
     {
