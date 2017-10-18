@@ -111,6 +111,8 @@
     <Compile Include="Implementation\ClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
     <Compile Include="Implementation\PersistentCollection.cs" />
+    <Compile Include="Implementation\PersistentCollectionNoDTO.cs" />
+    <Compile Include="Implementation\WebAPIPersistableCatalog.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
@@ -142,6 +144,9 @@
     </Reference>
     <Reference Include="PersistencyInterfaces">
       <HintPath>..\PersistencyInterfaces\bin\Debug\PersistencyInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="WebAPI">
+      <HintPath>..\WebAPI\bin\Debug\WebAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -17,7 +17,7 @@ namespace Persistency.Interfaces
         /// <param name="data">
         /// Data in string format.
         /// </param>
-        void SaveAsync(string source, string data);
+        Task SaveAsync(string source, string data);
 
         /// <summary>
         /// Loads a string from the specified source.

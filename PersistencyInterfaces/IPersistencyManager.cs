@@ -12,21 +12,21 @@ namespace Persistency.Interfaces
         /// <summary>
         /// A client can register its Load method at this delegate.
         /// </summary>
-        event Action LoadDelegate;
+        event Action<bool> LoadDelegate;
 
         /// <summary>
         /// A client can register its Save method at this delegate.
         /// </summary>
-        event Action SaveDelegate;
+        event Action<bool> SaveDelegate;
 
         /// <summary>
         /// Invokes the Load method on all registered clients.
         /// </summary>
-        void LoadAll();
+        void LoadAll(bool suppressException = true);
 
         /// <summary>
         /// Invokes the Save method on all registered clients.
         /// </summary>
-        void SaveAll();
+        void SaveAll(bool suppressException = true);
     }
 }

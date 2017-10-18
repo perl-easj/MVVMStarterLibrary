@@ -16,8 +16,8 @@ namespace Persistency.Implementation
         } 
         #endregion
 
-        public event Action LoadDelegate;
-        public event Action SaveDelegate;
+        public event Action<bool> LoadDelegate;
+        public event Action<bool> SaveDelegate;
 
         private PersistencyManager()
         {
@@ -28,17 +28,17 @@ namespace Persistency.Implementation
         /// <summary>
         /// Invoke all registered Load methods.
         /// </summary>
-        public void LoadAll()
+        public void LoadAll(bool suppressException = true)
         {
-            LoadDelegate?.Invoke();
+            LoadDelegate?.Invoke(suppressException);
         }
 
         /// <summary>
         /// Invoke all registered Save methods.
         /// </summary>
-        public void SaveAll()
+        public void SaveAll(bool suppressException = true)
         {
-            SaveDelegate?.Invoke();
+            SaveDelegate?.Invoke(suppressException);
         }
 
         /// <summary>

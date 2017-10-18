@@ -26,9 +26,9 @@ namespace ExtensionsModel.Implementation
         {
         }
 
-        public override void InsertDTO(IDTO obj, bool replaceKey = true)
+        public override IDTO ConvertDTO(IDTO obj)
         {
-            Insert(obj, replaceKey);
+            return obj;
         }
     }
 }

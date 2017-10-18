@@ -34,7 +34,7 @@ namespace FilePersistency.Implementation
                 }
                 catch (FileNotFoundException)
                 {
-                    SaveAsync(fileName, "");
+                    await SaveAsync(fileName, "");
                     return null;
                 }
             }
@@ -50,7 +50,7 @@ namespace FilePersistency.Implementation
         /// <param name="stringToSave">
         /// String data to save.
         /// </param>
-        public async void SaveAsync(string fileName, string stringToSave)
+        public async Task SaveAsync(string fileName, string stringToSave)
         {
             var saveFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
             await FileIO.WriteTextAsync(saveFile, stringToSave);

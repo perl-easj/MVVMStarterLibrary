@@ -19,7 +19,7 @@ namespace Persistency.Interfaces
         /// <param name="objects">
         /// List of objects to save
         /// </param>
-        void Save(List<T> objects);
+        Task Save(List<T> objects);
 
         /// <summary>
         /// Load a List of objects from the source.
@@ -28,5 +28,10 @@ namespace Persistency.Interfaces
         /// List of loaded objects, wrapped in an awaitable Task object.
         /// </returns>
         Task<List<T>> Load();
+
+        Task Create(T obj);
+        Task<T> Read(int key);
+        Task Update(int key, T obj);
+        Task Delete(int key);
     }
 }

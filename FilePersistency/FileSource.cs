@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Persistency.Interfaces;
 
@@ -46,10 +47,30 @@ namespace FilePersistency.Implementation
         /// <param name="objects">
         /// List of objects to save
         /// </param>
-        public void Save(List<T> objects)
+        public Task Save(List<T> objects)
         {
             string data = _dataConverter.ConvertToString(objects);
-            _stringPersistence.SaveAsync(_fileName, data);
+            return _stringPersistence.SaveAsync(_fileName, data);
+        }
+
+        public Task Create(T obj)
+        {
+            throw new NotSupportedException("Create not supported for File Persistency");
+        }
+
+        public Task<T> Read(int key)
+        {
+            throw new NotSupportedException("Read not supported for File Persistency");
+        }
+
+        public Task Update(int key, T obj)
+        {
+            throw new NotSupportedException("Update not supported for File Persistency");
+        }
+
+        public Task Delete(int key)
+        {
+            throw new NotSupportedException("Delete not supported for File Persistency");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ExtensionsModel.Implementation
     /// <summary>
     /// This is a "fully dressed" implementation of a collection, 
     /// with several features:
-    /// 1) Implements both the IInMemoryCollection and IDTOCollection interfaces.
+    /// 1) Implements the IDTOCollection interface.
     /// 2) The collection is monitorable (clients can get notified when collection changes).
     /// 3) The collection is persistable (can be saved to persistent storage).
     /// </summary>
@@ -21,24 +21,27 @@ namespace ExtensionsModel.Implementation
     /// Type of stored objects
     /// </typeparam>
     public abstract class PersistentCollection<T> : 
-        IInMemoryCollection<T>, 
         IDTOCollection, 
         IMonitorable, 
-        IPersistable, 
+        IPersistable<T>, 
         IManaged
     {
         #region Instance fields
         private IPersistentSource<T> _source;
         private IInMemoryCollection<T> _collection;
-        private IDTOFactory<T> _dtoFactory;
         private DTOConverter<T> _dtoConverter;
+        private List<PersistencyOperations> _supportedOperations;
         private Action _onObjectCreated;
         private Action _onObjectUpdated;
         private Action _onObjectDeleted;
         #endregion
 
         #region Constructor
-        protected PersistentCollection(IPersistentSource<T> source, IInMemoryCollection<T> collection, IDTOFactory<T> dtoFactory)
+        protected PersistentCollection(
+            IPersistentSource<T> source, 
+            IInMemoryCollection<T> collection, 
+            IDTOFactory<T> dtoFactory,
+            List<PersistencyOperations> supportedOperations)
         {
             // Sanity checks, so no need to null-check later
             if (source == null || collection == null || dtoFactory == null)
@@ -48,8 +51,8 @@ namespace ExtensionsModel.Implementation
 
             _source = source;
             _collection = collection;
-            _dtoFactory = dtoFactory;
             _dtoConverter = new DTOConverter<T>(collection, dtoFactory);
+            _supportedOperations = supportedOperations;
 
             _onObjectCreated = null;
             _onObjectUpdated = null;
@@ -59,69 +62,59 @@ namespace ExtensionsModel.Implementation
         }
         #endregion
 
-        #region IInMemoryCollection implementation
-        // All of the below IInMemoryCollection methods are implemented by
-        // 1) Delegating the call to the IInMemoryCollection implementation
-        // 2) Invoke relevant callback if collection is changed.
-        public List<T> All
-        {
-            get { return _collection.All; }
-        }
-
-        public T Read(int key)
-        {
-            return _collection.Read(key);
-        }
-
-        public T this[int key]
-        {
-            get { return _collection[key]; }
-        }
-
-        public void Insert(T obj, bool replaceKey = true)
-        {
-            _collection.Insert(obj, replaceKey);
-            _onObjectCreated?.Invoke();
-        }
-
-        public void InsertAll(List<T> objects, bool replaceKey = true)
-        {
-            _collection.InsertAll(objects, replaceKey);
-            _onObjectCreated?.Invoke();
-        }
-
-        public void Delete(int key)
-        {
-            _collection.Delete(key);
-            _onObjectDeleted?.Invoke();
-        }
-
-        public void DeleteAll()
-        {
-            _collection.DeleteAll();
-            _onObjectDeleted?.Invoke();
-        }
-        #endregion
-
         #region IPersistable implementation
         /// <summary>
-        /// Loads objects from the source.
+        /// Will try to load objects from underlying source,
+        /// using Load semantics (replace all in-memory objects
+        /// with persisted objects from source)
         /// </summary>
-        public async void Load()
+        public async void Load(bool suppressException = true)
         {
-            if (_source != null)
+            if (!_supportedOperations.Contains(PersistencyOperations.Load))
             {
-                List<T> objects = await _source.Load();
-                _collection.InsertAll(objects, false);
+                throw new NotSupportedException();
+            }
+
+            try
+            {
+                if (_source != null)
+                {
+                    List<T> objects = await _source.Load();
+                    _collection.InsertAll(objects, false);
+                }
+            }
+            catch (Exception)
+            {
+                if (!suppressException)
+                {
+                    throw;
+                }
             }
         }
 
         /// <summary>
-        /// Saves objects back to the source.
+        /// Will try to save objects to underlying source,
+        /// using Save semantics (replace all persisted objects
+        /// in source with in-memory objects)
         /// </summary>
-        public void Save()
+        public void Save(bool suppressException = true)
         {
-            _source?.Save(_collection.All);
+            if (!_supportedOperations.Contains(PersistencyOperations.Save))
+            {
+                throw new NotSupportedException();
+            }
+
+            try
+            {
+                _source?.Save(_collection.All);
+            }
+            catch (Exception)
+            {
+                if (!suppressException)
+                {
+                    throw;
+                }
+            }
         }
         #endregion
 
@@ -132,15 +125,46 @@ namespace ExtensionsModel.Implementation
             get { return _dtoConverter.AllDTO;}
         }
 
+        /// <summary>
+        /// Reads a single object, given its key. Object is
+        /// read directly from in-memory.
+        /// </summary>
+        /// <param name="key">Key for object to read</param>
+        /// <returns>Object corresponding to given key</returns>
         public IDTO ReadDTO(int key)
         {
             return _dtoConverter.ReadDTO(key);
         }
 
+        /// <summary>
+        /// Delete a single object with Delete semantics
+        /// (delete object from memory and source)
+        /// </summary>
+        /// <param name="key">Key for object to read</param>
         public void DeleteDTO(int key)
         {
+            if (_supportedOperations.Contains(PersistencyOperations.Delete))
+            {
+                _source.Delete(key);
+            }
             _dtoConverter.DeleteDTO(key);
             _onObjectDeleted?.Invoke();
+        }
+
+        /// <summary>
+        /// Insert a single object with Create semantics
+        /// (create object in memory and source)
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="replaceKey"></param>
+        public void InsertDTO(IDTO obj, bool replaceKey = true)
+        {
+            if (_supportedOperations.Contains(PersistencyOperations.Create))
+            {
+                _source.Create(ConvertDTO(obj));
+            }           
+            _collection.Insert(ConvertDTO(obj));
+            _onObjectCreated?.Invoke();
         }
         #endregion
 
@@ -172,6 +196,6 @@ namespace ExtensionsModel.Implementation
         #endregion
 
         // Type-specific Catalog classes will need to implement this method.
-        public abstract void InsertDTO(IDTO obj, bool replaceKey = true);
+        public abstract T ConvertDTO(IDTO obj);
     }
 }
