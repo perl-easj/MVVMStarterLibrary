@@ -108,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOBase.cs" />
-    <Compile Include="DTOConverter.cs" />
     <Compile Include="DTOFactoryBase.cs" />
     <Compile Include="DTOWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

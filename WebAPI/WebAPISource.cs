@@ -1,45 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using DBOInterfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
 
 namespace WebAPI
 {
-    public class WebAPISource<T> : IPersistentSource<T> where T : IStorable
+    public class WebAPISource<T, TDBO> : IPersistentSource<T> 
+        where T : IStorable
+        where TDBO : IDBO
     {
+        private enum APIMethod { Load, Create, Read, Update, Delete }
+
+        #region Instance fields
         private string _serverURL;
+        private string _apiPrefix;
         private string _apiID;
         private HttpClientHandler _httpClientHandler;
         private HttpClient _httpClient;
+        private IDBOFactory<T> _dboFactory;
+        #endregion
 
-        public WebAPISource(string serverURL, string apiID)
+        #region Constructor
+        public WebAPISource(IDBOFactory<T> dboFactory, string serverURL, string apiID, string apiPrefix = "api")
         {
+            _dboFactory = dboFactory;
             _serverURL = serverURL;
             _apiID = apiID;
+            _apiPrefix = apiPrefix;
             _httpClientHandler = new HttpClientHandler();
             _httpClientHandler.UseDefaultCredentials = true;
             _httpClient = new HttpClient(_httpClientHandler);
+            _httpClient.BaseAddress = new Uri(_serverURL);
         }
+        #endregion
 
+        #region Implementation of IPersistentSource
         public async Task<List<T>> Load()
         {
-            InitHTTPClient(_httpClient);
-            Task<HttpResponseMessage> responseTask = _httpClient.GetAsync($"api/{_apiID}");
-            await responseTask;
-
-            if (responseTask.Result.IsSuccessStatusCode)
+            string requestURI = BuildRequestURI(APIMethod.Load);
+            List<TDBO> dboList = await InvokeAPIWithReturnValueAsync<List<TDBO>>(() => _httpClient.GetAsync(requestURI));
+            List<T> objList = new List<T>();
+            foreach (TDBO dbObj in dboList)
             {
-                Task<IEnumerable<T>> readTask = responseTask.Result.Content.ReadAsAsync<IEnumerable<T>>();
-                await readTask;
-
-                return readTask.Result.ToList();
+                objList.Add(_dboFactory.CreateT(dbObj));
             }
-
-            return null;
+            return objList;
         }
 
         public Task Save(List<T> objects)
@@ -49,44 +58,76 @@ namespace WebAPI
 
         public async Task Create(T obj)
         {
-            InitHTTPClient(_httpClient);
-            await _httpClient.PostAsJsonAsync($"api/{_apiID}", obj);
+            await InvokeAPINoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), _dboFactory.CreateDBO(obj)));
         }
 
         public async Task<T> Read(int key)
         {
-            InitHTTPClient(_httpClient);
-            Task<HttpResponseMessage> responseTask = _httpClient.GetAsync($"api/{_apiID}/{key}");
-            await responseTask;
-
-            if (responseTask.Result.IsSuccessStatusCode)
-            {
-                Task<T> readTask = responseTask.Result.Content.ReadAsAsync<T>();
-                await readTask;
-
-                return readTask.Result;
-            }
-
-            return default(T);
+            TDBO dbObj = await InvokeAPIWithReturnValueAsync<TDBO>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Read, key)));
+            return _dboFactory.CreateT(dbObj);
         }
 
         public async Task Update(int key, T obj)
         {
-            InitHTTPClient(_httpClient);
-            await _httpClient.PutAsJsonAsync($"api/{_apiID}/{key}", obj);
+            await InvokeAPINoReturnValueAsync(() => _httpClient.PutAsJsonAsync(BuildRequestURI(APIMethod.Update, key), _dboFactory.CreateDBO(obj)));
         }
 
         public async Task Delete(int key)
         {
-            InitHTTPClient(_httpClient);
-            await _httpClient.DeleteAsync($"api/{_apiID}/{key}");
+            await InvokeAPINoReturnValueAsync(() => _httpClient.DeleteAsync(BuildRequestURI(APIMethod.Update, key)));
+        } 
+        #endregion
+
+        #region Private methods for API method invocation
+        private async Task<U> InvokeAPIWithReturnValueAsync<U>(Func<Task<HttpResponseMessage>> apiMethod)
+        {
+            return await InvokeAPIAsync(apiMethod).Result.Content.ReadAsAsync<U>();
         }
 
-        private void InitHTTPClient(HttpClient client)
+        private async Task InvokeAPINoReturnValueAsync(Func<Task<HttpResponseMessage>> apiMethod)
         {
-            client.BaseAddress = new Uri(_serverURL);
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            await InvokeAPIAsync(apiMethod);
         }
+
+        private async Task<HttpResponseMessage> InvokeAPIAsync(Func<Task<HttpResponseMessage>> apiMethod)
+        {
+            // Prepare HTTP client for method invocation
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // Invoke the method - the method will at some point 
+            // return an HttpResponseMessage 
+            HttpResponseMessage response = await apiMethod().ConfigureAwait(false);
+
+            // Throw exception if the invocation was unsuccessful
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"{(int)response.StatusCode} - {response.ReasonPhrase}");
+            }
+
+            // Return the HttpResponseMessage, which we now know 
+            // is a response to a successful method invocation
+            return response;
+        }
+
+        private string BuildRequestURI(APIMethod method, int key = 0)
+        {
+            switch (method)
+            {
+                case APIMethod.Load:
+                    return $"{_apiPrefix}/{_apiID}";
+                case APIMethod.Create:
+                    return $"{_apiPrefix}/{_apiID}";
+                case APIMethod.Read:
+                    return $"{_apiPrefix}/{_apiID}/{key}";
+                case APIMethod.Update:
+                    return $"{_apiPrefix}/{_apiID}/{key}";
+                case APIMethod.Delete:
+                    return $"{_apiPrefix}/{_apiID}/{key}";
+                default:
+                    throw new ArgumentException("BuildRequestURI");
+            }
+        }
+        #endregion
     }
 }

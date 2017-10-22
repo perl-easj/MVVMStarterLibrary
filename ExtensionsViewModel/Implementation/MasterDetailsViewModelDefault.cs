@@ -22,7 +22,7 @@ namespace ExtensionsViewModel.Implementation
     {
         protected MasterDetailsViewModelDefault(
             IViewModelFactory viewModelFactory,
-            FilePersistableCatalog<T> catalog,
+            PersistentCollection<T> catalog,
             List<string> immutableControls,
             List<string> mutableControls) 
             : base(viewModelFactory, catalog, catalog)

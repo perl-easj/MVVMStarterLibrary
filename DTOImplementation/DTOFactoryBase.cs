@@ -13,14 +13,21 @@ namespace DTO.Implementation
     /// Actual type of DTO. The DTO class must declare a 
     /// parameterless constructor.
     /// </typeparam>
-    public class DTOFactoryBase<T, TDTO> : IDTOFactory<T> 
+    public abstract class DTOFactoryBase<T, TDTO> : IDTOFactory<T>
         where TDTO : IDTO, new()
     {
-        public IDTO Create(T obj)
+        public IDTO CreateDTO(T obj)
         {
+            if (obj == null)
+            {
+                return null;
+            }
+
             IDTO dtoObj = new TDTO();
             dtoObj.SetValuesFromObject(obj);
             return dtoObj;
         }
+
+        public abstract T CreateT(IDTO dtObj);
     }
 }

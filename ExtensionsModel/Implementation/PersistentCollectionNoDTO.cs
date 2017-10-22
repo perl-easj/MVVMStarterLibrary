@@ -16,7 +16,7 @@ namespace ExtensionsModel.Implementation
     /// <typeparam name="T">
     /// Type of stored objects
     /// </typeparam>
-    public abstract class PersistentCollectionNoDTO<T> :
+    public class PersistentCollectionNoDTO<T> :
         IInMemoryCollection<T>,
         IMonitorable,
         IPersistable<T>,

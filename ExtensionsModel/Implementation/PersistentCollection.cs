@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DTO.Implementation;
 using DTO.Interfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Implementation;
@@ -29,7 +28,7 @@ namespace ExtensionsModel.Implementation
         #region Instance fields
         private IPersistentSource<T> _source;
         private IInMemoryCollection<T> _collection;
-        private DTOConverter<T> _dtoConverter;
+        private IDTOFactory<T> _dtoFactory;
         private List<PersistencyOperations> _supportedOperations;
         private Action _onObjectCreated;
         private Action _onObjectUpdated;
@@ -51,7 +50,7 @@ namespace ExtensionsModel.Implementation
 
             _source = source;
             _collection = collection;
-            _dtoConverter = new DTOConverter<T>(collection, dtoFactory);
+            _dtoFactory = dtoFactory;
             _supportedOperations = supportedOperations;
 
             _onObjectCreated = null;
@@ -122,7 +121,16 @@ namespace ExtensionsModel.Implementation
         // IDTOCollection methods implemented by delegating to DTOConverter 
         public List<IDTO> AllDTO
         {
-            get { return _dtoConverter.AllDTO;}
+            get
+            {
+                List<IDTO> dtoCollection = new List<IDTO>();
+                foreach (T obj in _collection.All)
+                {
+                    dtoCollection.Add(_dtoFactory.CreateDTO(obj));
+                }
+
+                return dtoCollection;
+            }
         }
 
         /// <summary>
@@ -133,7 +141,7 @@ namespace ExtensionsModel.Implementation
         /// <returns>Object corresponding to given key</returns>
         public IDTO ReadDTO(int key)
         {
-            return _dtoConverter.ReadDTO(key);
+            return _dtoFactory.CreateDTO(_collection.Read(key));
         }
 
         /// <summary>
@@ -143,11 +151,11 @@ namespace ExtensionsModel.Implementation
         /// <param name="key">Key for object to read</param>
         public void DeleteDTO(int key)
         {
+            _collection.Delete(key);
             if (_supportedOperations.Contains(PersistencyOperations.Delete))
             {
                 _source.Delete(key);
             }
-            _dtoConverter.DeleteDTO(key);
             _onObjectDeleted?.Invoke();
         }
 
@@ -159,11 +167,13 @@ namespace ExtensionsModel.Implementation
         /// <param name="replaceKey"></param>
         public void InsertDTO(IDTO obj, bool replaceKey = true)
         {
+            T newObj = _dtoFactory.CreateT(obj);
+
+            _collection.Insert(newObj);
             if (_supportedOperations.Contains(PersistencyOperations.Create))
             {
-                _source.Create(ConvertDTO(obj));
-            }           
-            _collection.Insert(ConvertDTO(obj));
+                _source.Create(newObj);
+            }
             _onObjectCreated?.Invoke();
         }
         #endregion
@@ -194,8 +204,5 @@ namespace ExtensionsModel.Implementation
             _onObjectDeleted += callback;
         } 
         #endregion
-
-        // Type-specific Catalog classes will need to implement this method.
-        public abstract T ConvertDTO(IDTO obj);
     }
 }
