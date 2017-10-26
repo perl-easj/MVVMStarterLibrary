@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace ViewModel.Interfaces
 {
@@ -13,17 +13,17 @@ namespace ViewModel.Interfaces
         /// Collection of DTOs corresponding to underlying data,
         /// e.g. to be presented in a collection-oriented GUI control.
         /// </summary>
-        ObservableCollection<IDTOWrapper> ItemCollection { get; }
+        ObservableCollection<ITransformedDataWrapper> ItemCollection { get; }
 
         /// <summary>
         /// Item currently selected.
         /// </summary>
-        IDTOWrapper ItemSelected { get; set; }
+        ITransformedDataWrapper ItemSelected { get; set; }
 
         /// <summary>
         /// Details for a specific item. This will usually be the 
         /// same item as ItemSelected refers to.
         /// </summary>
-        IDTOWrapper ItemDetails { get; set; }
+        ITransformedDataWrapper ItemDetails { get; set; }
     }
 }

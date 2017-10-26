@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using DBOInterfaces;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using InMemoryStorage.Implementation;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
@@ -13,14 +12,18 @@ namespace ExtensionsModel.Implementation
     /// 1) Data is read from a RESTful web service, supporting Load, Create and Delete
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
-    public abstract class WebAPIPersistableCatalog<T, TDBO> : PersistentCollection<T>
+    public abstract class WebAPIPersistableCatalog<T, TDO> : PersistentCollection<T>
         where T : class, IStorable 
-        where TDBO : IDBO
+        where TDO : ITransformedData
     {
-        protected WebAPIPersistableCatalog(string url, string apiID, IDTOFactory<T> dtoFactory, IDBOFactory<T> dboFactory)
-            : base(new WebAPISource<T, TDBO>(dboFactory, url, apiID), 
-                   new InMemoryCollection<T>(), 
-                   dtoFactory,
+        protected WebAPIPersistableCatalog(
+            string url, 
+            string apiID, 
+            ITransformedDataFactory<T> viewDataFactory, 
+            ITransformedDataFactory<T> sourceDataFactory)
+            : base(new WebAPISource<T, TDO>(sourceDataFactory, url, apiID), 
+                   new InMemoryCollection<T>(),
+                   viewDataFactory,
                    new List<PersistencyOperations> { PersistencyOperations.Load, PersistencyOperations.Create, PersistencyOperations.Delete })
         {
         }

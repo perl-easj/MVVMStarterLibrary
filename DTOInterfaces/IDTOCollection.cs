@@ -8,11 +8,11 @@ namespace DTO.Interfaces
     /// may be constructed/deconstructed as part of the implementation,
     /// before being stored/retrieved in the actual collection.
     /// </summary>
-    public interface IDTOCollection
-    {
-        List<IDTO> AllDTO { get; }
-        IDTO ReadDTO(int key);
-        void DeleteDTO(int key);
-        void InsertDTO(IDTO obj, bool replaceKey = true);
-    }
+    //public interface IDTOCollection
+    //{
+    //    List<IDTO> AllDTO { get; }
+    //    IDTO ReadDTO(int key);
+    //    void DeleteDTO(int key);
+    //    void InsertDTO(IDTO obj, bool replaceKey = true);
+    //}
 }

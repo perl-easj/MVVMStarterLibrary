@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
@@ -7,14 +7,14 @@ namespace DataController.Implementation
     /// </summary>
     public class DeleteControllerBase : CRUDControllerBase
     {
-        public DeleteControllerBase(IDTOWrapper source, IDTOCollection target)
+        public DeleteControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
             : base(source, target)
         {
         }
 
         public override void Run()
         {
-            Target.DeleteDTO(Source.DataObject.Key);
+            Target.DeleteTransformed(Source.DataObject.Key);
         }
     }
 }

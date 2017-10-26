@@ -1,5 +1,5 @@
 ﻿using Controller.Interfaces;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
@@ -12,10 +12,10 @@ namespace DataController.Implementation
     /// </summary>
     public abstract class CRUDControllerBase : ISimpleController 
     {
-        protected IDTOWrapper Source;
-        protected IDTOCollection Target;
+        protected ITransformedDataWrapper Source;
+        protected ITransformedDataCollection Target;
 
-        protected CRUDControllerBase(IDTOWrapper source, IDTOCollection target)
+        protected CRUDControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
         {
             Source = source;
             Target = target;

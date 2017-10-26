@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
@@ -15,21 +15,21 @@ namespace ViewModel.Implementation
     /// can be used as a source for a data-releted operation, it implements
     /// the IDTOWrapper interface.
     /// </summary>
-    public abstract class MasterDetailsViewModelBase : INotifyPropertyChanged, IDTOWrapper, IMasterDetailsViewModel 
+    public abstract class MasterDetailsViewModelBase : INotifyPropertyChanged, ITransformedDataWrapper, IMasterDetailsViewModel 
     {
         #region Instance fields
-        protected IDTOCollection DTOCollection;
+        protected ITransformedDataCollection TDOCollection;
         protected IViewModelFactory ViewModelFactory;
 
-        private IDTOWrapper _itemDetails;
-        private IDTOWrapper _itemSelected;
+        private ITransformedDataWrapper _itemDetails;
+        private ITransformedDataWrapper _itemSelected;
         #endregion
 
         #region Initialisation
-        protected MasterDetailsViewModelBase(IViewModelFactory viewModelFactory, IDTOCollection dtoCollection)
+        protected MasterDetailsViewModelBase(IViewModelFactory viewModelFactory, ITransformedDataCollection dtoCollection)
         {
             // Sanity checks, so we don't need null checks elsewhere
-            DTOCollection = dtoCollection ?? throw new ArgumentNullException(nameof(dtoCollection));
+            TDOCollection = dtoCollection ?? throw new ArgumentNullException(nameof(dtoCollection));
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
             _itemDetails = null;
@@ -42,7 +42,7 @@ namespace ViewModel.Implementation
         /// The object referred to by ItemDetails is considered the "wrapped"
         /// DTO. This can be changed in a sub-class, if needed.
         /// </summary>
-        public virtual IDTO DataObject
+        public virtual ITransformedData DataObject
         {
             get { return ItemDetails?.DataObject; }
         }
@@ -53,9 +53,9 @@ namespace ViewModel.Implementation
         /// Creation of an item collection is delegated to the provided
         /// ViewModel object factory.
         /// </summary>
-        public virtual ObservableCollection<IDTOWrapper> ItemCollection
+        public virtual ObservableCollection<ITransformedDataWrapper> ItemCollection
         {
-            get { return ViewModelFactory.CreateItemViewModelCollection(DTOCollection.AllDTO); }
+            get { return ViewModelFactory.CreateItemViewModelCollection(TDOCollection.AllTransformed); }
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace ViewModel.Implementation
         /// OnItemSelectionChanged. Clients interested in knowing about selection
         /// changes get notified about this change.
         /// </summary>
-        public virtual IDTOWrapper ItemSelected
+        public virtual ITransformedDataWrapper ItemSelected
         {
             get { return _itemSelected; }
             set
@@ -77,7 +77,7 @@ namespace ViewModel.Implementation
         /// <summary>
         /// Standard implementation of bindable property.
         /// </summary>
-        public virtual IDTOWrapper ItemDetails
+        public virtual ITransformedDataWrapper ItemDetails
         {
             get { return _itemDetails; }
             set
@@ -93,8 +93,8 @@ namespace ViewModel.Implementation
         /// Clients interested in knowing about changes in item 
         /// selection can register at this event.
         /// </summary>
-        public event Action<IDTOWrapper> ItemSelectionChanged;
-        public virtual void OnItemSelectionChanged(IDTOWrapper dtoWrapper)
+        public event Action<ITransformedDataWrapper> ItemSelectionChanged;
+        public virtual void OnItemSelectionChanged(ITransformedDataWrapper dtoWrapper)
         {
             ItemSelectionChanged?.Invoke(dtoWrapper);
         }

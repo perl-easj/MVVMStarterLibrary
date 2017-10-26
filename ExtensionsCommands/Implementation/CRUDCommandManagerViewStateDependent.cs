@@ -1,6 +1,6 @@
 ﻿using System;
 using DataCommand.Implementation;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
 using ViewState.Interfaces;
 
@@ -14,7 +14,7 @@ namespace ExtensionsCommands.Implementation
     {
         private IHasViewState _viewStateObject;
 
-        public CRUDCommandManagerViewStateDependent(IDTOWrapper source, IDTOCollection target, IHasViewState viewStateObject) : base(source, target)
+        public CRUDCommandManagerViewStateDependent(ITransformedDataWrapper source, ITransformedDataCollection target, IHasViewState viewStateObject) : base(source, target)
         {
             _viewStateObject = viewStateObject ?? throw new ArgumentException(nameof(CRUDCommandManagerViewStateDependent));
         }

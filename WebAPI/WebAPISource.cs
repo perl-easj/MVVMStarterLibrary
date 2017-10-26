@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using DBOInterfaces;
+using DataTransformation.Interfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
 
 namespace WebAPI
 {
-    public class WebAPISource<T, TDBO> : IPersistentSource<T> 
+    public class WebAPISource<T, TDO> : IPersistentSource<T> 
         where T : IStorable
-        where TDBO : IDBO
+        where TDO : ITransformedData
     {
         private enum APIMethod { Load, Create, Read, Update, Delete }
 
@@ -21,11 +21,11 @@ namespace WebAPI
         private string _apiID;
         private HttpClientHandler _httpClientHandler;
         private HttpClient _httpClient;
-        private IDBOFactory<T> _dboFactory;
+        private ITransformedDataFactory<T> _dboFactory;
         #endregion
 
         #region Constructor
-        public WebAPISource(IDBOFactory<T> dboFactory, string serverURL, string apiID, string apiPrefix = "api")
+        public WebAPISource(ITransformedDataFactory<T> dboFactory, string serverURL, string apiID, string apiPrefix = "api")
         {
             _dboFactory = dboFactory;
             _serverURL = serverURL;
@@ -42,11 +42,11 @@ namespace WebAPI
         public async Task<List<T>> Load()
         {
             string requestURI = BuildRequestURI(APIMethod.Load);
-            List<TDBO> dboList = await InvokeAPIWithReturnValueAsync<List<TDBO>>(() => _httpClient.GetAsync(requestURI));
+            List<TDO> dboList = await InvokeAPIWithReturnValueAsync<List<TDO>>(() => _httpClient.GetAsync(requestURI));
             List<T> objList = new List<T>();
-            foreach (TDBO dbObj in dboList)
+            foreach (TDO dbObj in dboList)
             {
-                objList.Add(_dboFactory.CreateT(dbObj));
+                objList.Add(_dboFactory.CreateDomainObject(dbObj));
             }
             return objList;
         }
@@ -58,18 +58,18 @@ namespace WebAPI
 
         public async Task Create(T obj)
         {
-            await InvokeAPINoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), _dboFactory.CreateDBO(obj)));
+            await InvokeAPINoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), _dboFactory.CreateTransformedObject(obj)));
         }
 
         public async Task<T> Read(int key)
         {
-            TDBO dbObj = await InvokeAPIWithReturnValueAsync<TDBO>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Read, key)));
-            return _dboFactory.CreateT(dbObj);
+            TDO dbObj = await InvokeAPIWithReturnValueAsync<TDO>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Read, key)));
+            return _dboFactory.CreateDomainObject(dbObj);
         }
 
         public async Task Update(int key, T obj)
         {
-            await InvokeAPINoReturnValueAsync(() => _httpClient.PutAsJsonAsync(BuildRequestURI(APIMethod.Update, key), _dboFactory.CreateDBO(obj)));
+            await InvokeAPINoReturnValueAsync(() => _httpClient.PutAsJsonAsync(BuildRequestURI(APIMethod.Update, key), _dboFactory.CreateTransformedObject(obj)));
         }
 
         public async Task Delete(int key)

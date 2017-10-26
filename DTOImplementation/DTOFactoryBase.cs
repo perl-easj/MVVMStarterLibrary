@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿
 
 namespace DTO.Implementation
 {
@@ -13,21 +13,21 @@ namespace DTO.Implementation
     /// Actual type of DTO. The DTO class must declare a 
     /// parameterless constructor.
     /// </typeparam>
-    public abstract class DTOFactoryBase<T, TDTO> : IDTOFactory<T>
-        where TDTO : IDTO, new()
-    {
-        public IDTO CreateDTO(T obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
+    //public abstract class DTOFactoryBase<T, TDTO> : IDTOFactory<T>
+    //    where TDTO : IDTO, new()
+    //{
+    //    public IDTO CreateDTO(T obj)
+    //    {
+    //        if (obj == null)
+    //        {
+    //            return null;
+    //        }
 
-            IDTO dtoObj = new TDTO();
-            dtoObj.SetValuesFromObject(obj);
-            return dtoObj;
-        }
+    //        IDTO dtoObj = new TDTO();
+    //        dtoObj.SetValuesFromObject(obj);
+    //        return dtoObj;
+    //    }
 
-        public abstract T CreateT(IDTO dtObj);
-    }
+    //    public abstract T CreateT(IDTO dtObj);
+    //}
 }

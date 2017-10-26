@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using InMemoryStorage.Interfaces;
 using Persistency.Implementation;
 using Persistency.Interfaces;
@@ -19,8 +19,9 @@ namespace ExtensionsModel.Implementation
     /// <typeparam name="T">
     /// Type of stored objects
     /// </typeparam>
-    public abstract class PersistentCollection<T> : 
-        IDTOCollection, 
+    public abstract class PersistentCollection<T> :
+        IInMemoryCollection<T>,
+        ITransformedDataCollection, 
         IMonitorable, 
         IPersistable<T>, 
         IManaged
@@ -28,7 +29,7 @@ namespace ExtensionsModel.Implementation
         #region Instance fields
         private IPersistentSource<T> _source;
         private IInMemoryCollection<T> _collection;
-        private IDTOFactory<T> _dtoFactory;
+        private ITransformedDataFactory<T> _dtoFactory;
         private List<PersistencyOperations> _supportedOperations;
         private Action _onObjectCreated;
         private Action _onObjectUpdated;
@@ -38,8 +39,8 @@ namespace ExtensionsModel.Implementation
         #region Constructor
         protected PersistentCollection(
             IPersistentSource<T> source, 
-            IInMemoryCollection<T> collection, 
-            IDTOFactory<T> dtoFactory,
+            IInMemoryCollection<T> collection,
+            ITransformedDataFactory<T> dtoFactory,
             List<PersistencyOperations> supportedOperations)
         {
             // Sanity checks, so no need to null-check later
@@ -117,16 +118,16 @@ namespace ExtensionsModel.Implementation
         }
         #endregion
 
-        #region IDTOCollection implementation
+        #region ITransformedDataCollection implementation
         // IDTOCollection methods implemented by delegating to DTOConverter 
-        public List<IDTO> AllDTO
+        public List<ITransformedData> AllTransformed
         {
             get
             {
-                List<IDTO> dtoCollection = new List<IDTO>();
+                List<ITransformedData> dtoCollection = new List<ITransformedData>();
                 foreach (T obj in _collection.All)
                 {
-                    dtoCollection.Add(_dtoFactory.CreateDTO(obj));
+                    dtoCollection.Add(_dtoFactory.CreateTransformedObject(obj));
                 }
 
                 return dtoCollection;
@@ -139,9 +140,9 @@ namespace ExtensionsModel.Implementation
         /// </summary>
         /// <param name="key">Key for object to read</param>
         /// <returns>Object corresponding to given key</returns>
-        public IDTO ReadDTO(int key)
+        public ITransformedData ReadTransformed(int key)
         {
-            return _dtoFactory.CreateDTO(_collection.Read(key));
+            return _dtoFactory.CreateTransformedObject(_collection.Read(key));
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace ExtensionsModel.Implementation
         /// (delete object from memory and source)
         /// </summary>
         /// <param name="key">Key for object to read</param>
-        public void DeleteDTO(int key)
+        public void DeleteTransformed(int key)
         {
             _collection.Delete(key);
             if (_supportedOperations.Contains(PersistencyOperations.Delete))
@@ -165,9 +166,9 @@ namespace ExtensionsModel.Implementation
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="replaceKey"></param>
-        public void InsertDTO(IDTO obj, bool replaceKey = true)
+        public void InsertTransformed(ITransformedData obj, bool replaceKey = true)
         {
-            T newObj = _dtoFactory.CreateT(obj);
+            T newObj = _dtoFactory.CreateDomainObject(obj);
 
             _collection.Insert(newObj);
             if (_supportedOperations.Contains(PersistencyOperations.Create))
@@ -202,6 +203,43 @@ namespace ExtensionsModel.Implementation
         public void AddOnObjectDeletedCallback(Action callback)
         {
             _onObjectDeleted += callback;
+        }
+        #endregion
+
+        #region IInMemoryCollection implementation
+        public List<T> All
+        {
+            get { return _collection.All; }
+        }
+
+        public T Read(int key)
+        {
+            return _collection.Read(key);
+        }
+
+        public T this[int key]
+        {
+            get { return _collection[key]; }
+        }
+
+        public void Insert(T obj, bool replaceKey = true)
+        {
+            _collection.Insert(obj, replaceKey);
+        }
+
+        public void InsertAll(List<T> objects, bool replaceKey = true)
+        {
+            _collection.InsertAll(objects, replaceKey);
+        }
+
+        public void Delete(int key)
+        {
+            _collection.Delete(key);
+        }
+
+        public void DeleteAll()
+        {
+            _collection.DeleteAll();
         } 
         #endregion
     }

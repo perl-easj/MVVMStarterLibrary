@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿using DataTransformation.Interfaces;
 
 namespace ViewModel.Interfaces
 {
@@ -14,7 +14,7 @@ namespace ViewModel.Interfaces
         /// <param name="dtoWrapper">
         /// Newly selected object
         /// </param>
-        void OnItemSelectionChanged(IDTOWrapper dtoWrapper);
+        void OnItemSelectionChanged(ITransformedDataWrapper dtoWrapper);
 
         /// <summary>
         /// Invoked when the underlying model changes.

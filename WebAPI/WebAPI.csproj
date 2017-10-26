@@ -127,9 +127,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBOInterfaces\DBOInterfaces.csproj">
-      <Project>{5615CC64-EB1F-41D1-B331-BCC0E8B28C21}</Project>
-      <Name>DBOInterfaces</Name>
+    <ProjectReference Include="..\DataTransformationInterfaces\DataTransformationInterfaces.csproj">
+      <Project>{0CA2025D-F752-424F-8473-419E08DB0FFB}</Project>
+      <Name>DataTransformationInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

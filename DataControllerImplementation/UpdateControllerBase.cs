@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
@@ -7,7 +7,7 @@ namespace DataController.Implementation
     /// </summary>
     public class UpdateControllerBase : CRUDControllerBase
     {
-        public UpdateControllerBase(IDTOWrapper source, IDTOCollection target)
+        public UpdateControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
             : base(source, target)
         {
         }
@@ -18,9 +18,9 @@ namespace DataController.Implementation
         /// </summary>
         public override void Run()
         {
-            IDTO updateObj = Source.DataObject.Clone();
-            Target.DeleteDTO(Source.DataObject.Key);
-            Target.InsertDTO(updateObj, false);
+            ITransformedData updateObj = Source.DataObject.Clone();
+            Target.DeleteTransformed(Source.DataObject.Key);
+            Target.InsertTransformed(updateObj, false);
         }
     }
 }

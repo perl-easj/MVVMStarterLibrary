@@ -1,6 +1,6 @@
 ﻿using System;
 using DataController.Implementation;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataCommand.Implementation
 {
@@ -9,7 +9,7 @@ namespace DataCommand.Implementation
     /// </summary>
     public class CreateCommandBase : CRUDCommandBase
     {
-        public CreateCommandBase(IDTOWrapper source, IDTOCollection target, Func<bool> condition)
+        public CreateCommandBase(ITransformedDataWrapper source, ITransformedDataCollection target, Func<bool> condition)
             : base(source, target, new CreateControllerBase(source, target), condition)
         {
         }

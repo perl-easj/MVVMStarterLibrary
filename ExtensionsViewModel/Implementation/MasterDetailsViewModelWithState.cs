@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Command.Interfaces;
 using ControlState.Interfaces;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using InMemoryStorage.Interfaces;
 using ViewModel.Implementation;
 using ViewModel.Interfaces;
@@ -41,7 +41,7 @@ namespace ExtensionsViewModel.Implementation
         protected MasterDetailsViewModelWithState(
             IViewModelFactory viewModelFactory,
             IMonitorable collection,
-            IDTOCollection dtoCollection)
+            ITransformedDataCollection dtoCollection)
             : base(viewModelFactory, dtoCollection)
         {
             // Sanity checks, to avoid null-checking later.

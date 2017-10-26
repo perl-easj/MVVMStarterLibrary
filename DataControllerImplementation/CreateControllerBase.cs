@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
@@ -7,14 +7,14 @@ namespace DataController.Implementation
     /// </summary>
     public class CreateControllerBase : CRUDControllerBase
     {
-        public CreateControllerBase(IDTOWrapper source, IDTOCollection target)
+        public CreateControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
             : base(source, target)
         {
         }
 
         public override void Run()
         {
-            Target.InsertDTO(Source.DataObject);
+            Target.InsertTransformed(Source.DataObject);
         }
     }
 }

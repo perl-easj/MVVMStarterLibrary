@@ -1,5 +1,5 @@
 ﻿using Command.Implementation;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataCommand.Implementation
 {
@@ -10,14 +10,14 @@ namespace DataCommand.Implementation
     /// </summary>
     public abstract class CRUDCommandManager : CommandManager
     {
-        private IDTOWrapper _source;
+        private ITransformedDataWrapper _source;
 
         /// <summary>
         /// Constructor. Registers commands for Create, Update and Delete.
         /// </summary>
         /// <param name="source">DTO source for commands</param>
         /// <param name="target">Target collection for commands</param>
-        protected CRUDCommandManager(IDTOWrapper source, IDTOCollection target)
+        protected CRUDCommandManager(ITransformedDataWrapper source, ITransformedDataCollection target)
         {
             _source = source;
 

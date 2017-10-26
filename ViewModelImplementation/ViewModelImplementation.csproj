@@ -125,11 +125,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DTOImplementation">
-      <HintPath>..\DTOImplementation\bin\Debug\DTOImplementation.dll</HintPath>
+    <Reference Include="DataTransformationImplementation">
+      <HintPath>..\DataTransformationImplementation\bin\Debug\DataTransformationImplementation.dll</HintPath>
     </Reference>
-    <Reference Include="DTOInterfaces">
-      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    <Reference Include="DataTransformationInterfaces">
+      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

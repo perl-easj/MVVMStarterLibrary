@@ -118,8 +118,8 @@
     <Reference Include="ControllerInterfaces">
       <HintPath>..\ControllerInterfaces\bin\Debug\ControllerInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="DTOInterfaces">
-      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    <Reference Include="DataTransformationInterfaces">
+      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

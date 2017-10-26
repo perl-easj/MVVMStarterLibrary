@@ -1,7 +1,7 @@
 ﻿using System;
 using Command.Interfaces;
 using Controller.Interfaces;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataCommand.Implementation
 {
@@ -15,12 +15,12 @@ namespace DataCommand.Implementation
     /// </summary>
     public abstract class CRUDCommandBase : INotifiableCommand 
     {
-        protected IDTOWrapper Source;
-        protected IDTOCollection Target;
+        protected ITransformedDataWrapper Source;
+        protected ITransformedDataCollection Target;
         protected ISimpleController Controller;
         protected Func<bool> Condition;
 
-        protected CRUDCommandBase(IDTOWrapper source, IDTOCollection target, ISimpleController controller, Func<bool> condition)
+        protected CRUDCommandBase(ITransformedDataWrapper source, ITransformedDataCollection target, ISimpleController controller, Func<bool> condition)
         {
             Source = source;
             Target = target;

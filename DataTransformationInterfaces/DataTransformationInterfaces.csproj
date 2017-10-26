@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C7A83E53-4AB6-4F81-9B77-C1C6AC6F9E5A}</ProjectGuid>
+    <ProjectGuid>{0CA2025D-F752-424F-8473-419E08DB0FFB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtensionsCommands</RootNamespace>
-    <AssemblyName>ExtensionsCommands</AssemblyName>
+    <RootNamespace>DataTransformationInterfaces</RootNamespace>
+    <AssemblyName>DataTransformationInterfaces</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -102,39 +102,27 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Implementation\CRUDViewStateSelectCommandManager.cs" />
-    <Compile Include="Implementation\CRUDCommandManagerViewStateDependent.cs" />
+    <Compile Include="ITransformedData.cs" />
+    <Compile Include="ITransformedDataCollection.cs" />
+    <Compile Include="ITransformedDataFactory.cs" />
+    <Compile Include="ITransformedDataWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\CRUDStateCommands.cs" />
-    <Compile Include="Types\CRUDStates.cs" />
-    <EmbeddedResource Include="Properties\ExtensionsCommands.rd.xml" />
+    <EmbeddedResource Include="Properties\DataTransformationInterfaces.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommandInterfaces\CommandInterfaces.csproj">
-      <Project>{52BE3CDA-97E8-4030-BEEB-B6E343C809FE}</Project>
-      <Name>CommandInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataCommandImplementation\DataCommandImplementation.csproj">
-      <Project>{AA7779A0-33D8-45C0-B0FF-6A24E054CC3A}</Project>
-      <Name>DataCommandImplementation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewState\ViewState.csproj">
-      <Project>{943F1C5A-9189-40AF-AAC4-3C3E0B45DA11}</Project>
-      <Name>ViewState</Name>
-    </ProjectReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CommandImplementation">
-      <HintPath>..\CommandImplementation\bin\Debug\CommandImplementation.dll</HintPath>
-    </Reference>
-    <Reference Include="DataTransformationInterfaces">
-      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
+      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
+      <Name>InMemoryStorageInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

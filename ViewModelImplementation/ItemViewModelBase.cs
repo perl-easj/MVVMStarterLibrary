@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
-using DTO.Implementation;
-using DTO.Interfaces;
+using DataTransformation.Implementation;
+using DataTransformation.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
@@ -12,14 +12,11 @@ namespace ViewModel.Implementation
     /// such that DTO-specific properties can be directly accessed for
     /// implementing the "generic" Item ViewModel properties.
     /// </summary>
-    /// <typeparam name="TDTO">
-    /// Actual type of DTO.
-    /// </typeparam>
-    public abstract class ItemViewModelBase<TDTO> : 
-        TypedDTOWrapper<TDTO>, 
+    public abstract class ItemViewModelBase<TDO> : 
+        TypedTransformedDataWrapper<TDO>, 
         IItemViewModelDescription,
         IItemViewModelImage 
-        where TDTO : class
+        where TDO : class
     {
         #region Properties (override in model-specific item view model)
         /// <summary>
@@ -70,7 +67,7 @@ namespace ViewModel.Implementation
         }
         #endregion
 
-        protected ItemViewModelBase(IDTO obj) : base(obj)
+        protected ItemViewModelBase(ITransformedData obj) : base(obj)
         {
         }
     }

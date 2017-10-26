@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using InMemoryStorage.Interfaces;
 using FilePersistency.Implementation;
 using InMemoryStorage.Implementation;
@@ -20,7 +20,7 @@ namespace ExtensionsModel.Implementation
     public abstract class FilePersistableCatalog<T> : PersistentCollection<T>
         where T : class, IStorable
     {
-        protected FilePersistableCatalog(IDTOFactory<T> dtoFactory) 
+        protected FilePersistableCatalog(ITransformedDataFactory<T> dtoFactory) 
             : base(new FileSource<T>(new FileStringPersistence(), new JSONConverter<T>()), 
                    new InMemoryCollection<T>(), 
                    dtoFactory,

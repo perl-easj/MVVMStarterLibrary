@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace ViewModel.Interfaces
 {
@@ -20,7 +20,7 @@ namespace ViewModel.Interfaces
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        IDTOWrapper CreateDetailsViewModel(IDTO obj);
+        ITransformedDataWrapper CreateDetailsViewModel(ITransformedData obj);
 
         /// <summary>
         /// Create Item ViewModel object, referring to the given DTO.
@@ -31,7 +31,7 @@ namespace ViewModel.Interfaces
         /// <returns>
         /// New Item ViewModel object.
         /// </returns>
-        IDTOWrapper CreateItemViewModel(IDTO obj);
+        ITransformedDataWrapper CreateItemViewModel(ITransformedData obj);
 
         /// <summary>
         /// Create Details ViewModel object, referring to a new DTO.
@@ -39,7 +39,7 @@ namespace ViewModel.Interfaces
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        IDTOWrapper CreateDetailsViewModelFromNewDTO();
+        ITransformedDataWrapper CreateDetailsViewModelFromNewDTO();
 
         /// <summary>
         /// Create Details ViewModel object, referring to a clone of the given DTO.
@@ -51,12 +51,12 @@ namespace ViewModel.Interfaces
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        IDTOWrapper CreateDetailsViewModelFromClonedDTO(IDTO obj);
+        ITransformedDataWrapper CreateDetailsViewModelFromClonedDTO(ITransformedData obj);
 
         /// <summary>
         /// Create a collection of Item ViewModel objects, from a
         /// collection of DTOs. 
         /// </summary>
-        ObservableCollection<IDTOWrapper> CreateItemViewModelCollection(IEnumerable<IDTO> dataObjects);
+        ObservableCollection<ITransformedDataWrapper> CreateItemViewModelCollection(IEnumerable<ITransformedData> dataObjects);
     }
 }

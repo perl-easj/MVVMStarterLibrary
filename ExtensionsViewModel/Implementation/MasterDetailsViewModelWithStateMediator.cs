@@ -1,7 +1,8 @@
 ﻿using System;
-using DTO.Interfaces;
+using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
 using ViewModel.Interfaces;
+// ReSharper disable UnusedMember.Local
 
 namespace ExtensionsViewModel.Implementation
 {
@@ -29,7 +30,7 @@ namespace ExtensionsViewModel.Implementation
         /// <param name="dtoWrapper">
         /// New selection.
         /// </param>
-        public void OnItemSelectionChanged(IDTOWrapper dtoWrapper)
+        public void OnItemSelectionChanged(ITransformedDataWrapper dtoWrapper)
         {
             if (dtoWrapper == null)
             {
@@ -106,7 +107,7 @@ namespace ExtensionsViewModel.Implementation
             _masterDetailsViewModel.StateCommandManager.Notify();
         }
 
-        private IDTOWrapper SetDetailsObject(IDTOWrapper itemDtoWrapper)
+        private ITransformedDataWrapper SetDetailsObject(ITransformedDataWrapper itemDtoWrapper)
         {
             if (itemDtoWrapper == null)
             {
@@ -124,7 +125,7 @@ namespace ExtensionsViewModel.Implementation
                     return _viewModelFactory.CreateDetailsViewModelFromNewDTO();
                 }
 
-                return _viewModelFactory.CreateDetailsViewModel(itemDtoWrapper.DataObject); ;
+                return _viewModelFactory.CreateDetailsViewModel(itemDtoWrapper.DataObject);
             }
         }
     }

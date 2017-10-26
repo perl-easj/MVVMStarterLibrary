@@ -1,4 +1,4 @@
-﻿using DTO.Interfaces;
+﻿using DataTransformation.Interfaces;
 using ExtensionsServices.Implementation;
 using Images.Implementation;
 using Images.Interfaces;
@@ -12,15 +12,12 @@ namespace ExtensionsViewModel.Implementation
     /// provided by the Images service. The image is thus identified 
     /// by a numeric key (ImageKey).
     /// </summary>
-    /// <typeparam name="TDTO">
-    /// Actual type of DTO
-    /// </typeparam>
-    public abstract class ItemViewModelWithImage<TDTO> : ItemViewModelBase<TDTO> 
-        where TDTO : class
+    public abstract class ItemViewModelWithImage<TDO> : ItemViewModelBase<TDO> 
+        where TDO : class
     {
         private IImage _notFoundImage;
 
-        protected ItemViewModelWithImage(IDTO obj) : base(obj)
+        protected ItemViewModelWithImage(ITransformedData obj) : base(obj)
         {
             _notFoundImage = new Image("Image not found", ServiceProvider.Images.GetAppImageSource(AppImageType.NotFound));
         }

@@ -116,8 +116,8 @@
     <EmbeddedResource Include="Properties\ViewModelInterfaces.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DTOInterfaces">
-      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    <Reference Include="DataTransformationInterfaces">
+      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

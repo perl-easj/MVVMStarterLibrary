@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using DTO.Implementation;
-using DTO.Interfaces;
+using DataTransformation.Implementation;
+using DataTransformation.Interfaces;
 
 namespace ViewModel.Implementation
 {
@@ -11,15 +11,12 @@ namespace ViewModel.Implementation
     /// object will wrap a DTO. The DTO will be strongly typed, such that
     /// DTO-specific properties can be directly accessed for view binding.
     /// </summary>
-    /// <typeparam name="TDTO">
-    /// Actual type of DTO.
-    /// </typeparam>
-    public class DetailsViewModelBase<TDTO> :
-        TypedDTOWrapper<TDTO>,
+    public class DetailsViewModelBase<TDO> :
+        TypedTransformedDataWrapper<TDO>,
         INotifyPropertyChanged 
-        where TDTO : class
+        where TDO : class
     {
-        public DetailsViewModelBase(IDTO obj) : base(obj)
+        public DetailsViewModelBase(ITransformedData obj) : base(obj)
         {
         }
 

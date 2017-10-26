@@ -130,10 +130,6 @@
       <Project>{AA7779A0-33D8-45C0-B0FF-6A24E054CC3A}</Project>
       <Name>DataCommandImplementation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DTOImplementation\DTOImplementation.csproj">
-      <Project>{7E8D829E-E76B-4D7D-80FD-A05842812975}</Project>
-      <Name>DTOImplementation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ExtensionsCommands\ExtensionsCommands.csproj">
       <Project>{C7A83E53-4AB6-4F81-9B77-C1C6AC6F9E5A}</Project>
       <Name>ExtensionsCommands</Name>
@@ -178,8 +174,11 @@
     <Reference Include="CommandInterfaces">
       <HintPath>..\CommandInterfaces\bin\Debug\CommandInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="DTOInterfaces">
-      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    <Reference Include="DataTransformationImplementation">
+      <HintPath>..\DataTransformationImplementation\bin\Debug\DataTransformationImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="DataTransformationInterfaces">
+      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="InMemoryStorageInterfaces">
       <HintPath>..\InMemoryStorage\bin\Debug\InMemoryStorageInterfaces.dll</HintPath>

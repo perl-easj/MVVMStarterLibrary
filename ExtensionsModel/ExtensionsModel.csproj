@@ -117,14 +117,6 @@
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBOInterfaces\DBOInterfaces.csproj">
-      <Project>{5615cc64-eb1f-41d1-b331-bcc0e8b28c21}</Project>
-      <Name>DBOInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DTOImplementation\DTOImplementation.csproj">
-      <Project>{7E8D829E-E76B-4D7D-80FD-A05842812975}</Project>
-      <Name>DTOImplementation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FilePersistency\FileJSON.csproj">
       <Project>{4427ead7-0561-44c0-9294-2f4cde6cc9de}</Project>
       <Name>FileJSON</Name>
@@ -139,8 +131,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DTOInterfaces">
-      <HintPath>..\DTOInterfaces\bin\Debug\DTOInterfaces.dll</HintPath>
+    <Reference Include="DataTransformationImplementation">
+      <HintPath>..\DataTransformationImplementation\bin\Debug\DataTransformationImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="DataTransformationInterfaces">
+      <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="PersistencyImplementation">
       <HintPath>..\PersistencyImplementation\bin\Debug\PersistencyImplementation.dll</HintPath>
