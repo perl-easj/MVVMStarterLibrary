@@ -110,7 +110,8 @@
     <Compile Include="Implementation\ClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
     <Compile Include="Implementation\PersistentCollection.cs" />
-    <Compile Include="Implementation\PersistentCollectionNoDTO.cs" />
+    <Compile Include="Implementation\PersistentCollectionNoTransformation.cs" />
+    <Compile Include="Implementation\PersistentCollectionWithTransformation.cs" />
     <Compile Include="Implementation\WebAPIPersistableCatalog.cs" />
     <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,17 +20,18 @@ namespace Filtering.Implementation
         }
 
         /// <summary>
-        /// Add a single filter to the filter collection. An exception
-        /// is thrown if the filter is empty or already exists.
+        /// Add a single filter to the filter collection. 
+        /// An exception is thrown if the filter is empty 
+        /// or already exists.
         /// </summary>
         /// <param name="filter">
         /// Filter to add.
         /// </param>
-        public void AddFilter(IFilter<T> filter)
+        public void Add(IFilter<T> filter)
         {
             if (filter == null || _filters.ContainsKey(filter.ID))
             {
-                throw new ArgumentException(nameof(AddFilter));
+                throw new ArgumentException(nameof(Add));
             }
 
             _filters.Add(filter.ID, filter);
@@ -42,14 +43,14 @@ namespace Filtering.Implementation
         /// <param name="filterID">
         /// Identifier for filter to remove.
         /// </param>
-        public void RemoveFilter(string filterID)
+        public void Remove(string filterID)
         {
             _filters.Remove(filterID);
         }
 
         /// <summary>
-        /// Retrieve the filter matching the given ID. An exception is
-        /// thrown if no filter matches the ID.
+        /// Retrieve the filter matching the given ID. 
+        /// An exception is thrown if no filter matches the ID.
         /// </summary>
         /// <param name="filterID">
         /// ID for filter to retrieve
@@ -57,11 +58,11 @@ namespace Filtering.Implementation
         /// <returns>
         /// Filter matching the given ID.
         /// </returns>
-        public IFilter<T> GetFilter(string filterID)
+        public IFilter<T> Get(string filterID)
         {
             if (!_filters.ContainsKey(filterID))
             {
-                throw new ArgumentException(nameof(GetFilter));
+                throw new ArgumentException(nameof(Get));
             }
 
             return _filters[filterID];
@@ -77,7 +78,7 @@ namespace Filtering.Implementation
         /// <returns>
         /// List of objects that passed all filters.
         /// </returns>
-        public List<T> FilterList(List<T> list)
+        public List<T> Apply(List<T> list)
         {
             return list.FindAll(SatisfiesAll);
         }

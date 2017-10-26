@@ -10,12 +10,12 @@
     public interface IFilterService<T>
     {
         /// <summary>
-        /// Create a filter collection with the given ID.
+        /// Adds a filter collection with the given ID.
         /// </summary>
         /// <param name="filterCollId">
         /// Filter collection identifier
         /// </param>
-        void CreateFilterCollection(string filterCollId);
+        void Add(string filterCollId);
 
         /// <summary>
         /// Remove the filter collection with the given ID.
@@ -23,14 +23,14 @@
         /// <param name="filterCollId">
         /// Filter collection identifier
         /// </param>
-        void RemoveFilterCollection(string filterCollId);
+        void Remove(string filterCollId);
 
         /// <summary>
-        /// Retrieve the filter collection with the given ID.
+        /// Gets the filter collection with the given ID.
         /// </summary>
         /// <param name="filterCollId">
         /// Filter collection identifier
         /// </param>
-        IFilterCollection<T> GetFilterCollection(string filterCollId);
+        IFilterCollection<T> Get(string filterCollId);
     }
 }

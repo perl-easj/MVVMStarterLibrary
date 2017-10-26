@@ -4,13 +4,13 @@ using Images.Interfaces;
 namespace Images.Implementation
 {
     /// <summary>
-    /// Implementation of the TaggedImage interface (we assume that 
-    /// all images are tagged).
+    /// Implementation of the TaggedImage interface 
+    /// (we assume that all images are tagged).
     /// </summary>
-    public class Image : ITaggedImage
+    public class TaggedImage : ITaggedImage
     {
         #region Constructor
-        public Image(string description, string source)
+        public TaggedImage(string description, string source)
         {
             Description = description;
             Source = source;
@@ -25,8 +25,8 @@ namespace Images.Implementation
         public int Key { get; set; }
 
         /// <summary>
-        /// Source for the image. This could be a path to a file,
-        /// or a URL.
+        /// Source for the image. This could be a 
+        /// path to a file, or a URL.
         /// </summary>
         public string Source { get; }
 
@@ -54,13 +54,15 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Checks if a given tag is part of the set of tags.
+        /// Checks if a given tag is part of 
+        /// the set of tags.
         /// </summary>
         /// <param name="tag">
         /// Tag to check.
         /// </param>
         /// <returns>
-        /// True if given tag is part of the set of tags, otherwise false.
+        /// True if given tag is part of the 
+        /// set of tags, otherwise false.
         /// </returns>
         public bool ContainsTag(string tag)
         {
@@ -68,14 +70,15 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Checks if at least one of the given tags is part of the set of tags.
+        /// Checks if at least one of the given 
+        /// tags is part of the set of tags.
         /// </summary>
         /// <param name="tags">
         /// Tags to check.
         /// </param>
         /// <returns>
-        /// True if at least one of the given tags is part of the set of tags, 
-        /// otherwise false.
+        /// True if at least one of the given tags 
+        /// is part of the set of tags, otherwise false.
         /// </returns>
         public bool ContainsAnyTag(List<string> tags)
         {

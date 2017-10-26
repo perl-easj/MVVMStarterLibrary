@@ -7,10 +7,13 @@ using ViewModel.Interfaces;
 namespace ViewModel.Implementation
 {
     /// <summary>
-    /// Base class for Item ViewModel classes. It is assumed that any Item
-    /// ViewModel object will wrap a DTO. The DTO will be strongly typed, 
-    /// such that DTO-specific properties can be directly accessed for
-    /// implementing the "generic" Item ViewModel properties.
+    /// Base class for Item ViewModel classes. 
+    /// It is assumed that any Item ViewModel 
+    /// object will wrap a transformed data object. 
+    /// The transformed data object will be strongly 
+    /// typed, such that type-specific properties 
+    /// can be directly accessed for implementing the 
+    /// "generic" Item ViewModel properties.
     /// </summary>
     public abstract class ItemViewModelBase<TDO> : 
         TypedTransformedDataWrapper<TDO>, 
@@ -20,8 +23,10 @@ namespace ViewModel.Implementation
     {
         #region Properties (override in model-specific item view model)
         /// <summary>
-        /// Override this property to provide a string description of a DTO. 
-        /// This description is then displayed for each item in the Master part of the view.
+        /// Override this property to provide a string 
+        /// description of a transformed data object. 
+        /// This description is then displayed for each 
+        /// item in the Master part of the view.
         /// </summary>
         public virtual string Description
         {
@@ -30,8 +35,10 @@ namespace ViewModel.Implementation
         }
 
         /// <summary>
-        /// Override this property to provide an image source for a DTO. 
-        /// This image is then displayed for each item in the Master part of the view.
+        /// Override this property to provide an image
+        /// source for a transformed data object. 
+        /// This image is then displayed for each  
+        /// item in the Master part of the view.
         /// </summary>
         public virtual string ImageSource
         {
@@ -43,7 +50,8 @@ namespace ViewModel.Implementation
         }
 
         /// <summary>
-        /// Override this property to provide a font size for the description. 
+        /// Override this property to provide a 
+        /// font size for the description. 
         /// </summary>
         public virtual int FontSize
         {
@@ -51,7 +59,8 @@ namespace ViewModel.Implementation
         }
 
         /// <summary>
-        /// Override this property to define the visibility of the image part
+        /// Override this property to define 
+        /// the visibility of the image part
         /// </summary>
         public virtual Visibility ImageVisibility
         {
@@ -59,7 +68,8 @@ namespace ViewModel.Implementation
         }
 
         /// <summary>
-        /// Override this property to define the size of the image part
+        /// Override this property to define 
+        /// the size of the image part
         /// </summary>
         public virtual int ImageSize
         {

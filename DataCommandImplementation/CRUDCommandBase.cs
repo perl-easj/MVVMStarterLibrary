@@ -9,9 +9,10 @@ namespace DataCommand.Implementation
     /// Base class for commands performing CRUD 
     /// (Create, Read, Update, Delete) operations.
     /// It is assumed that the commands use a corresponding
-    /// controller, which operates on DTOs, obtains the 
-    /// source object from an IDTOWrapper, and performs 
-    /// the operation itself on an IDTOCOllection.
+    /// controller, which operates on transformed data, obtains
+    /// the source object from a transformed data wrapper, 
+    /// and performs the operation itself on a collection
+    /// implementing the ITransformedDataCollection interface.
     /// </summary>
     public abstract class CRUDCommandBase : INotifiableCommand 
     {

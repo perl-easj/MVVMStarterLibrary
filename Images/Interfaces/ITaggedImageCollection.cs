@@ -9,18 +9,18 @@ namespace Images.Interfaces
     public interface ITaggedImageCollection : IImageCollection
     {
         /// <summary>
-        /// Retrieves all Image objects tagged with the given tag.
+        /// Retrieves all image objects tagged with the given tag.
         /// </summary>
         /// <param name="tag">
-        /// Tag used for selecting Image objects.
+        /// Tag used for selecting image objects.
         /// </param>
         /// <returns>
-        /// List of Image objects tagged with the given tag.
+        /// List of image objects tagged with the given tag.
         /// </returns>
         List<IImage> AllWithTag(string tag);
 
         /// <summary>
-        /// Returns the union of all tags for all Image objects.
+        /// Returns the union of all tags for all image objects.
         /// </summary>
         List<string> AllTags { get; }
     }

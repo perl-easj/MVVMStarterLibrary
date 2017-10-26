@@ -5,8 +5,9 @@ using ControlState.Interfaces;
 namespace ControlState.Implementation
 {
     /// <summary>
-    /// Implementation of the IControlStateService interface. The implementation
-    /// does not make any assumptions about specific controls or view states .
+    /// Implementation of the IControlStateService interface. 
+    /// The implementation does not make any assumptions 
+    /// about specific controls or view states.
     /// </summary>
     public class ControlStateService : IControlStateService
     {
@@ -38,7 +39,7 @@ namespace ControlState.Implementation
 
         /// <summary>
         /// Returns Dictionary of all control states corresponding
-        /// to the given view state. An exception is throw if the
+        /// to the given view state. An exception is thrown if the
         /// given view state is unknown.
         /// </summary>
         /// <param name="state">

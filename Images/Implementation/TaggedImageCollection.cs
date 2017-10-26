@@ -11,13 +11,13 @@ namespace Images.Implementation
     public class TaggedImageCollection : ImageCollection, ITaggedImageCollection
     {
         /// <summary>
-        /// Retrieves all Image objects tagged with the given tag.
+        /// Retrieves all image objects tagged with the given tag.
         /// </summary>
         /// <param name="tag">
-        /// Tag used for selecting Image objects.
+        /// Tag used for selecting image objects.
         /// </param>
         /// <returns>
-        /// List of Image objects tagged with the given tag.
+        /// List of image objects tagged with the given tag.
         /// </returns>
         public List<IImage> AllWithTag(string tag)
         {
@@ -35,7 +35,7 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Returns the union of all tags for all Image objects.
+        /// Returns the union of all tags for all image objects.
         /// </summary>
         public List<string> AllTags
         {

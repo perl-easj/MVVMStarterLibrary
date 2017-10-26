@@ -8,9 +8,10 @@ using Security.Implementation;
 namespace ExtensionsServices.Implementation
 {
     /// <summary>
-    /// This class is a ViewModel class for the Security service. If you 
-    /// wish to include a GUI for the Security service in an application, 
-    /// you can bind the view controls to properties in this class.
+    /// This class is a ViewModel class for the Security service. 
+    /// If you wish to include a GUI for the Security service in 
+    /// an application, you can bind the view controls to properties 
+    /// in this class.
     /// </summary>
     public class SecurityViewModel : INotifyPropertyChanged
     {
@@ -26,7 +27,8 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property for detecting visibility in GUI of login service
+        /// Property for detecting visibility in 
+        /// GUI of login service
         /// </summary>
         public virtual Visibility LoginVisible
         {
@@ -34,8 +36,9 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property for tracking the currently entered username. Changing the username
-        /// may cause changes in the can-execute state of the Login command.
+        /// Property for tracking the currently entered username. 
+        /// Changing the username may cause changes in the 
+        /// can-execute state of the Login command.
         /// </summary>
         public string Username
         {
@@ -50,8 +53,9 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property for tracking the currently entered password. Changing the password
-        /// may cause changes in the can-execute state of the Login command.
+        /// Property for tracking the currently entered password. 
+        /// Changing the password may cause changes in the 
+        /// can-execute state of the Login command.
         /// </summary>
         public string Password
         {
@@ -79,8 +83,9 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// DoLogin will only be executable when username and password are valid.
-        /// It will therefore just change the status
+        /// DoLogin will only be executable when username 
+        /// and password are valid. It will therefore just 
+        /// change the status
         /// </summary>
         public void DoLogin()
         {
@@ -88,8 +93,8 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// CanLogin will only return true when the entered username/password
-        /// combination is valid.
+        /// CanLogin will only return true when the entered 
+        /// username/password combination is valid.
         /// </summary>
         /// <returns></returns>
         public bool CanLogin()

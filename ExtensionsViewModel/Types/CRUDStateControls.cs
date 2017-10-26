@@ -1,8 +1,9 @@
 ﻿namespace ExtensionsViewModel.Types
 {
     /// <summary>
-    /// Valid CRUD state control identifiers. To be used when binding to
-    /// control state and control content providers.
+    /// Valid CRUD state control identifiers. 
+    /// To be used when binding to control 
+    /// state and control content providers.
     /// </summary>
     public class CRUDStateControls
     {

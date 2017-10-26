@@ -1,7 +1,7 @@
 ﻿namespace Images.Interfaces
 {
     /// <summary>
-    /// Interface for a image managed internally in the application.
+    /// Interface for an image managed internally in the application.
     /// </summary>
     public interface IImage
     {
@@ -11,8 +11,8 @@
         int Key { get; set; }
 
         /// <summary>
-        /// Source for the image. This could be a path to a file,
-        /// or a URL.
+        /// Source for the image. This could be a 
+        /// path to a file, or a URL.
         /// </summary>
         string Source { get; }
 

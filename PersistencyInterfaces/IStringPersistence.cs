@@ -3,8 +3,10 @@
 namespace Persistency.Interfaces
 {
     /// <summary>
-    /// Interface for loading/saving a string to/from a persistent source.
-    /// It is assumed that the source itself can be identified by a string.
+    /// Interface for loading/saving a 
+    /// string to/from a persistent source.
+    /// It is assumed that the source itself 
+    /// can be identified by a string.
     /// </summary>
     public interface IStringPersistence
     {

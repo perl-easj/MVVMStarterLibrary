@@ -4,8 +4,8 @@ using Security.Types;
 namespace Security.Interfaces
 {
     /// <summary>
-    /// Interface for managing access types to specific
-    /// application elements.
+    /// Interface for managing access types to 
+    /// specific application elements.
     /// </summary>
     public interface IItemAccess
     {

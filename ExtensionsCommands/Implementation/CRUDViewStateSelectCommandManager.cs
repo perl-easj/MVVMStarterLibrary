@@ -6,8 +6,10 @@ using ExtensionsCommands.Types;
 namespace ExtensionsCommands.Implementation
 {
     /// <summary>
-    /// Command manager for selecting a view state through a command.
-    /// Needs a reference to an object implementing IViewStateService.
+    /// Command manager for selecting a view state 
+    /// through a command.
+    /// A manager of this type needs a reference 
+    /// to an object implementing IViewStateService.
     /// </summary>
     public class CRUDViewStateSelectCommandManager : CommandManager
     {

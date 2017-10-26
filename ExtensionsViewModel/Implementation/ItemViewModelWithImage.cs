@@ -8,8 +8,9 @@ using ViewModel.Implementation;
 namespace ExtensionsViewModel.Implementation
 {
     /// <summary>
-    /// Base class for an Item ViewModel class containing a image, 
-    /// provided by the Images service. The image is thus identified 
+    /// Base class for an Item ViewModel class 
+    /// containing a image, provided by the Images 
+    /// service. The image is thus identified 
     /// by a numeric key (ImageKey).
     /// </summary>
     public abstract class ItemViewModelWithImage<TDO> : ItemViewModelBase<TDO> 
@@ -19,12 +20,13 @@ namespace ExtensionsViewModel.Implementation
 
         protected ItemViewModelWithImage(ITransformedData obj) : base(obj)
         {
-            _notFoundImage = new Image("Image not found", ServiceProvider.Images.GetAppImageSource(AppImageType.NotFound));
+            _notFoundImage = new TaggedImage("Image not found", ServiceProvider.Images.GetAppImageSource(AppImageType.NotFound));
         }
 
         /// <summary>
-        /// If no Image with a matching key can be found, a well-defined 
-        /// fall-back Image is used instead.
+        /// If no image with a matching key can 
+        /// be found, a well-defined fall-back 
+        /// image is used instead.
         /// </summary>
         public override string ImageSource
         {
@@ -32,8 +34,10 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Specific implementation of the Key property is done in sub-classes,
-        /// since the specific source for the key value may vary.
+        /// Specific implementation of the Key 
+        /// property is done in sub-classes,
+        /// since the specific source for the 
+        /// key value may vary.
         /// </summary>
         public abstract int ImageKey { get; }
     }

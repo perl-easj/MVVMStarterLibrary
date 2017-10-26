@@ -1,8 +1,9 @@
 ﻿namespace Images.Types
 {
     /// <summary>
-    /// Types of application images, i.e. images used for visually
-    /// identifying certain generic application functionalities.
+    /// Types of application images, i.e. images 
+    /// used for visually identifying certain generic 
+    /// application functionalities.
     /// </summary>
     public enum AppImageType
     {

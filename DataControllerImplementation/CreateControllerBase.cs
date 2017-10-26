@@ -12,6 +12,10 @@ namespace DataController.Implementation
         {
         }
 
+        /// <summary>
+        /// Inserts the retrieved transformed data object
+        /// into the target collection.
+        /// </summary>
         public override void Run()
         {
             Target.InsertTransformed(Source.DataObject);

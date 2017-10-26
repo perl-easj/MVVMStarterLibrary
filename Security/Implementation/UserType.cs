@@ -19,8 +19,9 @@ namespace Security.Implementation
 
         #region Methods
         /// <summary>
-        /// Add a user type to the set of valid user types. If the user
-        /// type has already been added, an exception is thrown.
+        /// Add a user type to the set of valid user types. 
+        /// If the user type has already been added, 
+        /// an exception is thrown.
         /// </summary>
         /// <param name="userType">
         /// User type to add.
@@ -36,8 +37,9 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Add an access right for a specific user type. If an unknown user type
-        /// is specified, an exception is thrown.
+        /// Add an access right for a specific user type. 
+        /// If an unknown user type is specified, an 
+        /// exception is thrown.
         /// </summary>
         /// <param name="userType">
         /// User type for which an access right is added.
@@ -81,9 +83,10 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Returns whether or not a given usertype has a given access right
-        /// to a given application element. If an unknown user type is
-        /// specified, an exception is thrown.
+        /// Returns whether or not a given usertype has 
+        /// a given access right to a given application 
+        /// element. If an unknown user type is specified, 
+        /// an exception is thrown.
         /// </summary>
         /// <param name="userType">
         /// User type

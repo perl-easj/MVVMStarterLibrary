@@ -5,7 +5,8 @@ using InMemoryStorage.Interfaces;
 namespace InMemoryStorage.Implementation
 {
     /// <summary>
-    /// Implementation of the interface for an in-memory collection
+    /// Implementation of the interface for an in-memory 
+    /// collection, typically of domain objects
     /// </summary>
     /// <typeparam name="T">
     /// Type of stored objects. Type must inherit from IStorable.

@@ -9,7 +9,8 @@ namespace Security.Interfaces
     public interface ISecurityService
     {
         /// <summary>
-        /// Returns whether the Login functionality is used at all.
+        /// Returns whether the Login functionality 
+        /// is used at all.
         /// </summary>
         bool UseLogin { get; set; }
 
@@ -33,8 +34,9 @@ namespace Security.Interfaces
         void AddUser(string userName, string password, string userType);
 
         /// <summary>
-        /// Checks if given user name and password match, i.e. is the given
-        /// password the correct password for this user.
+        /// Checks if given user name and password match, 
+        /// i.e. is the given password the correct password 
+        /// for this user.
         /// </summary>
         /// <param name="userName">
         /// Name of user.
@@ -71,7 +73,8 @@ namespace Security.Interfaces
         void AddItemAccessTypes(string itemName, List<AccessType> accessTypes);
 
         /// <summary>
-        /// Add an access right to the user type, for a given application element.
+        /// Add an access right to the user type, 
+        /// for a given application element.
         /// </summary>
         /// <param name="userType">
         /// User type for which an access right is added.
@@ -86,7 +89,8 @@ namespace Security.Interfaces
         void AddUserAccessRight(string userType, string itemName, AccessType accessType);
 
         /// <summary>
-        /// Add a set of access rights to the user type, for a given application element.
+        /// Add a set of access rights to the user type, 
+        /// for a given application element.
         /// </summary>
         /// <param name="userType">
         /// User type for which access rights are added.
@@ -101,8 +105,8 @@ namespace Security.Interfaces
         void AddUserAccessRights(string userType, string itemName, List<AccessType> accessTypes);
 
         /// <summary>
-        /// Returns whether or not the current user has access to
-        /// the given application element.
+        /// Returns whether or not the current user has 
+        /// access to the given application element.
         /// </summary>
         /// <param name="itemName">
         /// Application element identifier.
@@ -110,8 +114,8 @@ namespace Security.Interfaces
         bool IsActionAllowedForCurrentUser(string itemName);
 
         /// <summary>
-        /// Returns whether or not the given user has access to
-        /// the given application element.
+        /// Returns whether or not the given user has 
+        /// access to the given application element.
         /// </summary>
         /// <param name="userName">
         /// User name for which to check access rights.

@@ -6,9 +6,11 @@ namespace DataController.Implementation
     /// <summary>
     /// Base class for controllers performing CRUD 
     /// (Create, Read, Update, Delete) operations.
-    /// It is assumed that the controllers operate on DTOs,
-    /// obtain the source object from an IDTOWrapper, and
-    /// perform the operation itself on an IDTOCOllection.
+    /// It is assumed that the controllers operate
+    /// on transformed data objects, obtain the source 
+    /// object from a transformed data object wrapper, 
+    /// and perform the operation itself on implementation 
+    /// of ITransformedDataCollection.
     /// </summary>
     public abstract class CRUDControllerBase : ISimpleController 
     {

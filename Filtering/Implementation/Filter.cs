@@ -56,8 +56,9 @@ namespace Filtering.Implementation
         }
 
         /// <summary>
-        /// The method acting as the actual filter: returns true
-        /// if the given object "passes" the filter, otherwise false.
+        /// The method acting as the actual filter: 
+        /// returns true if the given object "passes" 
+        /// the filter, otherwise false.
         /// </summary>
         /// <param name="obj">
         /// Object to which the filter condition is applied.

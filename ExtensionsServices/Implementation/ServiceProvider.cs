@@ -6,9 +6,10 @@ using Security.Interfaces;
 namespace ExtensionsServices.Implementation
 {
     /// <summary>
-    /// The ServiceProvider is simply intended to hold together the various
-    /// services included in a project. The current version only holds the
-    /// Image and Security service.
+    /// The ServiceProvider is simply intended 
+    /// to hold together the various services 
+    /// included in a project. The current version 
+    /// only holds the Image and Security service.
     /// </summary>
     public class ServiceProvider
     {

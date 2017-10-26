@@ -6,8 +6,10 @@ using Persistency.Interfaces;
 namespace FilePersistency.Implementation
 {
     /// <summary>
-    /// File-specific implementation of the IPersistentSource interface.
-    /// Ties a IStringPersistence implementation to a IDataConverter implementation.
+    /// File-specific implementation of the 
+    /// IPersistentSource interface. Ties a 
+    /// IStringPersistence implementation to a 
+    /// IDataConverter implementation.
     /// </summary>
     /// <typeparam name="T">
     /// Type of objects to load/save.
@@ -19,8 +21,9 @@ namespace FilePersistency.Implementation
         private IDataConverter<T> _dataConverter;
 
         /// <summary>
-        /// If nothing else is specified, data is stored in a text file 
-        /// called (NameOfClass)Model.dat, for instance CarModel.dat.
+        /// If nothing else is specified, data is stored 
+        /// in a text file  called (NameOfClass)Model.dat, 
+        /// for instance CarModel.dat.
         /// </summary>
         public FileSource(IStringPersistence stringPersistence, IDataConverter<T> dataConverter, string fileSuffix = "Model.dat")
         {
@@ -53,21 +56,33 @@ namespace FilePersistency.Implementation
             return _stringPersistence.SaveAsync(_fileName, data);
         }
 
+        /// <summary>
+        /// File-based persistence does not support this operation.
+        /// </summary>
         public Task Create(T obj)
         {
             throw new NotSupportedException("Create not supported for File Persistency");
         }
 
+        /// <summary>
+        /// File-based persistence does not support this operation.
+        /// </summary>
         public Task<T> Read(int key)
         {
             throw new NotSupportedException("Read not supported for File Persistency");
         }
 
+        /// <summary>
+        /// File-based persistence does not support this operation.
+        /// </summary>
         public Task Update(int key, T obj)
         {
             throw new NotSupportedException("Update not supported for File Persistency");
         }
 
+        /// <summary>
+        /// File-based persistence does not support this operation.
+        /// </summary>
         public Task Delete(int key)
         {
             throw new NotSupportedException("Delete not supported for File Persistency");

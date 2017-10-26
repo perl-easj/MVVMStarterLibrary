@@ -7,9 +7,10 @@ using Images.Interfaces;
 namespace ExtensionsServices.Implementation
 {
     /// <summary>
-    /// This class is a ViewModel class for the Image service. If you wish
-    /// to include a GUI for the Image service in an application, you can
-    /// bind the view controls to properties in this class.
+    /// This class is a ViewModel class for the Image service. 
+    /// If you wish to include a GUI for the Image service 
+    /// in an application, you can bind the view controls to 
+    /// properties in this class.
     /// </summary>
     public class ImageViewModel : INotifyPropertyChanged
     {
@@ -23,8 +24,9 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Returns either the entire set of images available (if no tag has
-        /// been selected), or the images matching the selected tag.
+        /// Returns either the entire set of images 
+        /// available (if no tag has been selected), 
+        /// or the images matching the selected tag.
         /// </summary>
         public ObservableCollection<IImage> ImageCollection
         {
@@ -60,7 +62,8 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property returning the description for the currently selected image.
+        /// Property returning the description for the 
+        /// currently selected image.
         /// </summary>
         public string ImageSelectedDescription
         {
@@ -68,7 +71,8 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property returning the tags for the currently selected image.
+        /// Property returning the tags for the 
+        /// currently selected image.
         /// </summary>
         public List<string> ImageSelectedTags
         {
@@ -76,10 +80,12 @@ namespace ExtensionsServices.Implementation
         }
 
         /// <summary>
-        /// Property returning the entire set of tags found on the 
-        /// set of available images. The entry "(All)" is added to
-        /// enable a selection indicating that all tags are selected.
-        /// This extra entry will have index 0 (zero), see ImageCollection.
+        /// Property returning the entire set of tags 
+        /// found on the set of available images. 
+        /// The entry "(All)" is added to enable a 
+        /// selection indicating that all tags are selected.
+        /// This extra entry will have index 0 (zero), 
+        /// see ImageCollection.
         /// </summary>
         public List<string> AllTags
         {

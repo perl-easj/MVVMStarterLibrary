@@ -7,8 +7,10 @@ using ViewState.Interfaces;
 namespace ExtensionsCommands.Implementation
 {
     /// <summary>
-    /// CRUD Command manager where CanExecute predicates depend on view state.
-    /// Needs a reference to an object implementing IHasViewState.
+    /// CRUD Command manager where CanExecute 
+    /// predicates depend on view state.
+    /// A manager of this type needs a reference 
+    /// to an object implementing IHasViewState.
     /// </summary>
     public class CRUDCommandManagerViewStateDependent : CRUDCommandManager
     {

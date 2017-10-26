@@ -5,9 +5,10 @@ using ViewState.Interfaces;
 namespace ViewState.Implementation
 {
     /// <summary>
-    /// Implementation of IViewStateService interface. A ViewStateService
-    /// is created with a set of valid view states, against which any
-    /// subsequent changes in view state are validated.
+    /// Implementation of IViewStateService interface. 
+    /// A ViewStateService is created with a set of 
+    /// valid view states, against which any subsequent 
+    /// changes in view state are validated.
     /// </summary>
     public class ViewStateService : IViewStateService
     {
@@ -26,8 +27,9 @@ namespace ViewState.Implementation
 
         #region Properties
         /// <summary>
-        /// View state of object. If an attempt is made to set the view state
-        /// to an unknown value, an exception is thrown. Subscribers are notified
+        /// View state of object. If an attempt is made 
+        /// to set the view state to an unknown value, 
+        /// an exception is thrown. Subscribers are notified
         /// if the view state changes.
         /// </summary>
         public string ViewState

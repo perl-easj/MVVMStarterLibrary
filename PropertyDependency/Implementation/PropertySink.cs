@@ -7,16 +7,21 @@ using PropertyDependency.Interfaces;
 namespace PropertyDependency.Implementation
 {
     /// <summary>
-    /// Contains functionality for classes which are "property sinks",
-    /// i.e. contains properties/commands which are dependent on properties 
-    /// from other classes. These dependencies can in general be many-to-many,
-    /// so lists of dependencies are maintained for each property.
+    /// Contains functionality for classes which 
+    /// are "property sinks", i.e. contains 
+    /// properties/commands which are dependent on 
+    /// properties from other classes. These dependencies 
+    /// can in general be many-to-many, so lists of 
+    /// dependencies are maintained for each property.
     /// 
     /// A property sink object can:
-    /// 1) Specifiy properties in other objects on which properties in the object depends.
-    /// 2) Specifiy properties in other objects on which commands in the object depends.
-    /// 3) Register its own handler for property changes in the property sources
-    ///    on which the object depends.
+    /// 1) Specifiy properties in other objects on 
+    ///    which properties in the object depends.
+    /// 2) Specifiy properties in other objects on 
+    ///    which commands in the object depends.
+    /// 3) Register its own handler for property 
+    ///    changes in the property sources on which 
+    ///    the object depends.
     /// </summary>
     public class PropertySink : IPropertySink, INotifyPropertyChanged
     {
@@ -50,8 +55,8 @@ namespace PropertyDependency.Implementation
 
         #region Public methods
         /// <summary>
-        /// Register a property that may be affected by a change
-        /// in the given property
+        /// Register a property that may be affected 
+        /// by a change in the given property
         /// </summary>
         /// <param name="propertyName">
         /// Name of property.
@@ -70,8 +75,8 @@ namespace PropertyDependency.Implementation
         }
      
         /// <summary>
-        /// Register a command that may be affected by a change
-        /// in the given property.
+        /// Register a command that may be affected 
+        /// by a change in the given property.
         /// </summary>
         /// <param name="propertyName">
         /// Name of property.
@@ -92,9 +97,10 @@ namespace PropertyDependency.Implementation
 
         #region Private methods
         /// <summary>
-        /// Registers the object at all of the specified property sources, such that
-        /// the OnSourcePropertyChanged method will be called whenever one of the
-        /// properties in the property sources are changed.
+        /// Registers the object at all of the specified property 
+        /// sources, such that the OnSourcePropertyChanged 
+        /// method will be called whenever one of the properties 
+        /// in the property sources are changed.
         /// </summary>
         private void RegisterSelfAtPropertySources(List<IPropertySource> propertySources)
         {
@@ -105,7 +111,8 @@ namespace PropertyDependency.Implementation
         }
 
         /// <summary>
-        /// Handler for changes to source properties. Property source objects will call
+        /// Handler for changes to source properties. 
+        /// Property source objects will call
         /// this method when their properties change.
         /// </summary>
         private void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -121,7 +128,8 @@ namespace PropertyDependency.Implementation
         }
 
         /// <summary>
-        /// Handler for notifying command objects that depend on other properties.
+        /// Handler for notifying command objects 
+        /// that depend on other properties.
         /// </summary>
         private void NotifyCommands([CallerMemberName] string propertyName = null)
         {

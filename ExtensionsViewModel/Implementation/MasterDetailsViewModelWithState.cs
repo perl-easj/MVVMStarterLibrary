@@ -11,7 +11,8 @@ using ViewState.Interfaces;
 namespace ExtensionsViewModel.Implementation
 {
     /// <summary>
-    /// This class adds several functionalities to the Master/Details base class.
+    /// This class adds several functionalities to the 
+    /// Master/Details base class.
     /// 1) View state service
     /// 2) Control state service
     /// 3) Data commands (commands for invoking CRUD operations)
@@ -44,7 +45,6 @@ namespace ExtensionsViewModel.Implementation
             ITransformedDataCollection dtoCollection)
             : base(viewModelFactory, dtoCollection)
         {
-            // Sanity checks, to avoid null-checking later.
             _collection = collection ?? throw new ArgumentNullException(nameof(MasterDetailsViewModelWithState));
             _mediator = new MasterDetailsViewModelWithStateMediator(this, viewModelFactory);
 
@@ -56,8 +56,8 @@ namespace ExtensionsViewModel.Implementation
             // Let Mediator be notified when item selection changes.
             ItemSelectionChanged += _mediator.OnItemSelectionChanged;
 
-            // These are set in sub-classes, since they involve references to the
-            // Master/Details ViewModel object itself.
+            // These instance fields are set in sub-classes, since they involve 
+            // references to the Master/Details ViewModel object itself.
             _controlStateService = null;
             _viewStateService = null;
             _dataCommands = null;

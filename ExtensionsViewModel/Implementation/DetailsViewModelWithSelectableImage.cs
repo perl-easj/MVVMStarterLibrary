@@ -7,10 +7,11 @@ using ViewModel.Implementation;
 namespace ExtensionsViewModel.Implementation
 {
     /// <summary>
-    /// Base class for a Details ViewModel class containing a image, 
-    /// which can be selected from a set of Image objects. The Image
-    /// objects are provided by the Images service. The image is thus 
-    /// identified by a numeric key (ImageKey).
+    /// Base class for a Details ViewModel class 
+    /// containing an image, which can be selected 
+    /// from a set of image objects. The image
+    /// objects are provided by the Images service. 
+    /// The image is identified by a numeric key (ImageKey).
     /// </summary>
     public abstract class DetailsViewModelWithSelectableImage<TDO> : DetailsViewModelBase<TDO> 
         where TDO : class
@@ -24,8 +25,10 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Gets the Image objects corresponding to the specified tag. The Images
-        /// service must be populated with Image objects matching the specified tag.
+        /// Gets the image objects corresponding to 
+        /// the specified tag. The Images service must 
+        /// be populated with image objects matching 
+        /// the specified tag.
         /// </summary>
         public ObservableCollection<IImage> ImageCollection
         {
@@ -33,7 +36,7 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Tracks the Image object currently selected.
+        /// Tracks the image object currently selected.
         /// </summary>
         public IImage ImageSelected
         {
@@ -50,8 +53,9 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Specific implementation of the Key property is done in sub-classes,
-        /// since the specific source for the key value may vary.
+        /// Specific implementation of the Key property 
+        /// is done in sub-classes, since the specific 
+        /// source for the key value may vary.
         /// </summary>
         public abstract int ImageKey { get; set; }
     }

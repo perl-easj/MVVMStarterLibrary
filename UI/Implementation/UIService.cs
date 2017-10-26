@@ -12,7 +12,8 @@ namespace UI.Implementation
     public class UIService
     {
         /// <summary>
-        /// Simple class for wrapping an action into an Invoke method.
+        /// Simple class for wrapping an action 
+        /// into an Invoke method.
         /// </summary>
         public class ActionWrapper
         {
@@ -30,8 +31,9 @@ namespace UI.Implementation
         }
 
         /// <summary>
-        /// Present message; user can click on a Button with text "Undo", 
-        /// which will undo the action leading up to presentation of the message.
+        /// Present message; user can click on a Button 
+        /// with text "Undo", which will undo the action 
+        /// leading up to presentation of the message.
         /// </summary>
         /// <param name="message">
         /// Message to user
@@ -45,8 +47,9 @@ namespace UI.Implementation
         }
 
         /// <summary>
-        /// Present message; user can just click on a Button with the given text, which will
-        /// close the dialog without any further action.
+        /// Present message; user can only click on a Button 
+        /// with the given text, which will close the dialog 
+        /// without any further action.
         /// </summary>
         /// <param name="message">
         /// Message to user
@@ -60,8 +63,9 @@ namespace UI.Implementation
         }
 
         /// <summary>
-        /// Present message; user can click on a Button with text "OK", which will
-        /// invoke the action defined by the caller.
+        /// Present message; user can click on a Button 
+        /// with text "OK", which will invoke the action 
+        /// defined by the caller.
         /// </summary>
         /// <param name="message">
         /// Message to user
@@ -75,8 +79,9 @@ namespace UI.Implementation
         }
 
         /// <summary>
-        /// Present message; user can click on a Button with the given text, which will
-        /// invoke the action defined by the caller.
+        /// Present message; user can click on a Button 
+        /// with the given text, which will invoke the 
+        /// action defined by the caller.
         /// </summary>
         /// <param name="message">
         /// Message to user
@@ -95,9 +100,11 @@ namespace UI.Implementation
         }
 
         /// <summary>
-        /// Present message; user can click on a Button with the given text, which will
-        /// invoke the action defined by the caller, or can click "Cancel", which will
-        /// close the dialog without any actions.
+        /// Present message; user can click on a Button 
+        /// with the given text, which will invoke the 
+        /// action defined by the caller, or can click 
+        /// "Cancel", which will close the dialog without 
+        /// any actions.
         /// </summary>
         /// <param name="message">
         /// Message to user

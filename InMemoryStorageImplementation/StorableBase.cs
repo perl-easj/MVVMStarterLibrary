@@ -3,7 +3,7 @@
 namespace InMemoryStorage.Implementation
 {
     /// <summary>
-    /// Implementation of IStorable interface
+    /// Implementation of the IStorable interface
     /// </summary>
     public abstract class StorableBase : IStorable
     {

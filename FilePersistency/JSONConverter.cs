@@ -5,10 +5,11 @@ using Persistency.Interfaces;
 namespace FilePersistency.Implementation
 {
     /// <summary>
-    /// JSON-specific implementation of the IDataConverter interface.
-    /// Uses the 3rd-party NewtonSoft JSON package.
+    /// JSON-specific implementation of the 
+    /// IDataConverter interface. Uses the 
+    /// 3rd-party NewtonSoft JSON package.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of objects to convert</typeparam>
     public class JSONConverter<T> : IDataConverter<T>
     {
         /// <summary>

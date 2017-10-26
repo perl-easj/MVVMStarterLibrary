@@ -27,19 +27,21 @@ namespace Images.Interfaces
         /// Tag to check.
         /// </param>
         /// <returns>
-        /// True if given tag is part of the set of tags, otherwise false.
+        /// True if given tag is part of the set of tags, 
+        /// otherwise false.
         /// </returns>
         bool ContainsTag(string tag);
 
         /// <summary>
-        /// Checks if at least one of the given tags is part of the set of tags.
+        /// Checks if at least one of the given tags is 
+        /// part of the set of tags.
         /// </summary>
         /// <param name="tags">
         /// Tags to check.
         /// </param>
         /// <returns>
-        /// True if at least one of the given tags is part of the set of tags, 
-        /// otherwise false.
+        /// True if at least one of the given tags is 
+        /// part of the set of tags, otherwise false.
         /// </returns>
         bool ContainsAnyTag(List<string> tags);
     }

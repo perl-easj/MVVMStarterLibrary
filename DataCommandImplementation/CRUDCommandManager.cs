@@ -15,7 +15,7 @@ namespace DataCommand.Implementation
         /// <summary>
         /// Constructor. Registers commands for Create, Update and Delete.
         /// </summary>
-        /// <param name="source">DTO source for commands</param>
+        /// <param name="source">Data source for commands</param>
         /// <param name="target">Target collection for commands</param>
         protected CRUDCommandManager(ITransformedDataWrapper source, ITransformedDataCollection target)
         {
@@ -35,7 +35,8 @@ namespace DataCommand.Implementation
         }
 
         /// <summary>
-        /// Predicate for Update command (source must provide a DTO). 
+        /// Predicate for Update command 
+        /// (source must provide a transformed data object). 
         /// </summary>
         private bool CanDoUpdate()
         {
@@ -43,7 +44,8 @@ namespace DataCommand.Implementation
         }
 
         /// <summary>
-        /// Predicate for Delete command (source must provide a DTO).
+        /// Predicate for Delete command 
+        /// (source must provide a transformed data object).
         /// </summary>
         private bool CanDoDelete()
         {

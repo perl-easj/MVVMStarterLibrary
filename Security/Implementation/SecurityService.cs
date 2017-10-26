@@ -30,7 +30,8 @@ namespace Security.Implementation
 
         #region Properties
         /// <summary>
-        /// Returns whether the Login functionality is used at all.
+        /// Returns whether the Login functionality 
+        /// is used at all.
         /// </summary>
         public bool UseLogin { get; set; }
 
@@ -40,12 +41,14 @@ namespace Security.Implementation
         public string CurrentUserName { get; set; }
 
         /// <summary>
-        /// Retrieves all registered users, using the user name as key.
+        /// Retrieves all registered users, 
+        /// using the user name as key.
         /// </summary>
         protected Dictionary<string, IUser> Users { get; }
 
         /// <summary>
-        /// Retrieves all registered user types, as an IUserType reference.
+        /// Retrieves all registered user types, 
+        /// as an IUserType reference.
         /// </summary>
         protected IUserType UserTypes
         {
@@ -53,8 +56,8 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Retrieves all registered item access specification, 
-        /// as an IItemAccess reference.
+        /// Retrieves all registered item access 
+        /// specification, as an IItemAccess reference.
         /// </summary>
         protected IItemAccess ItemAccess
         {
@@ -64,7 +67,8 @@ namespace Security.Implementation
 
         #region Methods
         /// <summary>
-        /// Add a new user. If the user has already been added, an exception is thrown.
+        /// Add a new user. If the user has already 
+        /// been added, an exception is thrown.
         /// </summary>
         /// <param name="userName">
         /// User name for new user.
@@ -87,9 +91,10 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Checks if given user name and password match, i.e. is the given
-        /// password the correct password for this user. If no user with the
-        /// given user name has been registered, an exception is thrown.
+        /// Checks if given user name and password match, 
+        /// i.e. is the given password the correct password 
+        /// for this user. If no user with the given user name 
+        /// has been registered, an exception is thrown.
         /// </summary>
         /// <param name="userName">
         /// Name of user.
@@ -143,7 +148,8 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Add an access right to the user type, for a given application element.
+        /// Add an access right to the user type, 
+        /// for a given application element.
         /// </summary>
         /// <param name="userType">
         /// User type for which an access right is added.
@@ -161,7 +167,8 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Add a set of access rights to the user type, for a given application element.
+        /// Add a set of access rights to the user type, 
+        /// for a given application element.
         /// </summary>
         /// <param name="userType">
         /// User type for which access rights are added.
@@ -182,8 +189,8 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Returns whether or not the current user has access to
-        /// the given application element.
+        /// Returns whether or not the current user has 
+        /// access to the given application element.
         /// </summary>
         /// <param name="itemName">
         /// Application element identifier.
@@ -194,8 +201,8 @@ namespace Security.Implementation
         }
 
         /// <summary>
-        /// Returns whether or not the given user has access to
-        /// the given application element.
+        /// Returns whether or not the given user has 
+        /// access to the given application element.
         /// </summary>
         /// <param name="userName">
         /// User name for which to check access rights.

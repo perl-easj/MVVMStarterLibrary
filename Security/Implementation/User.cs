@@ -41,8 +41,7 @@ namespace Security.Implementation
         #region Methods
         public override string ToString()
         {
-            string toStr = "User :  " + Name + "\n";
-            return toStr;
+            return $"User :  {Name} \n";
         } 
         #endregion
     }

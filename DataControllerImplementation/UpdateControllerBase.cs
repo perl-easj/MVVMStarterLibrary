@@ -13,8 +13,9 @@ namespace DataController.Implementation
         }
 
         /// <summary>
-        /// Update is performed by deleting the existing object with the
-        /// corresponding Key, and then inserting the updated object.
+        /// Update is performed by deleting the existing 
+        /// data object with the corresponding Key, and 
+        /// then inserting the updated object.
         /// </summary>
         public override void Run()
         {

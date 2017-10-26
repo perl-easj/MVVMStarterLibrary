@@ -5,11 +5,16 @@ using Command.Interfaces;
 namespace Command.Implementation
 {
     /// <summary>
-    /// Straightforward implementation of ICommandManager
+    /// Implementation of ICommandManager interface
     /// </summary>
     public class CommandManager : ICommandManager
     {
         private Dictionary<string, INotifiableCommand> _commands;
+
+        public CommandManager()
+        {
+            _commands = new Dictionary<string, INotifiableCommand>();
+        }
 
         /// <summary>
         /// Retrieve the entire set of registered commands.
@@ -17,11 +22,6 @@ namespace Command.Implementation
         public Dictionary<string, INotifiableCommand> Commands
         {
             get { return _commands; }
-        }
-
-        public CommandManager()
-        {
-            _commands = new Dictionary<string, INotifiableCommand>();
         }
 
         /// <summary>

@@ -1,9 +1,10 @@
 ﻿namespace ExtensionsCommands.Types
 {
     /// <summary>
-    /// Valid CRUD state setting command identifiers, to be used if 
-    /// e.g. a View can be in one of these states, and can be set in
-    /// one of these states through a Command.
+    /// Valid CRUD state setting command identifiers, 
+    /// to be used if e.g. a View can be in one of 
+    /// these states, and can be set in one of these 
+    /// states through a Command.
     /// </summary>
     public class CRUDStateCommands
     {

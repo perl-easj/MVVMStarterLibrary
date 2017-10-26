@@ -26,7 +26,7 @@ namespace Images.Implementation
 
         #region Properties
         /// <summary>
-        /// Get all Image objects currently in the collection.
+        /// Get all image objects currently in the collection.
         /// </summary>
         public List<IImage> All
         {
@@ -34,7 +34,7 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Returns the union of all tags for all Image objects.
+        /// Returns the union of all tags for all image objects.
         /// </summary>
         public List<string> AllTags
         {
@@ -44,9 +44,10 @@ namespace Images.Implementation
 
         #region Methods
         /// <summary>
-        /// Sets the image source for a given application-wide image type.
-        /// If the image source has already been set for the given image
-        /// type, an exception is thrown.
+        /// Sets the image source for a given 
+        /// application-wide image type. If the image 
+        /// source has already been set for the given 
+        /// image type, an exception is thrown.
         /// </summary>
         /// <param name="imageType">
         /// Image type to which the given image is used.
@@ -65,9 +66,10 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Retrieves the image source for a given application-wide image type.
-        /// If the source has not been set for the given image type, an
-        /// exception is thrown.
+        /// Retrieves the image source for a given 
+        /// application-wide image type. If the source 
+        /// has not been set for the given image type,
+        /// an exception is thrown.
         /// </summary>
         /// <param name="imageType">
         /// Image type for which to retrieve the image source.
@@ -86,13 +88,13 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Add a single Image object to the collection
+        /// Add a single image object to the collection
         /// </summary>
         /// <param name="image">
         /// Image object to add.
         /// </param>
         /// <returns>
-        /// Key for Image object
+        /// Key for image object
         /// </returns>
         public int AddImage(IImage image)
         {
@@ -100,11 +102,12 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Sets the collection to contain the given set of Image objects.
-        /// All existing Image objects in the collection should be removed.
+        /// Sets the collection to contain the given 
+        /// set of image objects. All existing image
+        /// objects in the collection should be removed.
         /// </summary>
         /// <param name="imageList">
-        /// List of new Image objects.
+        /// List of new image objects.
         /// </param>
         public void SetImages(List<IImage> imageList)
         {
@@ -112,17 +115,19 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Retrieve a single Image object, matching the given key.
+        /// Retrieve a single image object, 
+        /// matching the given key.
         /// </summary>
         /// <param name="key">
-        /// Key of Image objects to retrieve.
+        /// Key of image objects to retrieve.
         /// </param>
         /// <param name="defaultImage">
-        /// A fall-back Image can be specified; this is returned if 
-        /// no Image in the collection matches the given key.
+        /// A fall-back image can be specified; 
+        /// this is returned if no image in the 
+        /// collection matches the given key.
         /// </param>
         /// <returns>
-        /// Image object matching the key, or fall-back Image
+        /// Image object matching the key, or fall-back image
         /// </returns>
         public IImage Read(int key, IImage defaultImage = null)
         {
@@ -130,13 +135,13 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Retrieves all Image objects tagged with the given tag.
+        /// Retrieves all image objects tagged with the given tag.
         /// </summary>
         /// <param name="tag">
-        /// Tag used for selecting Image objects.
+        /// Tag used for selecting image objects.
         /// </param>
         /// <returns>
-        /// List of Image objects tagged with the given tag.
+        /// List of image objects tagged with the given tag.
         /// </returns>
         public List<IImage> AllWithTag(string tag)
         {
@@ -144,14 +149,15 @@ namespace Images.Implementation
         }
 
         /// <summary>
-        /// Returns the set of Image objects tagged with the given tag,
-        /// in the form of an ObservableCollection.
+        /// Returns the set of image objects 
+        /// tagged with the given tag, in the form 
+        /// of an ObservableCollection.
         /// </summary>
         /// <param name="tag">
-        /// Tag used to select Image objects.
+        /// Tag used to select image objects.
         /// </param>
         /// <returns>
-        /// ObservableCollection of Image objects tagged with the given tag.
+        /// ObservableCollection of image objects tagged with the given tag.
         /// </returns>
         public ObservableCollection<IImage> GetObservableImageCollection(string tag)
         {

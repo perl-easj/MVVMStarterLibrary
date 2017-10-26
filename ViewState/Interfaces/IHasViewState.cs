@@ -1,7 +1,8 @@
 ﻿namespace ViewState.Interfaces
 {
     /// <summary>
-    /// Any object that has a "view state" should implement this interface.
+    /// Any object that has a "view state" 
+    /// should implement this interface.
     /// </summary>
     public interface IHasViewState
     {

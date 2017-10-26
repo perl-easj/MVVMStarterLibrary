@@ -16,7 +16,7 @@ namespace Filtering.Interfaces
         /// <param name="filter">
         /// Filter to add.
         /// </param>
-        void AddFilter(IFilter<T> filter);
+        void Add(IFilter<T> filter);
 
         /// <summary>
         /// Removes a single filter from the collection.
@@ -24,7 +24,7 @@ namespace Filtering.Interfaces
         /// <param name="filterID">
         /// Identifier for filter to remove.
         /// </param>
-        void RemoveFilter(string filterID);
+        void Remove(string filterID);
 
         /// <summary>
         /// Retrieve the filter matching the given ID.
@@ -35,7 +35,7 @@ namespace Filtering.Interfaces
         /// <returns>
         /// Filter matching the given ID.
         /// </returns>
-        IFilter<T> GetFilter(string filterID);
+        IFilter<T> Get(string filterID);
 
         /// <summary>
         /// Apply the filters to all elements in the given list.
@@ -47,6 +47,6 @@ namespace Filtering.Interfaces
         /// <returns>
         /// List of objects that passed all filters.
         /// </returns>
-        List<T> FilterList(List<T> list);
+        List<T> Apply(List<T> list);
     }
 }

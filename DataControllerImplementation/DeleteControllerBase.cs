@@ -12,6 +12,10 @@ namespace DataController.Implementation
         {
         }
 
+        /// <summary>
+        /// Deletes an object from the target collection,
+        /// which matches the key of the source data object.
+        /// </summary>
         public override void Run()
         {
             Target.DeleteTransformed(Source.DataObject.Key);

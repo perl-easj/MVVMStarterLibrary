@@ -3,14 +3,15 @@
 namespace Validation.Implementation
 {
     /// <summary>
-    /// Contains a set of methods which can be used as-is for validation,
-    /// or as building blocks for custom validation methods.
+    /// Contains a set of methods which can be 
+    /// used as-is for validation, or as building 
+    /// blocks for custom validation methods.
     /// </summary>
-    public class ValidationService
+    public static class ValidationService
     {
         /// <summary>
-        /// Main validation method: If the validation finds errors,
-        /// a ValidationException is thrown.
+        /// Main validation method: If the validation 
+        /// finds errors, a ValidationException is thrown.
         /// </summary>
         /// <typeparam name="TValue">
         /// Type of value subjected to validation
@@ -24,7 +25,7 @@ namespace Validation.Implementation
         public static void ThrowOnInvalid<TValue>(Func<TValue, ValidationOutcome> validator, TValue value)
         {
             ValidationOutcome vo = validator(value);
-            if (!vo.Valid)
+            if (!vo.Valid) // Validation found errors
             {
                 throw new ValidationException(vo.Message);
             }
@@ -47,7 +48,7 @@ namespace Validation.Implementation
         /// </returns>
         public static ValidationOutcome ValidateStringMinLength(string value, int minLength, string message)
         {
-            return Validate<string>(value, (v => v.Length >= minLength), message);
+            return Validate(value, (v => v.Length >= minLength), message);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Validation.Implementation
         /// </returns>
         public static ValidationOutcome ValidateStringMaxLength(string value, int maxLength, string message)
         {
-            return Validate<string>(value, (v => v.Length <= maxLength), message);
+            return Validate(value, (v => v.Length <= maxLength), message);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Validation.Implementation
         /// </returns>
         public static ValidationOutcome ValidateStringContains(string value, string subString, string message)
         {
-            return Validate<string>(value, v => v.Contains(subString), message);
+            return Validate(value, v => v.Contains(subString), message);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Validation.Implementation
         /// </returns>
         public static ValidationOutcome ValidateStringContainsNot(string value, string subString, string message)
         {
-            return Validate<string>(value, v => !v.Contains(subString), message);
+            return Validate(value, v => !v.Contains(subString), message);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Validation.Implementation
         /// </returns>
         public static ValidationOutcome ValidateIntInInterval(int value, int minValue, int MaxValue, string message)
         {
-            return Validate<int>(value, v => (v >= minValue && v <= MaxValue), message);
+            return Validate(value, v => (v >= minValue && v <= MaxValue), message);
         }
 
         /// <summary>

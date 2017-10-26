@@ -4,7 +4,8 @@ using Persistency.Interfaces;
 namespace Persistency.Implementation
 {
     /// <summary>
-    /// Implementation of the IPersistencyManager interface as a Singleton
+    /// Implementation of the IPersistencyManager 
+    /// interface as a Singleton
     /// </summary>
     public class PersistencyManager : IPersistencyManager
     {

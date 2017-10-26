@@ -7,19 +7,22 @@ using Persistency.Interfaces;
 namespace FilePersistency.Implementation
 {
     /// <summary>
-    /// File-specific implementation of the IStringPersistence interface.
-    /// File is located in local folder for application, since a UWP App
-    /// will have access to this area of the file system.
+    /// File-specific implementation of the 
+    /// IStringPersistence interface. File is 
+    /// located in local folder for application, 
+    /// since a UWP App will have access to this 
+    /// area of the file system.
     /// </summary>
     public class FileStringPersistence : IStringPersistence
     {
         /// <summary>
-        /// Loads a string from the specified file. If the file is not found,
+        /// Loads a string from the specified file. 
+        /// If the file is not found,
         /// a new empty file is created.
         /// </summary>
         /// <param name="fileName">
-        /// Name of file to load data from. Assumed to ONLY contain the
-        /// file name, NOT the full path.
+        /// Name of file to load data from. Assumed to 
+        /// ONLY contain the file name, NOT the full path.
         /// </param>
         /// <returns>
         /// Loaded string data, wrapped in an awaitable Task.
@@ -44,7 +47,8 @@ namespace FilePersistency.Implementation
         /// Saves a string to the specified file.
         /// </summary>
         /// <param name="fileName">
-        /// Name of file to save data to. Assumed to ONLY contain the
+        /// Name of file to save data to. 
+        /// Assumed to ONLY contain the
         /// file name, NOT the full path.
         /// </param>
         /// <param name="stringToSave">

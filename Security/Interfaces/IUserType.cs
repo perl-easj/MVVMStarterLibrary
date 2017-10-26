@@ -44,8 +44,8 @@ namespace Security.Interfaces
         List<AccessType> GetAccessRights(string userType, string itemName);
 
         /// <summary>
-        /// Returns whether or not a given usertype has a given access right
-        /// to a given application element
+        /// Returns whether or not a given usertype has a given 
+        /// access right to a given application element
         /// </summary>
         /// <param name="userType">
         /// User type

@@ -8,9 +8,13 @@ using ExtensionsCommands.Types;
 
 namespace ExtensionsViewModel.Implementation
 {
-    // This class implements methods specific for a managing control states in a 
-    // CRUD-oriented view. That is, the view has states and controls corresponding to
-    // CRUD operations, and contains sets of controls with identical behavior.
+    /// <summary>
+    /// This class implements methods specific for 
+    /// managing control states in a CRUD-oriented view.
+    /// That is, the view has states and controls 
+    /// corresponding to CRUD operations, and contains 
+    /// sets of controls with identical behavior.
+    /// </summary>
     public class CRUDControlStateService : ControlStateService, ICRUDControlStateService
     {
         public CRUDControlStateService() 
@@ -19,7 +23,8 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Specifies controls that will never be enabled after object creation.
+        /// Specifies controls that will never 
+        /// be enabled after object creation.
         /// </summary>
         /// <param name="ids">List of control identifiers</param>
         public void AddImmutableControlsDefaultStates(List<string> ids)
@@ -28,7 +33,8 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Specifies controls that may be enabled after object creation.
+        /// Specifies controls that may 
+        /// be enabled after object creation.
         /// </summary>
         /// <param name="ids">List of control identifiers</param>
         public void AddMutableControlsDefaultStates(List<string> ids)
@@ -37,9 +43,10 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Sets default dehavior for controls used for invoking CRUD operations.
-        /// This could e.g. be Button controls. In this implementation, the states
-        /// are set for Create, Update and Delete.
+        /// Sets default dehavior for controls used for 
+        /// invoking CRUD operations. This could e.g. be 
+        /// Button controls. In this implementation, the 
+        /// states are set for Create, Update and Delete.
         /// </summary>
         public void AddCRUDInvokerDefaultStates()
         {
@@ -49,9 +56,10 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Sets default dehavior for controls used for selecting CRUD view states.
-        /// This could e.g. be RadioButton controls.In this implementation, the states
-        /// are set for all CRUD operations.
+        /// Sets default dehavior for controls used for 
+        /// selecting CRUD view states. This could e.g. be 
+        /// RadioButton controls.In this implementation, 
+        /// the states are set for all CRUD operations.
         /// </summary>
         public void AddStateSelectorDefaultStates()
         {
@@ -62,9 +70,10 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Sets default dehavior for control used for selecting an item.
-        /// This could e.g. be ListView control. In this implementation, the
-        /// selector control is visible in all states except Create state.
+        /// Sets default dehavior for a control used for 
+        /// selecting an item. This could e.g. be a ListView 
+        /// control. In this implementation, the selector 
+        /// control is visible in all states except Create state.
         /// </summary>
         public void AddItemSelectorDefaultStates()
         {
@@ -81,7 +90,7 @@ namespace ExtensionsViewModel.Implementation
         /// List of control identifiers
         /// </param>
         /// <param name="mutable">
-        /// Mutability (?) of controls. Applies to all control in list.
+        /// Mutability of controls. Applies to all controls in list.
         /// </param>
         private void AddControlDefaultStatesMultiple(List<string> ids, MutableType mutable)
         {
@@ -92,8 +101,8 @@ namespace ExtensionsViewModel.Implementation
         }
 
         /// <summary>
-        /// Adds the default control states for a control. In this implementation,
-        /// the default control states are:
+        /// Adds the default control states for a control. 
+        /// In this implementation, the default control states are:
         /// Create state: Control is enabled.
         /// Read state: Control is disabled.
         /// Update state: Control state as specific by "mutable" parameter
@@ -103,7 +112,7 @@ namespace ExtensionsViewModel.Implementation
         /// Control identifier
         /// </param>
         /// <param name="mutable">
-        /// Mutability (?) of control.
+        /// Mutability of control.
         /// </param>
         private void AddControlDefaultStates(string id, MutableType mutable)
         {
