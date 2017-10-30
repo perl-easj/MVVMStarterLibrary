@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Persistency.Interfaces;
+using StringPersistency.Interfaces;
 
 namespace FilePersistency.Implementation
 {

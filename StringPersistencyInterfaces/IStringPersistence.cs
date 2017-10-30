@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Persistency.Interfaces
+namespace StringPersistency.Interfaces
 {
     /// <summary>
     /// Interface for loading/saving a 

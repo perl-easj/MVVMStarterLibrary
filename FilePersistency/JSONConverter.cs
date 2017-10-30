@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Persistency.Interfaces;
+using StringPersistency.Interfaces;
 
 namespace FilePersistency.Implementation
 {
@@ -9,8 +9,8 @@ namespace FilePersistency.Implementation
     /// IDataConverter interface. Uses the 
     /// 3rd-party NewtonSoft JSON package.
     /// </summary>
-    /// <typeparam name="T">Type of objects to convert</typeparam>
-    public class JSONConverter<T> : IDataConverter<T>
+    /// <typeparam name="TDTO">Type of objects to convert</typeparam>
+    public class JSONConverter<TDTO> : IStringConverter<TDTO>
     {
         /// <summary>
         /// Convert a List of objects into a JSON string.
@@ -21,9 +21,9 @@ namespace FilePersistency.Implementation
         /// <returns>
         /// Data on JSON string format.
         /// </returns>
-        public string ConvertToString(List<T> objects)
+        public string ConvertToString(List<TDTO> objects)
         {
-            return JsonConvert.SerializeObject(objects); ;
+            return JsonConvert.SerializeObject(objects);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace FilePersistency.Implementation
         /// <returns>
         /// List of objects.
         /// </returns>
-        public List<T> ConvertFromString(string data)
+        public List<TDTO> ConvertFromString(string data)
         {
-            return (data == null ? new List<T>() : (List<T>)JsonConvert.DeserializeObject(data, typeof(List<T>)));
+            return (data == null ? new List<TDTO>() : (List<TDTO>)JsonConvert.DeserializeObject(data, typeof(List<TDTO>)));
         }
     }
 }

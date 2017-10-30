@@ -2,21 +2,17 @@
 
 namespace DataTransformation.Implementation
 {
-    /// <summary>
-    /// Implementation of simple wrapper of a 
-    /// transformed data object
-    /// </summary>
-    public class TransformedDataWrapper : ITransformedDataWrapper
+    public class DataWrapper<TTDO> : IDataWrapper<TTDO>
     {
         /// <summary>
         /// Returns the wrapped transformed data object
         /// </summary>
-        public ITransformedData DataObject { get; }
+        public TTDO DataObject { get; }
 
         /// <summary>
         /// Constructor. Sets the wrapped transformed data object
         /// </summary>
-        protected TransformedDataWrapper(ITransformedData obj)
+        protected DataWrapper(TTDO obj)
         {
             DataObject = obj;
         }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Catalog.Interfaces;
 using Command.Interfaces;
 using ControlState.Interfaces;
 using DataTransformation.Interfaces;
-using InMemoryStorage.Interfaces;
+using ExtensionsViewModel.Interfaces;
 using ViewModel.Implementation;
 using ViewModel.Interfaces;
 using ViewState.Interfaces;
@@ -11,57 +11,39 @@ using ViewState.Interfaces;
 namespace ExtensionsViewModel.Implementation
 {
     /// <summary>
-    /// This class adds several functionalities to the 
+    /// This class adds further properties to the 
     /// Master/Details base class.
     /// 1) View state service
     /// 2) Control state service
-    /// 3) Data commands (commands for invoking CRUD operations)
+    /// 3) Data commands (commands for invoking data-related operations)
     /// 4) State commands (commands for setting the view in a specific view state)
-    /// 5) A Mediator implementation, which manages the actions performed when a
-    ///    certain aspect of the object state changes (i,e, a change in collection, 
-    ///    item selection, or view state).
+    /// 5) Mediator (handles interactions between View Model elements)
     /// </summary>
-    public abstract class MasterDetailsViewModelWithState : 
-        MasterDetailsViewModelBase, 
+    public abstract class MasterDetailsViewModelWithState<T, TVMO> : 
+        MasterDetailsViewModelBase<T, TVMO>, 
         IHasViewState, 
-        IHasControlStates
+        IHasControlStates where TVMO : class, ITransformed<T>
     {
         #region Instance fields
-        protected IMonitorable _collection;
-
         private IControlStateService _controlStateService;
         private IViewStateService _viewStateService;
 
         private ICommandManager _dataCommands;
         private ICommandManager _stateCommands;
 
-        private IMasterDetailsViewModelWithStateMediator _mediator; 
+        private IMasterDetailsViewModelWithStateMediator<TVMO> _mediator; 
         #endregion
 
         #region Constructor
-        protected MasterDetailsViewModelWithState(
-            IViewModelFactory viewModelFactory,
-            IMonitorable collection,
-            ITransformedDataCollection dtoCollection)
-            : base(viewModelFactory, dtoCollection)
+        protected MasterDetailsViewModelWithState(IViewModelFactory<TVMO> viewModelFactory, ICatalog<TVMO> catalog)
+            : base(viewModelFactory, catalog)
         {
-            _collection = collection ?? throw new ArgumentNullException(nameof(MasterDetailsViewModelWithState));
-            _mediator = new MasterDetailsViewModelWithStateMediator(this, viewModelFactory);
-
-            // Let Mediator be notified when collection changes.
-            _collection.AddOnObjectCreatedCallback(_mediator.OnModelChanged);
-            _collection.AddOnObjectUpdatedCallback(_mediator.OnModelChanged);
-            _collection.AddOnObjectDeletedCallback(_mediator.OnModelChanged);
-
-            // Let Mediator be notified when item selection changes.
-            ItemSelectionChanged += _mediator.OnItemSelectionChanged;
-
-            // These instance fields are set in sub-classes, since they involve 
-            // references to the Master/Details ViewModel object itself.
+            // These will be initialised in sub-classes
             _controlStateService = null;
             _viewStateService = null;
             _dataCommands = null;
             _stateCommands = null;
+            _mediator = null;
         } 
         #endregion
 
@@ -75,14 +57,7 @@ namespace ExtensionsViewModel.Implementation
         public IViewStateService ViewStateService
         {
             get { return _viewStateService; }
-            protected set
-            {
-                _viewStateService = value;
-                _viewStateService.ViewState = "ReadState";
-
-                // Let Mediator be notified when view state changes.
-                _viewStateService.ViewStateChanged += _mediator.OnViewStateChanged;
-            }
+            protected set { _viewStateService = value; }
         } 
         #endregion
 
@@ -121,7 +96,15 @@ namespace ExtensionsViewModel.Implementation
         public string ViewState
         {
             get { return _viewStateService.ViewState; }
-        } 
+        }
+        #endregion
+
+        #region Exposure of Mediator
+        public IMasterDetailsViewModelWithStateMediator<TVMO> Mediator
+        {
+            get { return _mediator; }
+            protected set { _mediator = value; }
+        }
         #endregion
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using Command.Interfaces;
 using Controller.Interfaces;
-using DataTransformation.Interfaces;
 
 namespace DataCommand.Implementation
 {
@@ -16,15 +15,11 @@ namespace DataCommand.Implementation
     /// </summary>
     public abstract class CRUDCommandBase : INotifiableCommand 
     {
-        protected ITransformedDataWrapper Source;
-        protected ITransformedDataCollection Target;
         protected ISimpleController Controller;
         protected Func<bool> Condition;
 
-        protected CRUDCommandBase(ITransformedDataWrapper source, ITransformedDataCollection target, ISimpleController controller, Func<bool> condition)
+        protected CRUDCommandBase(ISimpleController controller, Func<bool> condition)
         {
-            Source = source;
-            Target = target;
             Controller = controller;
             Condition = condition;
         }
@@ -48,17 +43,17 @@ namespace DataCommand.Implementation
         /// <summary>
         /// Currently not used - forwards to parameterless version.
         /// </summary>
-        public bool CanExecute(object parameter)
+        public void Execute(object parameter)
         {
-            return CanExecute();
+            Execute();
         }
 
         /// <summary>
         /// Currently not used - forwards to parameterless version.
         /// </summary>
-        public void Execute(object parameter)
+        public bool CanExecute(object parameter)
         {
-            Execute();
+            return CanExecute();
         }
 
         /// <summary>

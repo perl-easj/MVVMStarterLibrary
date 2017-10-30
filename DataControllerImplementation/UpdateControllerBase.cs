@@ -1,13 +1,15 @@
-﻿using DataTransformation.Interfaces;
+﻿using Catalog.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
     /// <summary>
     /// Implementation of a generic Update operation.
     /// </summary>
-    public class UpdateControllerBase : CRUDControllerBase
+    public class UpdateControllerBase<T, TVMO> : CRUDControllerBase<TVMO>
+        where TVMO : class, ITransformed<T>
     {
-        public UpdateControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
+        public UpdateControllerBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
             : base(source, target)
         {
         }
@@ -19,9 +21,8 @@ namespace DataController.Implementation
         /// </summary>
         public override void Run()
         {
-            ITransformedData updateObj = Source.DataObject.Clone();
-            Target.DeleteTransformed(Source.DataObject.Key);
-            Target.InsertTransformed(updateObj, false);
+            TVMO updateObj = Source.DataObject.Clone() as TVMO;
+            Target.Update(updateObj, Source.DataObject.Key);
         }
     }
 }

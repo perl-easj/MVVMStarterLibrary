@@ -1,4 +1,5 @@
 ﻿using System;
+using Catalog.Interfaces;
 using DataController.Implementation;
 using DataTransformation.Interfaces;
 
@@ -7,10 +8,10 @@ namespace DataCommand.Implementation
     /// <summary>
     /// Implementation of a generic Create command.
     /// </summary>
-    public class CreateCommandBase : CRUDCommandBase
+    public class CreateCommandBase<TVMO> : CRUDCommandBase
     {
-        public CreateCommandBase(ITransformedDataWrapper source, ITransformedDataCollection target, Func<bool> condition)
-            : base(source, target, new CreateControllerBase(source, target), condition)
+        public CreateCommandBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target, Func<bool> condition)
+            : base(new CreateControllerBase<TVMO>(source, target), condition)
         {
         }
     }

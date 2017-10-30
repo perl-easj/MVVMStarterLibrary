@@ -7,65 +7,56 @@ namespace ViewModel.Interfaces
     /// <summary>
     /// Interface for a factory for creation of 
     /// Details and Item ViewModel objects, based 
-    /// on transformed data objects. The ViewModel 
-    /// object may refer to a brand new object, an 
-    /// existing object, or a clone of an existing object.
+    /// on a VMO. The ViewModel object may refer 
+    /// to a brand new object, an existing object, 
+    /// or a clone of an existing object.
     /// </summary>
-    public interface IViewModelFactory
+    public interface IViewModelFactory<TVMO>
     {
         /// <summary>
-        /// Create Details ViewModel object, referring 
-        /// to the given transformed data object.
+        /// Create Details ViewModel object, referring to the given VMO.
         /// </summary>
         /// <param name="obj">
-        /// Transformed data object to which the 
-        /// Details ViewModel object will refer.
+        /// VMO to which the Details ViewModel object will refer.
         /// </param>
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        ITransformedDataWrapper CreateDetailsViewModel(ITransformedData obj);
+        IDataWrapper<TVMO> CreateDetailsViewModel(TVMO obj);
 
         /// <summary>
-        /// Create Item ViewModel object, , referring 
-        /// to the given transformed data object.
+        /// Create Item ViewModel object, referring to the given VMO.
         /// </summary>
         /// <param name="obj">
-        /// Transformed data object to which the 
-        /// Item ViewModel object will refer.
+        /// VMO to which the Item ViewModel object will refer.
         /// </param>
         /// <returns>
         /// New Item ViewModel object.
         /// </returns>
-        ITransformedDataWrapper CreateItemViewModel(ITransformedData obj);
+        IDataWrapper<TVMO> CreateItemViewModel(TVMO obj);
 
         /// <summary>
-        /// Create Details ViewModel object, referring 
-        /// to a new transformed data object.
+        /// Create Details ViewModel object, referring to a new VMO.
         /// </summary>
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        ITransformedDataWrapper CreateDetailsViewModelFromNewTDO();
+        IDataWrapper<TVMO> CreateDetailsViewModelFromNewVMO();
 
         /// <summary>
-        /// Create Details ViewModel object, referring 
-        /// to a clone of the given transformed data object.
+        /// Create Details ViewModel object, referring to a clone of the given VMO.
         /// </summary>
         /// <param name="obj">
-        /// Transformed data object. which will be cloned. 
-        /// The Details ViewModel object will then refer
-        /// to the cloned transformed data object.
+        /// VMO which will be cloned. The Details ViewModel object will then refer to the VMO.
         /// </param>
         /// <returns>
         /// New Details ViewModel object.
         /// </returns>
-        ITransformedDataWrapper CreateDetailsViewModelFromClonedTDO(ITransformedData obj);
+        IDataWrapper<TVMO> CreateDetailsViewModelFromClonedVMO(TVMO obj);
 
         /// <summary>
-        /// Create a collection of Item ViewModel objects, from a
-        /// collection of transformed data objects. 
+        /// Create a collection of Item ViewModel objects, from a collection of VMOs. 
         /// </summary>
-        ObservableCollection<ITransformedDataWrapper> CreateItemViewModelCollection(IEnumerable<ITransformedData> dataObjects);
+        ObservableCollection<IDataWrapper<TVMO>> CreateItemViewModelCollection(IEnumerable<TVMO> dataObjects);
     }
 }

@@ -11,31 +11,30 @@ namespace ViewModel.Implementation
     /// ViewModel objects (Item and Details), based on 
     /// corresponding transformed data objects.
     /// </summary>
-    /// <typeparam name="TDO">Type of transformed data object</typeparam>
-    public abstract class ViewModelFactoryBase<TDO> : IViewModelFactory
-        where TDO : ITransformedData, new()
+    public abstract class ViewModelFactoryBase<T, TVMO> : IViewModelFactory<TVMO> 
+        where TVMO : class, ITransformed<T>, new()
     {
         /// <summary>
         /// Specific details for how to create a Details 
         /// ViewModel object based on a transformed 
         /// data object is deferred to sub-classes.
         /// </summary>
-        public abstract ITransformedDataWrapper CreateDetailsViewModel(ITransformedData obj);
+        public abstract IDataWrapper<TVMO> CreateDetailsViewModel(TVMO obj);
 
         /// <summary>
         /// Specific details for how to create an 
         /// Item ViewModel object based on a transformed 
         /// data object is deferred to sub-classes.
         /// </summary>
-        public abstract ITransformedDataWrapper CreateItemViewModel(ITransformedData obj);
+        public abstract IDataWrapper<TVMO> CreateItemViewModel(TVMO obj);
 
         /// <summary>
         /// Use brand new transformed data object as 
         /// source for creating a Details ViewModel object.
         /// </summary>
-        public ITransformedDataWrapper CreateDetailsViewModelFromNewTDO()
+        public IDataWrapper<TVMO> CreateDetailsViewModelFromNewVMO()
         {
-            return CreateDetailsViewModel(new TDO());
+            return CreateDetailsViewModel(new TVMO());
         }
 
         /// <summary>
@@ -46,19 +45,19 @@ namespace ViewModel.Implementation
         /// object will thus not be referred to by the 
         /// new Details ViewModel object.
         /// </summary>
-        public ITransformedDataWrapper CreateDetailsViewModelFromClonedTDO(ITransformedData obj)
+        public IDataWrapper<TVMO> CreateDetailsViewModelFromClonedVMO(TVMO obj)
         {
-            return CreateDetailsViewModel(obj.Clone());
+            return CreateDetailsViewModel(obj.Clone() as TVMO);
         }
 
         /// <summary>
         /// Create a collection of Item ViewModel objects, 
         /// from a collection of transformed data objects. 
         /// </summary>
-        public virtual ObservableCollection<ITransformedDataWrapper> CreateItemViewModelCollection(IEnumerable<ITransformedData> dataObjects)
+        public virtual ObservableCollection<IDataWrapper<TVMO>> CreateItemViewModelCollection(IEnumerable<TVMO> dataObjects)
         {
-            var itemViewModels = new ObservableCollection<ITransformedDataWrapper>();
-            foreach (ITransformedData obj in dataObjects)
+            var itemViewModels = new ObservableCollection<IDataWrapper<TVMO>>();
+            foreach (TVMO obj in dataObjects)
             {
                 itemViewModels.Add(CreateItemViewModel(obj));
             }

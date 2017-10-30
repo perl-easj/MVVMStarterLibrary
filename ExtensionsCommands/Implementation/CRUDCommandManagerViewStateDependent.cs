@@ -1,4 +1,5 @@
 ﻿using System;
+using Catalog.Interfaces;
 using DataCommand.Implementation;
 using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
@@ -12,13 +13,14 @@ namespace ExtensionsCommands.Implementation
     /// A manager of this type needs a reference 
     /// to an object implementing IHasViewState.
     /// </summary>
-    public class CRUDCommandManagerViewStateDependent : CRUDCommandManager
+    public class CRUDCommandManagerViewStateDependent<T, TVMO> : CRUDCommandManager<T, TVMO> 
+        where TVMO : class, ITransformed<T>
     {
         private IHasViewState _viewStateObject;
 
-        public CRUDCommandManagerViewStateDependent(ITransformedDataWrapper source, ITransformedDataCollection target, IHasViewState viewStateObject) : base(source, target)
+        public CRUDCommandManagerViewStateDependent(IDataWrapper<TVMO> source, ICatalog<TVMO> target, IHasViewState viewStateObject) : base(source, target)
         {
-            _viewStateObject = viewStateObject ?? throw new ArgumentException(nameof(CRUDCommandManagerViewStateDependent));
+            _viewStateObject = viewStateObject ?? throw new ArgumentException(nameof(_viewStateObject));
         }
 
         protected override bool FurtherConditionCreate()

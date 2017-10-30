@@ -7,7 +7,7 @@ namespace ViewModel.Interfaces
     /// Master/Details ViewModel object, and manage 
     /// the relations between various properties.
     /// </summary>
-    public interface IMasterDetailsViewModelMediator
+    public interface IMasterDetailsViewModelMediator<in TVMO>
     {
         /// <summary>
         /// Invoked when the selected item changes.
@@ -15,11 +15,11 @@ namespace ViewModel.Interfaces
         /// <param name="tdoWrapper">
         /// Newly selected item
         /// </param>
-        void OnItemSelectionChanged(ITransformedDataWrapper tdoWrapper);
+        void OnItemSelectionChanged(IDataWrapper<TVMO> tdoWrapper);
 
         /// <summary>
         /// Invoked when the underlying model changes.
         /// </summary>
-        void OnModelChanged();
+        void OnCatalogChanged();
     }
 }

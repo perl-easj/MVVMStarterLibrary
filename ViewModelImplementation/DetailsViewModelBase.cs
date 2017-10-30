@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using DataTransformation.Implementation;
-using DataTransformation.Interfaces;
 
 namespace ViewModel.Implementation
 {
@@ -13,12 +12,12 @@ namespace ViewModel.Implementation
     /// object will be strongly typed, such that type-specific 
     /// properties can be directly accessed for view binding.
     /// </summary>
-    public class DetailsViewModelBase<TDO> :
-        TypedTransformedDataWrapper<TDO>,
+    public class DetailsViewModelBase<TVMO> :
+        DataWrapper<TVMO>,
         INotifyPropertyChanged 
-        where TDO : class
+        where TVMO : class
     {
-        public DetailsViewModelBase(ITransformedData obj) : base(obj)
+        public DetailsViewModelBase(TVMO obj) : base(obj)
         {
         }
 

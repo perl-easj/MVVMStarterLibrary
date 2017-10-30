@@ -8,24 +8,24 @@ namespace ViewModel.Interfaces
     /// ViewModel class. Only consists of three properties 
     /// relating to transformed data object types.
     /// </summary>
-    public interface IMasterDetailsViewModel
+    public interface IMasterDetailsViewModel<TVMO>
     {
         /// <summary>
         /// Collection of transformed data objects corresponding 
         /// to underlying domain data, e.g. to be presented in a 
         /// collection-oriented GUI control.
         /// </summary>
-        ObservableCollection<ITransformedDataWrapper> ItemCollection { get; }
+        ObservableCollection<IDataWrapper<TVMO>> ItemCollection { get; }
 
         /// <summary>
         /// Item currently selected in collection-oriented GUI control.
         /// </summary>
-        ITransformedDataWrapper ItemSelected { get; set; }
+        IDataWrapper<TVMO> ItemSelected { get; set; }
 
         /// <summary>
         /// Details for a specific item. This will usually be the 
         /// same item as ItemSelected refers to.
         /// </summary>
-        ITransformedDataWrapper ItemDetails { get; set; }
+        IDataWrapper<TVMO> ItemDetails { get; set; }
     }
 }

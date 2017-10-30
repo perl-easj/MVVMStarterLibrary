@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using DataTransformation.Interfaces;
-using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
 
-namespace WebAPI
+namespace WebAPI.Implementation
 {
     /// <summary>
     /// Implementation of the IPersistentSource interface,
@@ -15,13 +13,8 @@ namespace WebAPI
     /// are transformed before being provided to the
     /// HTTPClient methods.
     /// </summary>
-    /// <typeparam name="T">
-    /// Type of domain data objects
-    /// </typeparam>
-    /// <typeparam name="TDO">Type of transformed data objects</typeparam>
-    public class WebAPISource<T, TDO> : IPersistentSource<T> 
-        where T : IStorable
-        where TDO : ITransformedData
+    /// <typeparam name="TDTO">Type of Data Transfer objects</typeparam>
+    public class WebAPISource<TDTO> : IPersistentSource<TDTO> 
     {
         private enum APIMethod { Load, Create, Read, Update, Delete }
 
@@ -31,13 +24,11 @@ namespace WebAPI
         private string _apiID;
         private HttpClientHandler _httpClientHandler;
         private HttpClient _httpClient;
-        private ITransformedDataFactory<T> _tdoFactory;
         #endregion
 
         #region Constructor
-        public WebAPISource(ITransformedDataFactory<T> tdoFactory, string serverURL, string apiID, string apiPrefix = "api")
+        public WebAPISource(string serverURL, string apiID, string apiPrefix = "api")
         {
-            _tdoFactory = tdoFactory;
             _serverURL = serverURL;
             _apiID = apiID;
             _apiPrefix = apiPrefix;
@@ -53,26 +44,17 @@ namespace WebAPI
         /// Implementation of Load method
         /// </summary>
         /// <returns>List of domain objects</returns>
-        public async Task<List<T>> Load()
+        public async Task<List<TDTO>> Load()
         {
-            // Retrieve transformed data object from Web Service
+            // Retrieve DTO from Web Service
             string requestURI = BuildRequestURI(APIMethod.Load);
-            List<TDO> dboList = await InvokeHTTPClientMethodWithReturnValueAsync<List<TDO>>(() => _httpClient.GetAsync(requestURI));
-
-            // Transform the retrieved objects to domain objects
-            List<T> objList = new List<T>();
-            foreach (TDO dbObj in dboList)
-            {
-                objList.Add(_tdoFactory.CreateDomainObject(dbObj));
-            }
-
-            return objList;
+            return await InvokeHTTPClientMethodWithReturnValueAsync<List<TDTO>>(() => _httpClient.GetAsync(requestURI));
         }
 
         /// <summary>
         /// Save operation is not supported by a Web Service
         /// </summary>
-        public Task Save(List<T> objects)
+        public Task Save(List<TDTO> objects)
         {
             throw new NotSupportedException("Save not supported for WebAPI Persistency (Use Create/Delete)");
         }
@@ -80,37 +62,36 @@ namespace WebAPI
         /// <summary>
         /// Implementation of Create method
         /// </summary>
-        /// <param name="obj">Object to create</param>
-        public async Task Create(T obj)
+        /// <param name="obj">DTO to create</param>
+        public async Task Create(TDTO obj)
         {
-            await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), _tdoFactory.CreateTransformedObject(obj)));
+            await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), obj));
         }
 
         /// <summary>
         /// Implementation of Read method
         /// </summary>
         /// <param name="key">Key for object to read</param>
-        /// <returns>Domain object matching key</returns>
-        public async Task<T> Read(int key)
+        /// <returns>DTO matching key</returns>
+        public async Task<TDTO> Read(int key)
         {
-            TDO dbObj = await InvokeHTTPClientMethodWithReturnValueAsync<TDO>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Read, key)));
-            return _tdoFactory.CreateDomainObject(dbObj);
+            return await InvokeHTTPClientMethodWithReturnValueAsync<TDTO>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Read, key)));
         }
 
         /// <summary>
         /// Implementation of Update method
         /// </summary>
         /// <param name="key">Key for object to update</param>
-        /// <param name="obj">Object to update</param>
-        public async Task Update(int key, T obj)
+        /// <param name="obj">DTO to update</param>
+        public async Task Update(int key, TDTO obj)
         {
-            await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.PutAsJsonAsync(BuildRequestURI(APIMethod.Update, key), _tdoFactory.CreateTransformedObject(obj)));
+            await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.PutAsJsonAsync(BuildRequestURI(APIMethod.Update, key), obj));
         }
 
         /// <summary>
         /// Implementation of Delete method
         /// </summary>
-        /// <param name="key">Key for object to delete</param>
+        /// <param name="key">Key for DTO to delete</param>
         public async Task Delete(int key)
         {
             await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.DeleteAsync(BuildRequestURI(APIMethod.Update, key)));

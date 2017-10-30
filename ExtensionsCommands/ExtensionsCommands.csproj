@@ -115,6 +115,10 @@
     <EmbeddedResource Include="Properties\ExtensionsCommands.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CatalogInterfaces\CatalogInterfaces.csproj">
+      <Project>{833D4C2C-9C8E-407D-BE7A-89FA7CE521D8}</Project>
+      <Name>CatalogInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommandInterfaces\CommandInterfaces.csproj">
       <Project>{52BE3CDA-97E8-4030-BEEB-B6E343C809FE}</Project>
       <Name>CommandInterfaces</Name>
@@ -122,6 +126,10 @@
     <ProjectReference Include="..\DataCommandImplementation\DataCommandImplementation.csproj">
       <Project>{AA7779A0-33D8-45C0-B0FF-6A24E054CC3A}</Project>
       <Name>DataCommandImplementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
+      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
+      <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewState\ViewState.csproj">
       <Project>{943F1C5A-9189-40AF-AAC4-3C3E0B45DA11}</Project>

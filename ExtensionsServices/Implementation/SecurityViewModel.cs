@@ -96,7 +96,6 @@ namespace ExtensionsServices.Implementation
         /// CanLogin will only return true when the entered 
         /// username/password combination is valid.
         /// </summary>
-        /// <returns></returns>
         public bool CanLogin()
         {
             return ServiceProvider.Security.CheckPassword(_username, _password);

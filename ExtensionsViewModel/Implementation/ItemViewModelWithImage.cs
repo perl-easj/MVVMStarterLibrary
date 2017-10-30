@@ -1,5 +1,4 @@
-﻿using DataTransformation.Interfaces;
-using ExtensionsServices.Implementation;
+﻿using ExtensionsServices.Implementation;
 using Images.Implementation;
 using Images.Interfaces;
 using Images.Types;
@@ -13,12 +12,12 @@ namespace ExtensionsViewModel.Implementation
     /// service. The image is thus identified 
     /// by a numeric key (ImageKey).
     /// </summary>
-    public abstract class ItemViewModelWithImage<TDO> : ItemViewModelBase<TDO> 
-        where TDO : class
+    public abstract class ItemViewModelWithImage<TVMO> : ItemViewModelBase<TVMO> 
+        where TVMO : class
     {
         private IImage _notFoundImage;
 
-        protected ItemViewModelWithImage(ITransformedData obj) : base(obj)
+        protected ItemViewModelWithImage(TVMO obj) : base(obj)
         {
             _notFoundImage = new TaggedImage("Image not found", ServiceProvider.Images.GetAppImageSource(AppImageType.NotFound));
         }

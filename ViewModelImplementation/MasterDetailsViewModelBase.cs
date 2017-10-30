@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Catalog.Interfaces;
 using DataTransformation.Interfaces;
 using ViewModel.Interfaces;
 
@@ -17,21 +18,22 @@ namespace ViewModel.Implementation
     /// a source for a data-releted operation, it implements
     /// the ITransformedDataWrapper interface.
     /// </summary>
-    public abstract class MasterDetailsViewModelBase : INotifyPropertyChanged, ITransformedDataWrapper, IMasterDetailsViewModel 
+    public abstract class MasterDetailsViewModelBase<T, TVMO> : INotifyPropertyChanged, IDataWrapper<TVMO>, IMasterDetailsViewModel<TVMO>
+        where TVMO : class, ITransformed<T>
     {
         #region Instance fields
-        protected ITransformedDataCollection TDOCollection;
-        protected IViewModelFactory ViewModelFactory;
+        protected ICatalog<TVMO> Catalog;
+        protected IViewModelFactory<TVMO> ViewModelFactory;
 
-        private ITransformedDataWrapper _itemDetails;
-        private ITransformedDataWrapper _itemSelected;
+        private IDataWrapper<TVMO> _itemDetails;
+        private IDataWrapper<TVMO> _itemSelected;
         #endregion
 
         #region Initialisation
-        protected MasterDetailsViewModelBase(IViewModelFactory viewModelFactory, ITransformedDataCollection tdoCollection)
+        protected MasterDetailsViewModelBase(IViewModelFactory<TVMO> viewModelFactory, ICatalog<TVMO> catalog)
         {
             // Sanity checks, so we don't need null checks elsewhere
-            TDOCollection = tdoCollection ?? throw new ArgumentNullException(nameof(tdoCollection));
+            Catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
             _itemDetails = null;
@@ -45,7 +47,7 @@ namespace ViewModel.Implementation
         /// the "wrapped" transformed data object. This can be 
         /// changed in a sub-class, if needed.
         /// </summary>
-        public virtual ITransformedData DataObject
+        public virtual TVMO DataObject
         {
             get { return ItemDetails?.DataObject; }
         }
@@ -56,9 +58,9 @@ namespace ViewModel.Implementation
         /// Creation of an item collection is delegated 
         /// to the provided ViewModel object factory.
         /// </summary>
-        public virtual ObservableCollection<ITransformedDataWrapper> ItemCollection
+        public virtual ObservableCollection<IDataWrapper<TVMO>> ItemCollection
         {
-            get { return ViewModelFactory.CreateItemViewModelCollection(TDOCollection.AllTransformed); }
+            get { return ViewModelFactory.CreateItemViewModelCollection(Catalog.All); }
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace ViewModel.Implementation
         /// Clients interested in knowing about selection
         /// changes get notified about this change.
         /// </summary>
-        public virtual ITransformedDataWrapper ItemSelected
+        public virtual IDataWrapper<TVMO> ItemSelected
         {
             get { return _itemSelected; }
             set
@@ -81,7 +83,7 @@ namespace ViewModel.Implementation
         /// <summary>
         /// Standard implementation of bindable property.
         /// </summary>
-        public virtual ITransformedDataWrapper ItemDetails
+        public virtual IDataWrapper<TVMO> ItemDetails
         {
             get { return _itemDetails; }
             set
@@ -97,10 +99,10 @@ namespace ViewModel.Implementation
         /// Clients interested in knowing about changes in item 
         /// selection can register at this event.
         /// </summary>
-        public event Action<ITransformedDataWrapper> ItemSelectionChanged;
-        public virtual void OnItemSelectionChanged(ITransformedDataWrapper tdoWrapper)
+        public event Action<IDataWrapper<TVMO>> ItemSelectionChanged;
+        public virtual void OnItemSelectionChanged(IDataWrapper<TVMO> vmoWrapper)
         {
-            ItemSelectionChanged?.Invoke(tdoWrapper);
+            ItemSelectionChanged?.Invoke(vmoWrapper);
         }
       
         public event PropertyChangedEventHandler PropertyChanged;

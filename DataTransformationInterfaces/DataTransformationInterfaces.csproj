@@ -106,10 +106,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ITransformedData.cs" />
-    <Compile Include="ITransformedDataCollection.cs" />
-    <Compile Include="ITransformedDataFactory.cs" />
-    <Compile Include="ITransformedDataWrapper.cs" />
+    <Compile Include="IDataWrapper.cs" />
+    <Compile Include="IFactory.cs" />
+    <Compile Include="ITransformed.cs" />
+    <Compile Include="ITransformedWithDefault.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\DataTransformationInterfaces.rd.xml" />
   </ItemGroup>

@@ -123,6 +123,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CatalogInterfaces\CatalogInterfaces.csproj">
+      <Project>{833D4C2C-9C8E-407D-BE7A-89FA7CE521D8}</Project>
+      <Name>CatalogInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
       <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
       <Name>InMemoryStorageInterfaces</Name>

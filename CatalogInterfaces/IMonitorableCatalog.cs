@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InMemoryStorage.Interfaces
+namespace Catalog.Interfaces
 {
     /// <summary>
     /// A collection that enables a client to be 
@@ -8,7 +8,7 @@ namespace InMemoryStorage.Interfaces
     /// should implement this interface. Clients can
     /// then register callbacks at the collection.
     /// </summary>
-    public interface IMonitorable
+    public interface IMonitorableCatalog
     {
         /// <summary>
         /// Adds a method to be be invoked when 

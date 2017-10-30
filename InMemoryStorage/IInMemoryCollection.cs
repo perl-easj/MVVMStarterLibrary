@@ -19,10 +19,18 @@ namespace InMemoryStorage.Interfaces
         List<T> All { get; }
 
         /// <summary>
+        /// Inserts the given object into the collection.
+        /// The "replaceKey" parameter controls if the
+        /// collection should replace the key with an
+        /// internally managed key.
+        /// </summary>
+        void Insert(T obj, bool replaceKey = true);
+
+        /// <summary>
         /// Reads the object in the collection which
         /// matches the given key (if any)
         /// </summary>
-        T Read(int key);
+        T Get(int key);
 
         /// <summary>
         /// Reads the object in the collection which
@@ -31,12 +39,10 @@ namespace InMemoryStorage.Interfaces
         T this[int key] { get; }
 
         /// <summary>
-        /// Inserts the given object into the collection.
-        /// The "replaceKey" parameter controls if the
-        /// collection should replace the key with an
-        /// internally managed key.
+        /// Deletes the object matching the key (if any)
+        /// from the collection.
         /// </summary>
-        void Insert(T obj, bool replaceKey = true);
+        void Remove(int key);
 
         /// <summary>
         /// Inserts all the given objects into the collection.
@@ -46,15 +52,11 @@ namespace InMemoryStorage.Interfaces
         /// </summary>
         void InsertAll(List<T> objects, bool replaceKey = true);
 
-        /// <summary>
-        /// Deletes the object matching the key (if any)
-        /// from the collection.
-        /// </summary>
-        void Delete(int key);
+        void ReplaceAll(List<T> objects, bool replaceKey = true);
 
         /// <summary>
         /// Delete all objects from the collection.
         /// </summary>
-        void DeleteAll();
+        void RemoveAll();
     }
 }

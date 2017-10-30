@@ -1,4 +1,4 @@
-﻿namespace Persistency.Interfaces
+﻿namespace Catalog.Interfaces
 {
     /// <summary>
     /// Interface for any client that wishes 
@@ -6,7 +6,7 @@
     /// functionality, like e.g. registering
     /// callback methods at a manager delegate, etc..
     /// </summary>
-    public interface IManaged
+    public interface IManagedCatalog
     {
         void Manage();
     }

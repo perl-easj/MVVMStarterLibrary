@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Persistency.Interfaces;
+using StringPersistency.Interfaces;
 
 namespace FilePersistency.Implementation
 {
@@ -11,25 +12,25 @@ namespace FilePersistency.Implementation
     /// IStringPersistence implementation to a 
     /// IDataConverter implementation.
     /// </summary>
-    /// <typeparam name="T">
+    /// <typeparam name="TDTO">
     /// Type of objects to load/save.
     /// </typeparam>
-    public class FileSource<T> : IPersistentSource<T>
+    public class FileSource<TDTO> : IPersistentSource<TDTO>
     {
         private string _fileName;
         private IStringPersistence _stringPersistence;
-        private IDataConverter<T> _dataConverter;
+        private IStringConverter<TDTO> _stringConverter;
 
         /// <summary>
         /// If nothing else is specified, data is stored 
         /// in a text file  called (NameOfClass)Model.dat, 
         /// for instance CarModel.dat.
         /// </summary>
-        public FileSource(IStringPersistence stringPersistence, IDataConverter<T> dataConverter, string fileSuffix = "Model.dat")
+        public FileSource(IStringPersistence stringPersistence, IStringConverter<TDTO> stringConverter, string fileSuffix = "Model.dat")
         {
             _stringPersistence = stringPersistence;
-            _dataConverter = dataConverter;
-            _fileName = typeof(T).Name + fileSuffix;
+            _stringConverter = stringConverter;
+            _fileName = typeof(TDTO).Name + fileSuffix;
         }
 
         /// <summary>
@@ -38,10 +39,10 @@ namespace FilePersistency.Implementation
         /// <returns>
         /// List of loaded objects, wrapped in an awaitable Task.
         /// </returns>
-        public async Task<List<T>> Load()
+        public async Task<List<TDTO>> Load()
         {
             string data = await _stringPersistence.LoadAsync(_fileName);
-            return _dataConverter.ConvertFromString(data);
+            return _stringConverter.ConvertFromString(data);
         }
 
         /// <summary>
@@ -50,16 +51,16 @@ namespace FilePersistency.Implementation
         /// <param name="objects">
         /// List of objects to save
         /// </param>
-        public Task Save(List<T> objects)
+        public Task Save(List<TDTO> objects)
         {
-            string data = _dataConverter.ConvertToString(objects);
+            string data = _stringConverter.ConvertToString(objects);
             return _stringPersistence.SaveAsync(_fileName, data);
         }
 
         /// <summary>
         /// File-based persistence does not support this operation.
         /// </summary>
-        public Task Create(T obj)
+        public Task Create(TDTO obj)
         {
             throw new NotSupportedException("Create not supported for File Persistency");
         }
@@ -67,7 +68,7 @@ namespace FilePersistency.Implementation
         /// <summary>
         /// File-based persistence does not support this operation.
         /// </summary>
-        public Task<T> Read(int key)
+        public Task<TDTO> Read(int key)
         {
             throw new NotSupportedException("Read not supported for File Persistency");
         }
@@ -75,7 +76,7 @@ namespace FilePersistency.Implementation
         /// <summary>
         /// File-based persistence does not support this operation.
         /// </summary>
-        public Task Update(int key, T obj)
+        public Task Update(int key, TDTO obj)
         {
             throw new NotSupportedException("Update not supported for File Persistency");
         }

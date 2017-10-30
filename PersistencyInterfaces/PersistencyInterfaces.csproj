@@ -107,12 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDataConverter.cs" />
-    <Compile Include="IManaged.cs" />
-    <Compile Include="IPersistable.cs" />
     <Compile Include="IPersistencyManager.cs" />
     <Compile Include="IPersistentSource.cs" />
-    <Compile Include="IStringPersistence.cs" />
     <Compile Include="PersistencyOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\PersistencyInterfaces.rd.xml" />

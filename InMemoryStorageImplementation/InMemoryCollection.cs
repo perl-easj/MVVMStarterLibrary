@@ -48,44 +48,6 @@ namespace InMemoryStorage.Implementation
         }
 
         /// <summary>
-        /// Insert a set of objects into the collection. The existing
-        /// objects are all deleted.
-        /// </summary>
-        /// <param name="objects">
-        /// Storable objects to insert.
-        /// </param>
-        /// <param name="replaceKey">
-        /// Specifies if the Key value should be overwritten for each object.
-        /// </param>
-        public void InsertAll(List<T> objects, bool replaceKey = true)
-        {
-            DeleteAll();
-            foreach (var obj in objects)
-            {
-                Insert(obj, replaceKey);
-            }
-        }
-
-        /// <summary>
-        /// Deletes a single object from the collection
-        /// </summary>
-        /// <param name="key">
-        /// Key for object to delete from collection
-        /// </param>
-        public void Delete(int key)
-        {
-            _collection.Remove(key);
-        }
-
-        /// <summary>
-        /// Deletes all objects from the collection unconditionally.
-        /// </summary>
-        public void DeleteAll()
-        {
-            _collection.Clear();
-        }
-
-        /// <summary>
         /// Retrieves the object corresponding to the given key
         /// </summary>
         /// <param name="key">
@@ -95,7 +57,7 @@ namespace InMemoryStorage.Implementation
         /// The object corresponding to the given key.
         /// Null is returned if no matching object is found.
         /// </returns>
-        public T Read(int key)
+        public T Get(int key)
         {
             return _collection.ContainsKey(key) ? _collection[key] : null;
         }
@@ -111,7 +73,53 @@ namespace InMemoryStorage.Implementation
         /// </returns>
         public T this[int key]
         {
-            get { return Read(key); }
+            get { return Get(key); }
+        }
+
+        /// <summary>
+        /// Deletes a single object from the collection
+        /// </summary>
+        /// <param name="key">
+        /// Key for object to delete from collection
+        /// </param>
+        public void Remove(int key)
+        {
+            _collection.Remove(key);
+        }
+
+        /// <summary>
+        /// Insert a set of objects into the collection. The existing
+        /// objects are all deleted.
+        /// </summary>
+        /// <param name="objects">
+        /// Storable objects to insert.
+        /// </param>
+        /// <param name="replaceKey">
+        /// Specifies if the Key value should be overwritten for each object.
+        /// </param>
+        public void InsertAll(List<T> objects, bool replaceKey = true)
+        {
+            foreach (var obj in objects)
+            {
+                Insert(obj, replaceKey);
+            }
+        }
+
+        public void ReplaceAll(List<T> objects, bool replaceKey = true)
+        {
+            RemoveAll();
+            foreach (var obj in objects)
+            {
+                Insert(obj, replaceKey);
+            }
+        }
+
+        /// <summary>
+        /// Deletes all objects from the collection unconditionally.
+        /// </summary>
+        public void RemoveAll()
+        {
+            _collection.Clear();
         }
 
         /// <summary>

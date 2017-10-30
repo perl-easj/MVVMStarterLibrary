@@ -124,16 +124,24 @@
       <HintPath>..\ControllerInterfaces\bin\Debug\ControllerInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="DataControllerImplementation">
-      <HintPath>..\DataControllerImplementation\bin\Debug\DataControllerImplementation.dll</HintPath>
+      <HintPath>..\DataControllerImplementation\obj\Debug\DataControllerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="DataTransformationInterfaces">
       <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CatalogInterfaces\CatalogInterfaces.csproj">
+      <Project>{833D4C2C-9C8E-407D-BE7A-89FA7CE521D8}</Project>
+      <Name>CatalogInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommandImplementation\CommandImplementation.csproj">
       <Project>{F9A5EDDF-E3D7-49CF-BC63-74C1532415B4}</Project>
       <Name>CommandImplementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
+      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
+      <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

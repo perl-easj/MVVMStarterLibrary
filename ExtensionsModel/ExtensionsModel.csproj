@@ -104,16 +104,12 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ClassDiagram1.cd" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\ClassWithImage.cs" />
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
-    <Compile Include="Implementation\PersistentCollection.cs" />
-    <Compile Include="Implementation\PersistentCollectionNoTransformation.cs" />
-    <Compile Include="Implementation\PersistentCollectionWithTransformation.cs" />
     <Compile Include="Implementation\WebAPIPersistableCatalog.cs" />
-    <Compile Include="Interfaces\IClassWithImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />
   </ItemGroup>
@@ -132,6 +128,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CatalogImplementation">
+      <HintPath>..\CatalogImplementation\bin\Debug\CatalogImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="CatalogInterfaces">
+      <HintPath>..\CatalogInterfaces\bin\Debug\CatalogInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="DataTransformationImplementation">
       <HintPath>..\DataTransformationImplementation\bin\Debug\DataTransformationImplementation.dll</HintPath>
     </Reference>
@@ -143,6 +145,9 @@
     </Reference>
     <Reference Include="PersistencyInterfaces">
       <HintPath>..\PersistencyInterfaces\bin\Debug\PersistencyInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="StringPersistencyInterfaces">
+      <HintPath>..\StringPersistencyInterfaces\bin\Debug\StringPersistencyInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="WebAPI">
       <HintPath>..\WebAPI\bin\Debug\WebAPI.dll</HintPath>

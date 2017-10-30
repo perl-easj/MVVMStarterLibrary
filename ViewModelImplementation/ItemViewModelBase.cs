@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using DataTransformation.Implementation;
-using DataTransformation.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation
@@ -15,11 +14,11 @@ namespace ViewModel.Implementation
     /// can be directly accessed for implementing the 
     /// "generic" Item ViewModel properties.
     /// </summary>
-    public abstract class ItemViewModelBase<TDO> : 
-        TypedTransformedDataWrapper<TDO>, 
+    public abstract class ItemViewModelBase<TVMO> : 
+        DataWrapper<TVMO>, 
         IItemViewModelDescription,
         IItemViewModelImage 
-        where TDO : class
+        where TVMO : class
     {
         #region Properties (override in model-specific item view model)
         /// <summary>
@@ -77,7 +76,7 @@ namespace ViewModel.Implementation
         }
         #endregion
 
-        protected ItemViewModelBase(ITransformedData obj) : base(obj)
+        protected ItemViewModelBase(TVMO obj) : base(obj)
         {
         }
     }

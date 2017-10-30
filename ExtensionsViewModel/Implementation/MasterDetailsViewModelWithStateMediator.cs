@@ -1,6 +1,7 @@
 ﻿using System;
 using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
+using ExtensionsViewModel.Interfaces;
 using ViewModel.Interfaces;
 // ReSharper disable UnusedMember.Local
 
@@ -11,20 +12,21 @@ namespace ExtensionsViewModel.Implementation
     /// mediation between elements in a Master/Details 
     /// ViewModel object with view state.
     /// </summary>
-    public class MasterDetailsViewModelWithStateMediator : IMasterDetailsViewModelWithStateMediator
+    public class MasterDetailsViewModelWithStateMediator<T, TVMO> : IMasterDetailsViewModelWithStateMediator<TVMO> 
+        where TVMO : class, ITransformed<T>
     {
         #region Instance fields
-        private MasterDetailsViewModelWithState _masterDetailsViewModel;
-        private IViewModelFactory _viewModelFactory;
+        private MasterDetailsViewModelWithState<T, TVMO> _masterDetailsViewModel;
+        private IViewModelFactory<TVMO> _viewModelFactory;
         #endregion
 
         #region Constructor
         public MasterDetailsViewModelWithStateMediator(
-    MasterDetailsViewModelWithState masterDetailsViewModel,
-    IViewModelFactory viewModelFactory)
+            MasterDetailsViewModelWithState<T, TVMO> masterDetailsViewModel,
+            IViewModelFactory<TVMO> viewModelFactory)
         {
-            _masterDetailsViewModel = masterDetailsViewModel ?? throw new ArgumentNullException(nameof(MasterDetailsViewModelWithStateMediator));
-            _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(MasterDetailsViewModelWithStateMediator));
+            _masterDetailsViewModel = masterDetailsViewModel ?? throw new ArgumentNullException(nameof(_masterDetailsViewModel));
+            _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(_viewModelFactory));
         }
         #endregion
 
@@ -35,7 +37,7 @@ namespace ExtensionsViewModel.Implementation
         /// <param name="tdoWrapper">
         /// New selection.
         /// </param>
-        public void OnItemSelectionChanged(ITransformedDataWrapper tdoWrapper)
+        public void OnItemSelectionChanged(IDataWrapper<TVMO> tdoWrapper)
         {
             if (tdoWrapper == null)
             {
@@ -43,12 +45,11 @@ namespace ExtensionsViewModel.Implementation
             }
             else
             {
-                // If in the Update state, the Details ViewModel object 
-                // will now refer to a clone of the selected transformed 
-                // data object. Otherwise, the Details ViewModel object 
-                // will refer directly to the selected transformed data object.
+                // If in the Update state, the Details ViewModel object will
+                // now refer to a clone of the VMO. Otherwise, the Details 
+                // ViewModel object will refer directly to the selected VMO.
                 _masterDetailsViewModel.ItemDetails = (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState) ?
-                    _viewModelFactory.CreateDetailsViewModelFromClonedTDO(tdoWrapper.DataObject) :
+                    _viewModelFactory.CreateDetailsViewModelFromClonedVMO(tdoWrapper.DataObject) :
                     _viewModelFactory.CreateDetailsViewModel(tdoWrapper.DataObject);
             }
 
@@ -59,9 +60,9 @@ namespace ExtensionsViewModel.Implementation
         /// <summary>
         /// Handle changes in underlying model.
         /// </summary>
-        public void OnModelChanged()
+        public void OnCatalogChanged()
         {
-            // If the underlying model changes, the Item selection 
+            // If the underlying catalog changes, the Item selection 
             // is set to null (no selection). The ItemCollection 
             // property is also notified, such that Views binding 
             // to this property can re-read the collection.
@@ -73,7 +74,7 @@ namespace ExtensionsViewModel.Implementation
             // will be populated with default values.
             if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
             {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewTDO();
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewVMO();
             }
         }
 
@@ -90,15 +91,15 @@ namespace ExtensionsViewModel.Implementation
             // will be populated with default values.
             if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
             {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewTDO();
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewVMO();
             }
 
             // If in the Update state - and an Item is selected - 
             // the Details ViewModel object will now refer to a 
-            // clone of the selected DTO.
+            // clone of the selected VMO.
             if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState && _masterDetailsViewModel.ItemSelected != null)
             {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromClonedTDO(_masterDetailsViewModel.ItemSelected.DataObject);
+                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromClonedVMO(_masterDetailsViewModel.ItemSelected.DataObject);
             }
 
             // All commands are notified
@@ -121,7 +122,7 @@ namespace ExtensionsViewModel.Implementation
             _masterDetailsViewModel.StateCommandManager.Notify();
         }
 
-        private ITransformedDataWrapper SetDetailsObject(ITransformedDataWrapper itemDtoWrapper)
+        private IDataWrapper<TVMO> SetDetailsObject(IDataWrapper<TVMO> itemDtoWrapper)
         {
             if (itemDtoWrapper == null)
             {
@@ -131,12 +132,12 @@ namespace ExtensionsViewModel.Implementation
             {
                 if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState)
                 {
-                    return _viewModelFactory.CreateDetailsViewModelFromClonedTDO(itemDtoWrapper.DataObject);
+                    return _viewModelFactory.CreateDetailsViewModelFromClonedVMO(itemDtoWrapper.DataObject);
                 }
 
                 if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
                 {
-                    return _viewModelFactory.CreateDetailsViewModelFromNewTDO();
+                    return _viewModelFactory.CreateDetailsViewModelFromNewVMO();
                 }
 
                 return _viewModelFactory.CreateDetailsViewModel(itemDtoWrapper.DataObject);

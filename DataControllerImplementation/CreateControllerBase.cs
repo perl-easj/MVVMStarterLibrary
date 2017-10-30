@@ -1,13 +1,14 @@
-﻿using DataTransformation.Interfaces;
+﻿using Catalog.Interfaces;
+using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
 {
     /// <summary>
     /// Implementation of a generic Insert operation.
     /// </summary>
-    public class CreateControllerBase : CRUDControllerBase
+    public class CreateControllerBase<TVMO> : CRUDControllerBase<TVMO>
     {
-        public CreateControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
+        public CreateControllerBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
             : base(source, target)
         {
         }
@@ -18,7 +19,7 @@ namespace DataController.Implementation
         /// </summary>
         public override void Run()
         {
-            Target.InsertTransformed(Source.DataObject);
+            Target.Create(Source.DataObject);
         }
     }
 }

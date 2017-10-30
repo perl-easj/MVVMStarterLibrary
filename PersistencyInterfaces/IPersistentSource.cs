@@ -9,10 +9,10 @@ namespace Persistency.Interfaces
     /// loaded/saved. The interface allows 
     /// for an asynchronous implementation.
     /// </summary>
-    /// <typeparam name="T">
+    /// <typeparam name="TDTO">
     /// Type of loaded/saved objects.
     /// </typeparam>
-    public interface IPersistentSource<T>
+    public interface IPersistentSource<TDTO>
     {
         /// <summary>
         /// Save the given List of objects to the source
@@ -20,7 +20,7 @@ namespace Persistency.Interfaces
         /// <param name="objects">
         /// List of objects to save
         /// </param>
-        Task Save(List<T> objects);
+        Task Save(List<TDTO> objects);
 
         /// <summary>
         /// Load a List of objects from the source.
@@ -28,13 +28,13 @@ namespace Persistency.Interfaces
         /// <returns>
         /// List of loaded objects, wrapped in an awaitable Task object.
         /// </returns>
-        Task<List<T>> Load();
+        Task<List<TDTO>> Load();
 
         /// <summary>
         /// Create the given object in the persistent source
         /// </summary>
         /// <param name="obj">Object to create</param>
-        Task Create(T obj);
+        Task Create(TDTO obj);
 
         /// <summary>
         /// Reads a single object from the source,
@@ -45,7 +45,7 @@ namespace Persistency.Interfaces
         /// Object matching the provided key, wrapped 
         /// in an awaitable Task object.
         /// </returns>
-        Task<T> Read(int key);
+        Task<TDTO> Read(int key);
 
         /// <summary>
         /// Updates a single object in the source,
@@ -53,7 +53,7 @@ namespace Persistency.Interfaces
         /// </summary>
         /// <param name="key">Key for object to update</param>
         /// <param name="obj">Object to update</param>
-        Task Update(int key, T obj);
+        Task Update(int key, TDTO obj);
 
         /// <summary>
         /// Deletes a single object from the source,

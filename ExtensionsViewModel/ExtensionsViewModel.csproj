@@ -104,6 +104,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ClassDiagram1.cd" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +112,7 @@
     <Compile Include="Implementation\CRUDViewStateService.cs" />
     <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
     <Compile Include="Implementation\ItemViewModelWithImage.cs" />
-    <Compile Include="Implementation\MasterDetailsViewModelDefault.cs" />
+    <Compile Include="Implementation\MasterDetailsViewModelCRUD.cs" />
     <Compile Include="Implementation\MasterDetailsViewModelWithStateMediator.cs" />
     <Compile Include="Implementation\MasterDetailsViewModelWithState.cs" />
     <Compile Include="Interfaces\ICRUDControlStateService.cs" />
@@ -167,6 +168,12 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CatalogImplementation">
+      <HintPath>..\CatalogImplementation\bin\Debug\CatalogImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="CatalogInterfaces">
+      <HintPath>..\CatalogInterfaces\bin\Debug\CatalogInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="CommandImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CommandImplementation\bin\Debug\CommandImplementation.dll</HintPath>

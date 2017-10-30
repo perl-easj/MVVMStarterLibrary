@@ -1,4 +1,5 @@
-﻿using Controller.Interfaces;
+﻿using Catalog.Interfaces;
+using Controller.Interfaces;
 using DataTransformation.Interfaces;
 
 namespace DataController.Implementation
@@ -12,12 +13,12 @@ namespace DataController.Implementation
     /// and perform the operation itself on implementation 
     /// of ITransformedDataCollection.
     /// </summary>
-    public abstract class CRUDControllerBase : ISimpleController 
+    public abstract class CRUDControllerBase<TVMO> : ISimpleController 
     {
-        protected ITransformedDataWrapper Source;
-        protected ITransformedDataCollection Target;
+        protected IDataWrapper<TVMO> Source;
+        protected ICatalog<TVMO> Target;
 
-        protected CRUDControllerBase(ITransformedDataWrapper source, ITransformedDataCollection target)
+        protected CRUDControllerBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
         {
             Source = source;
             Target = target;

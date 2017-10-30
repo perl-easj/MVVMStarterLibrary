@@ -1,4 +1,5 @@
-﻿using Command.Implementation;
+﻿using Catalog.Interfaces;
+using Command.Implementation;
 using DataTransformation.Interfaces;
 
 namespace DataCommand.Implementation
@@ -8,22 +9,23 @@ namespace DataCommand.Implementation
     /// Specific implementation of criteria for command execution
     /// are deferred to sub-classes.
     /// </summary>
-    public abstract class CRUDCommandManager : CommandManager
+    public abstract class CRUDCommandManager<T, TVMO> : CommandManager 
+        where TVMO : class, ITransformed<T>
     {
-        private ITransformedDataWrapper _source;
+        private IDataWrapper<TVMO> _source;
 
         /// <summary>
         /// Constructor. Registers commands for Create, Update and Delete.
         /// </summary>
         /// <param name="source">Data source for commands</param>
         /// <param name="target">Target collection for commands</param>
-        protected CRUDCommandManager(ITransformedDataWrapper source, ITransformedDataCollection target)
+        protected CRUDCommandManager(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
         {
             _source = source;
 
-            AddCommand(CRUDCommands.CreateCommand, new CreateCommandBase(source, target, CanDoCreate));
-            AddCommand(CRUDCommands.UpdateCommand, new UpdateCommandBase(source, target, CanDoUpdate));
-            AddCommand(CRUDCommands.DeleteCommand, new DeleteCommandBase(source, target, CanDoDelete));
+            AddCommand(CRUDCommands.CreateCommand, new CreateCommandBase<TVMO>(source, target, CanDoCreate));
+            AddCommand(CRUDCommands.UpdateCommand, new UpdateCommandBase<T, TVMO>(source, target, CanDoUpdate));
+            AddCommand(CRUDCommands.DeleteCommand, new DeleteCommandBase<T, TVMO>(source, target, CanDoDelete));
         }
 
         /// <summary>

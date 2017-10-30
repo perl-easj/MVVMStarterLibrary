@@ -1,4 +1,5 @@
 ﻿using System;
+using Catalog.Interfaces;
 using DataController.Implementation;
 using DataTransformation.Interfaces;
 
@@ -7,10 +8,11 @@ namespace DataCommand.Implementation
     /// <summary>
     /// Implementation of a generic Update command.
     /// </summary>
-    public class UpdateCommandBase : CRUDCommandBase
+    public class UpdateCommandBase<T, TVMO> : CRUDCommandBase
+        where TVMO : class, ITransformed<T>
     {
-        public UpdateCommandBase(ITransformedDataWrapper source, ITransformedDataCollection target, Func<bool> condition)
-            : base(source, target, new UpdateControllerBase(source, target), condition)
+        public UpdateCommandBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target, Func<bool> condition)
+            : base(new UpdateControllerBase<T, TVMO>(source, target), condition)
         {
         }
     }

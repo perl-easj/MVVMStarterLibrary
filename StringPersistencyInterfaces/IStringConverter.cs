@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Persistency.Interfaces
+namespace StringPersistency.Interfaces
 {
     /// <summary>
     /// Interface for conversion between a List of objects
@@ -10,7 +10,7 @@ namespace Persistency.Interfaces
     /// <typeparam name="T">
     /// Type of objects.
     /// </typeparam>
-    public interface IDataConverter<T>
+    public interface IStringConverter<T>
     {
         string ConvertToString(List<T> objects);
         List<T> ConvertFromString(string data);

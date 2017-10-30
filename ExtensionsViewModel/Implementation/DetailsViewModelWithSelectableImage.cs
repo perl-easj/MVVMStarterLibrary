@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using DataTransformation.Interfaces;
 using ExtensionsServices.Implementation;
 using Images.Interfaces;
 using ViewModel.Implementation;
@@ -13,12 +12,12 @@ namespace ExtensionsViewModel.Implementation
     /// objects are provided by the Images service. 
     /// The image is identified by a numeric key (ImageKey).
     /// </summary>
-    public abstract class DetailsViewModelWithSelectableImage<TDO> : DetailsViewModelBase<TDO> 
-        where TDO : class
+    public abstract class DetailsViewModelWithSelectableImage<TVMO> : DetailsViewModelBase<TVMO> 
+        where TVMO : class
     {
         private string _tag;
 
-        protected DetailsViewModelWithSelectableImage(ITransformedData obj, string tag)
+        protected DetailsViewModelWithSelectableImage(TVMO obj, string tag)
             : base(obj)
         {
             _tag = tag;

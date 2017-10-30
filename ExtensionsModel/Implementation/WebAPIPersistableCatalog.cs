@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Catalog.Implementation;
 using DataTransformation.Interfaces;
 using InMemoryStorage.Implementation;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
-using WebAPI;
+using WebAPI.Implementation;
 
 namespace ExtensionsModel.Implementation
 {
@@ -14,18 +15,12 @@ namespace ExtensionsModel.Implementation
     ///    supporting Load, Create and Delete
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
-    public abstract class WebAPIPersistableCatalog<T, TTDO> : PersistentCollectionWithTransformation<T>
+    public abstract class WebAPIPersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
         where T : class, IStorable 
-        where TTDO : ITransformedData
+        where TDTO : ITransformed<T>
     {
-        protected WebAPIPersistableCatalog(
-            string url, 
-            string apiID, 
-            ITransformedDataFactory<T> viewDataFactory, 
-            ITransformedDataFactory<T> sourceDataFactory)
-            : base(new WebAPISource<T, TTDO>(sourceDataFactory, url, apiID), 
-                   new InMemoryCollection<T>(),
-                   viewDataFactory,
+        protected WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
+            : base(new InMemoryCollection<T>(), new WebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
                    new List<PersistencyOperations> { PersistencyOperations.Load, PersistencyOperations.Create, PersistencyOperations.Delete })
         {
         }
