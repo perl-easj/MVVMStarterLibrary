@@ -21,7 +21,14 @@ namespace ExtensionsModel.Implementation
     {
         protected WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
             : base(new InMemoryCollection<T>(), new WebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
-                   new List<PersistencyOperations> { PersistencyOperations.Load, PersistencyOperations.Create, PersistencyOperations.Delete })
+                   new List<PersistencyOperations>
+                   {
+                       PersistencyOperations.Load,
+                       PersistencyOperations.Create,
+                       PersistencyOperations.Read,
+                       PersistencyOperations.Update,
+                       PersistencyOperations.Delete
+                   })
         {
         }
     }
