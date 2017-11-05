@@ -20,7 +20,7 @@ namespace ExtensionsModel.Implementation
         where T : class, IStorable, ITransformed<T>, new()
     {
         protected FilePersistableCatalog(IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory) 
-            : base(new InMemoryCollection<T>(), new FileSource<TDTO>(new FileStringPersistence(), new JSONConverter<TDTO>()),
+            : base(new InMemoryCollection<T>(), new ConfiguredFileSource<TDTO>(new FileStringPersistence(), new JSONConverter<TDTO>()),
                    vmFactory, dtoFactory, new List<PersistencyOperations> {PersistencyOperations.Load, PersistencyOperations.Save})
         {
         }

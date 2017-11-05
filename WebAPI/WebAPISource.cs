@@ -8,13 +8,12 @@ using Persistency.Interfaces;
 namespace WebAPI.Implementation
 {
     /// <summary>
-    /// Implementation of the IPersistentSource interface,
-    /// using a RESTful Web Service. Original data objects
-    /// are transformed before being provided to the
-    /// HTTPClient methods.
+    /// Implementation of IDataSource... interfaces, using a 
+    /// RESTful Web Service. Original data objects are transformed 
+    /// before being provided to the HTTPClient methods.
     /// </summary>
     /// <typeparam name="TDTO">Type of Data Transfer objects</typeparam>
-    public class WebAPISource<TDTO> : IPersistentSource<TDTO> 
+    public class WebAPISource<TDTO> : IDataSourceCRUD<TDTO>, IDataSourceLoad<TDTO>
     {
         private enum APIMethod { Load, Create, Read, Update, Delete }
 
@@ -49,14 +48,6 @@ namespace WebAPI.Implementation
             // Retrieve DTO from Web Service
             string requestURI = BuildRequestURI(APIMethod.Load);
             return await InvokeHTTPClientMethodWithReturnValueAsync<List<TDTO>>(() => _httpClient.GetAsync(requestURI));
-        }
-
-        /// <summary>
-        /// Save operation is not supported by a Web Service
-        /// </summary>
-        public Task Save(List<TDTO> objects)
-        {
-            throw new NotSupportedException("Save not supported for WebAPI Persistency (Use Create/Delete)");
         }
 
         /// <summary>

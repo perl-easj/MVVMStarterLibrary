@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfiguredFileSource.cs" />
     <Compile Include="FileSource.cs" />
     <Compile Include="FileStringPersistence.cs" />
     <Compile Include="JSONConverter.cs" />
@@ -120,6 +121,12 @@
     <Reference Include="StringPersistencyInterfaces">
       <HintPath>..\StringPersistencyInterfaces\bin\Debug\StringPersistencyInterfaces.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersistencyImplementation\PersistencyImplementation.csproj">
+      <Project>{05E85605-BD0B-433F-B428-2A522845705F}</Project>
+      <Name>PersistencyImplementation</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

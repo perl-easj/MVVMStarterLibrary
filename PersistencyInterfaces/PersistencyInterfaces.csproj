@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDataSourceCRUD.cs" />
+    <Compile Include="IDataSourceLoad.cs" />
+    <Compile Include="IDataSourceSave.cs" />
     <Compile Include="IPersistencyManager.cs" />
     <Compile Include="IPersistentSource.cs" />
     <Compile Include="PersistencyOperations.cs" />

@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\FilePersistableCatalog.cs" />
+    <Compile Include="Implementation\FilePersistableCatalogNoDTO.cs" />
     <Compile Include="Implementation\WebAPIPersistableCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ExtensionsModel.rd.xml" />

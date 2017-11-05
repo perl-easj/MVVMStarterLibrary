@@ -107,6 +107,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfiguredPersistentSource.cs" />
+    <Compile Include="DataSourceCRUDNotSupported.cs" />
+    <Compile Include="DataSourceLoadNotSupported.cs" />
+    <Compile Include="DataSourceOperaitonNotSupportedException.cs" />
+    <Compile Include="DataSourceSaveNotSupported.cs" />
     <Compile Include="PersistencyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\PersistencyImplementation.rd.xml" />

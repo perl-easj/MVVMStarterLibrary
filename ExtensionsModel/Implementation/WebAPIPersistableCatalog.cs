@@ -20,7 +20,7 @@ namespace ExtensionsModel.Implementation
         where TDTO : ITransformed<T>
     {
         protected WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
-            : base(new InMemoryCollection<T>(), new WebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
+            : base(new InMemoryCollection<T>(), new ConfiguredWebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
                    new List<PersistencyOperations>
                    {
                        PersistencyOperations.Load,
