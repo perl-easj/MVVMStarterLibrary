@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Implementation\ControlState.cs" />
     <Compile Include="Implementation\ControlStateService.cs" />
-    <Compile Include="Interfaces\IHasControlStates.cs" />
     <Compile Include="Interfaces\IControlState.cs" />
     <Compile Include="Interfaces\IControlStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

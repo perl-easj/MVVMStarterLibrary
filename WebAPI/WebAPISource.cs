@@ -45,9 +45,7 @@ namespace WebAPI.Implementation
         /// <returns>List of domain objects</returns>
         public async Task<List<TDTO>> Load()
         {
-            // Retrieve DTO from Web Service
-            string requestURI = BuildRequestURI(APIMethod.Load);
-            return await InvokeHTTPClientMethodWithReturnValueAsync<List<TDTO>>(() => _httpClient.GetAsync(requestURI));
+            return await InvokeHTTPClientMethodWithReturnValueAsync<List<TDTO>>(() => _httpClient.GetAsync(BuildRequestURI(APIMethod.Load)));
         }
 
         /// <summary>

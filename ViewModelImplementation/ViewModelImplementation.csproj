@@ -110,6 +110,7 @@
     <Compile Include="DetailsViewModelBase.cs" />
     <Compile Include="ItemViewModelBase.cs" />
     <Compile Include="MasterDetailsViewModelBase.cs" />
+    <Compile Include="MasterDetailsViewModelMediatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelFactoryBase.cs" />
     <EmbeddedResource Include="Properties\ViewModelImplementation.rd.xml" />

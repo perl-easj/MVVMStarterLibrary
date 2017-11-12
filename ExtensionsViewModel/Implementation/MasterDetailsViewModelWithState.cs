@@ -21,8 +21,7 @@ namespace ExtensionsViewModel.Implementation
     /// </summary>
     public abstract class MasterDetailsViewModelWithState<T, TVMO> : 
         MasterDetailsViewModelBase<T, TVMO>, 
-        IHasViewState, 
-        IHasControlStates where TVMO : class, ITransformed<T>
+        IHasViewState where TVMO : class, ITransformed<T>
     {
         #region Instance fields
         private IControlStateService _controlStateService;

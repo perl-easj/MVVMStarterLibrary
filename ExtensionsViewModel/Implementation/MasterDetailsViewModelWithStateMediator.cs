@@ -2,7 +2,9 @@
 using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
 using ExtensionsViewModel.Interfaces;
+using ViewModel.Implementation;
 using ViewModel.Interfaces;
+
 // ReSharper disable UnusedMember.Local
 
 namespace ExtensionsViewModel.Implementation
@@ -12,72 +14,25 @@ namespace ExtensionsViewModel.Implementation
     /// mediation between elements in a Master/Details 
     /// ViewModel object with view state.
     /// </summary>
-    public class MasterDetailsViewModelWithStateMediator<T, TVMO> : IMasterDetailsViewModelWithStateMediator<TVMO> 
+    public class MasterDetailsViewModelWithStateMediator<T, TVMO> : 
+        MasterDetailsViewModelMediatorBase<T, TVMO>, 
+        IMasterDetailsViewModelWithStateMediator<TVMO> 
         where TVMO : class, ITransformed<T>
     {
         #region Instance fields
-        private MasterDetailsViewModelWithState<T, TVMO> _masterDetailsViewModel;
-        private IViewModelFactory<TVMO> _viewModelFactory;
+        private MasterDetailsViewModelWithState<T, TVMO> _masterDetailsViewModelWS;
         #endregion
 
         #region Constructor
         public MasterDetailsViewModelWithStateMediator(
-            MasterDetailsViewModelWithState<T, TVMO> masterDetailsViewModel,
-            IViewModelFactory<TVMO> viewModelFactory)
+            MasterDetailsViewModelWithState<T, TVMO> masterDetailsViewModelWS,
+            IViewModelFactory<TVMO> viewModelFactory) : base(masterDetailsViewModelWS, viewModelFactory)
         {
-            _masterDetailsViewModel = masterDetailsViewModel ?? throw new ArgumentNullException(nameof(_masterDetailsViewModel));
-            _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(_viewModelFactory));
+            _masterDetailsViewModelWS = masterDetailsViewModelWS ?? throw new ArgumentNullException(nameof(_masterDetailsViewModelWS));
         }
         #endregion
 
         #region Implementation of interface methods
-        /// <summary>
-        /// Handle change in Item selection.
-        /// </summary>
-        /// <param name="tdoWrapper">
-        /// New selection.
-        /// </param>
-        public void OnItemSelectionChanged(IDataWrapper<TVMO> tdoWrapper)
-        {
-            if (tdoWrapper == null)
-            {
-                _masterDetailsViewModel.ItemDetails = null;
-            }
-            else
-            {
-                // If in the Update state, the Details ViewModel object will
-                // now refer to a clone of the VMO. Otherwise, the Details 
-                // ViewModel object will refer directly to the selected VMO.
-                _masterDetailsViewModel.ItemDetails = (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState) ?
-                    _viewModelFactory.CreateDetailsViewModelFromClonedVMO(tdoWrapper.DataObject) :
-                    _viewModelFactory.CreateDetailsViewModel(tdoWrapper.DataObject);
-            }
-
-            // All commands are notified
-            NotifyCommands();
-        }
-
-        /// <summary>
-        /// Handle changes in underlying model.
-        /// </summary>
-        public void OnCatalogChanged()
-        {
-            // If the underlying catalog changes, the Item selection 
-            // is set to null (no selection). The ItemCollection 
-            // property is also notified, such that Views binding 
-            // to this property can re-read the collection.
-            _masterDetailsViewModel.ItemSelected = null;
-            _masterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModel.ItemCollection));
-
-            // If in the Create state, set the Details to refer 
-            // to a fresh Details ViewModel object. This object 
-            // will be populated with default values.
-            if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
-            {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewVMO();
-            }
-        }
-
         /// <summary>
         /// Handle changes in view state.
         /// </summary>
@@ -89,17 +44,17 @@ namespace ExtensionsViewModel.Implementation
             // If in the Create state, set the Details to refer 
             // to a fresh Details ViewModel object. This object 
             // will be populated with default values.
-            if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
+            if (_masterDetailsViewModelWS.ViewState == CRUDStates.CreateState)
             {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromNewVMO();
+                MasterDetailsViewModel.ItemDetails = ViewModelFactory.CreateDetailsViewModelFromNewVMO();
             }
 
             // If in the Update state - and an Item is selected - 
             // the Details ViewModel object will now refer to a 
             // clone of the selected VMO.
-            if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState && _masterDetailsViewModel.ItemSelected != null)
+            if (_masterDetailsViewModelWS.ViewState == CRUDStates.UpdateState && MasterDetailsViewModel.ItemSelected != null)
             {
-                _masterDetailsViewModel.ItemDetails = _viewModelFactory.CreateDetailsViewModelFromClonedVMO(_masterDetailsViewModel.ItemSelected.DataObject);
+                MasterDetailsViewModel.ItemDetails = ViewModelFactory.CreateDetailsViewModelFromClonedVMO(MasterDetailsViewModel.ItemSelected.DataObject);
             }
 
             // All commands are notified
@@ -107,42 +62,45 @@ namespace ExtensionsViewModel.Implementation
 
             // Control states should be re-read, 
             // since they may depend on view state.
-            _masterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModel.ControlStates));
+            MasterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModelWS.ControlStates));
         }
         #endregion
 
-        #region Private helper methods
+        #region Base class overrides
         /// <summary>
         /// All commands are notified, such that the 
         /// CanExecute predicate can be re-evaluated.
         /// </summary>
-        private void NotifyCommands()
+        public override void NotifyCommands()
         {
-            _masterDetailsViewModel.DataCommandManager.Notify();
-            _masterDetailsViewModel.StateCommandManager.Notify();
+            _masterDetailsViewModelWS.DataCommandManager.Notify();
+            _masterDetailsViewModelWS.StateCommandManager.Notify();
         }
 
-        private IDataWrapper<TVMO> SetDetailsObject(IDataWrapper<TVMO> itemDtoWrapper)
+        /// <summary>
+        /// If in the Update state, the Details ViewModel object will
+        /// now refer to a clone of the VMO. Otherwise, the Details
+        /// ViewModel object will refer directly to the selected VMO.
+        /// </summary>
+        public override void SetItemDetailsOnItemSelectionChanged(TVMO vmObj)
         {
-            if (itemDtoWrapper == null)
-            {
-                return null;
-            }
-            else
-            {
-                if (_masterDetailsViewModel.ViewState == CRUDStates.UpdateState)
-                {
-                    return _viewModelFactory.CreateDetailsViewModelFromClonedVMO(itemDtoWrapper.DataObject);
-                }
+            MasterDetailsViewModel.ItemDetails = (_masterDetailsViewModelWS.ViewState == CRUDStates.UpdateState) ?
+                ViewModelFactory.CreateDetailsViewModelFromClonedVMO(vmObj) :
+                ViewModelFactory.CreateDetailsViewModel(vmObj);
+        }
 
-                if (_masterDetailsViewModel.ViewState == CRUDStates.CreateState)
-                {
-                    return _viewModelFactory.CreateDetailsViewModelFromNewVMO();
-                }
-
-                return _viewModelFactory.CreateDetailsViewModel(itemDtoWrapper.DataObject);
+        /// <summary>
+        /// If in the Create state, set the Details to refer 
+        /// to a fresh Details ViewModel object. This object 
+        /// will be populated with default values.
+        /// </summary>
+        public override void SetItemDetailsOnCatalogChanged()
+        {
+            if (_masterDetailsViewModelWS.ViewState == CRUDStates.CreateState)
+            {
+                MasterDetailsViewModel.ItemDetails = ViewModelFactory.CreateDetailsViewModelFromNewVMO();
             }
-        } 
+        }
         #endregion
     }
 }
