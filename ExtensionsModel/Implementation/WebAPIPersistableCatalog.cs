@@ -12,14 +12,15 @@ namespace ExtensionsModel.Implementation
     /// This class injects specific dependencies into 
     /// the PersistentCollectionWithTransformation class:
     /// 1) Data is read from a RESTful web service, 
-    ///    supporting Load, Create and Delete
+    ///    supporting Load + CRUD
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
-    public abstract class WebAPIPersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
+    public class WebAPIPersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
         where T : class, IStorable 
         where TDTO : ITransformed<T>
+        where TVMO : IStorable
     {
-        protected WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
+        public WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
             : base(new InMemoryCollection<T>(), new ConfiguredWebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
                    new List<PersistencyOperations>
                    {

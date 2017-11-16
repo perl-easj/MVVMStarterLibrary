@@ -34,7 +34,8 @@ namespace Persistency.Interfaces
         /// Create the given object in the persistent source
         /// </summary>
         /// <param name="obj">Object to create</param>
-        Task Create(TDTO obj);
+        /// <returns>The resulting key for the created object.</returns>
+        Task<int> Create(TDTO obj);
 
         /// <summary>
         /// Reads a single object from the source,

@@ -109,6 +109,8 @@
   <ItemGroup>
     <Compile Include="Implementation\ViewStateService.cs" />
     <Compile Include="Interfaces\IHasViewState.cs" />
+    <Compile Include="Interfaces\IViewStateChangedEvent.cs" />
+    <Compile Include="Interfaces\IViewStateMediator.cs" />
     <Compile Include="Interfaces\IViewStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ViewState.rd.xml" />

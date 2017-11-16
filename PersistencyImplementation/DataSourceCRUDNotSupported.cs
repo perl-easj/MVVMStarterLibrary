@@ -3,9 +3,13 @@ using Persistency.Interfaces;
 
 namespace Persistency.Implementation
 {
+    /// <summary>
+    /// This class represents a collective "Not Supported" 
+    /// strategy object for all CRUD operations.
+    /// </summary>
     public class DataSourceCRUDNotSupported<TDTO> : IDataSourceCRUD<TDTO>
     {
-        public Task Create(TDTO obj)
+        public Task<int> Create(TDTO obj)
         {
             throw new DataSourceOperationNotSupportedException("Create");
         }

@@ -16,10 +16,5 @@ namespace ViewModel.Interfaces
         /// Newly selected item
         /// </param>
         void OnItemSelectionChanged(IDataWrapper<TVMO> tdoWrapper);
-
-        /// <summary>
-        /// Invoked when the underlying model changes.
-        /// </summary>
-        void OnCatalogChanged();
     }
 }

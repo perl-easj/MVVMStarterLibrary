@@ -1,5 +1,6 @@
 ﻿using DataTransformation.Implementation;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace ExtensionsModel.Implementation
 {
@@ -9,7 +10,8 @@ namespace ExtensionsModel.Implementation
     /// the FilePersistableCatalog class:
     /// </summary>
     public class FilePersistableCatalogNoDTO<T, TVMO> : FilePersistableCatalog<T, TVMO, T>
-        where T : class, ITransformed<T>, new()
+        where T : class, ITransformed<T>, new() 
+        where TVMO : IStorable
     {
         public FilePersistableCatalogNoDTO(IFactory<T, TVMO> vmFactory)
             : base(vmFactory, new IdenticalDataFactory<T>())

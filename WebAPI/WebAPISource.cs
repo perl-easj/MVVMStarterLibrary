@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
 
 namespace WebAPI.Implementation
@@ -13,7 +14,7 @@ namespace WebAPI.Implementation
     /// before being provided to the HTTPClient methods.
     /// </summary>
     /// <typeparam name="TDTO">Type of Data Transfer objects</typeparam>
-    public class WebAPISource<TDTO> : IDataSourceCRUD<TDTO>, IDataSourceLoad<TDTO>
+    public class WebAPISource<TDTO> : IDataSourceCRUD<TDTO>, IDataSourceLoad<TDTO> where TDTO : IStorable
     {
         private enum APIMethod { Load, Create, Read, Update, Delete }
 
@@ -49,12 +50,18 @@ namespace WebAPI.Implementation
         }
 
         /// <summary>
-        /// Implementation of Create method
+        /// Implementation of Create method. Create is a bit atypical,
+        /// since we need to return the key value associated with the
+        /// newly created object. This is relevant if the data is saved
+        /// in a database table, where the table itself chooses the next
+        /// key for the object (e.g. an auto-increment setting)
         /// </summary>
         /// <param name="obj">DTO to create</param>
-        public async Task Create(TDTO obj)
+        public async Task<int> Create(TDTO obj)
         {
-            await InvokeHTTPClientMethodNoReturnValueAsync(() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), obj));
+            HttpResponseMessage response = await InvokeHTTPClientMethodAsync((() => _httpClient.PostAsJsonAsync(BuildRequestURI(APIMethod.Create), obj)));
+            TDTO createdObj = await response.Content.ReadAsAsync<TDTO>();
+            return createdObj.Key;
         }
 
         /// <summary>

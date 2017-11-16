@@ -3,7 +3,6 @@ using Catalog.Interfaces;
 using Command.Interfaces;
 using ControlState.Interfaces;
 using DataTransformation.Interfaces;
-using ExtensionsViewModel.Interfaces;
 using ViewModel.Implementation;
 using ViewModel.Interfaces;
 using ViewState.Interfaces;
@@ -17,11 +16,10 @@ namespace ExtensionsViewModel.Implementation
     /// 2) Control state service
     /// 3) Data commands (commands for invoking data-related operations)
     /// 4) State commands (commands for setting the view in a specific view state)
-    /// 5) Mediator (handles interactions between View Model elements)
+    /// Note that the class does not itself choose specific services/commands
     /// </summary>
-    public abstract class MasterDetailsViewModelWithState<T, TVMO> : 
-        MasterDetailsViewModelBase<T, TVMO>, 
-        IHasViewState where TVMO : class, ITransformed<T>
+    public abstract class MasterDetailsViewModelWithState<T, TVMO> : MasterDetailsViewModelBase<T, TVMO>, IHasViewState 
+        where TVMO : class, ITransformed<T>
     {
         #region Instance fields
         private IControlStateService _controlStateService;
@@ -29,20 +27,18 @@ namespace ExtensionsViewModel.Implementation
 
         private ICommandManager _dataCommands;
         private ICommandManager _stateCommands;
-
-        private IMasterDetailsViewModelWithStateMediator<TVMO> _mediator; 
         #endregion
 
         #region Constructor
         protected MasterDetailsViewModelWithState(IViewModelFactory<TVMO> viewModelFactory, ICatalog<TVMO> catalog)
             : base(viewModelFactory, catalog)
         {
-            // These will be initialised in sub-classes
+            // These will be initialised in sub-classes,
+            // with specific services/commands
             _controlStateService = null;
             _viewStateService = null;
             _dataCommands = null;
             _stateCommands = null;
-            _mediator = null;
         } 
         #endregion
 
@@ -95,14 +91,6 @@ namespace ExtensionsViewModel.Implementation
         public string ViewState
         {
             get { return _viewStateService.ViewState; }
-        }
-        #endregion
-
-        #region Exposure of Mediator
-        public IMasterDetailsViewModelWithStateMediator<TVMO> Mediator
-        {
-            get { return _mediator; }
-            protected set { _mediator = value; }
         }
         #endregion
     }

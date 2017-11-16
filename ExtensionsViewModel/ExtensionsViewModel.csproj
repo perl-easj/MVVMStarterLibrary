@@ -113,10 +113,9 @@
     <Compile Include="Implementation\DetailsViewModelWithSelectableImage.cs" />
     <Compile Include="Implementation\ItemViewModelWithImage.cs" />
     <Compile Include="Implementation\MasterDetailsViewModelCRUD.cs" />
-    <Compile Include="Implementation\MasterDetailsViewModelWithStateMediator.cs" />
+    <Compile Include="Implementation\MasterDetailsViewModelCRUDMediator.cs" />
     <Compile Include="Implementation\MasterDetailsViewModelWithState.cs" />
     <Compile Include="Interfaces\ICRUDControlStateService.cs" />
-    <Compile Include="Interfaces\IMasterDetailsViewModelWithStateMediator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\CRUDControls.cs" />
     <Compile Include="Types\CRUDStateControls.cs" />

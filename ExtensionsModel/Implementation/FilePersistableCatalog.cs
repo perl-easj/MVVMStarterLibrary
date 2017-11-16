@@ -16,10 +16,11 @@ namespace ExtensionsModel.Implementation
     /// 3) The string is on JSON format.
     /// 4) The InMemoryCollection implementation is used.
     /// </summary>
-    public abstract class FilePersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
-        where T : class, IStorable, ITransformed<T>, new()
+    public class FilePersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
+        where T : class, IStorable, ITransformed<T>, new() 
+        where TVMO : IStorable
     {
-        protected FilePersistableCatalog(IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory) 
+        public FilePersistableCatalog(IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory) 
             : base(new InMemoryCollection<T>(), new ConfiguredFileSource<TDTO>(new FileStringPersistence(), new JSONConverter<TDTO>()),
                    vmFactory, dtoFactory, new List<PersistencyOperations> {PersistencyOperations.Load, PersistencyOperations.Save})
         {

@@ -107,8 +107,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ICatalog.cs" />
+    <Compile Include="ICatalogChangedEvent.cs" />
+    <Compile Include="ICatalogMediator.cs" />
     <Compile Include="IManagedCatalog.cs" />
-    <Compile Include="IMonitorableCatalog.cs" />
     <Compile Include="IPersistableCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\CatalogInterfaces.rd.xml" />
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\DataTransformationInterfaces\DataTransformationInterfaces.csproj">
       <Project>{0CA2025D-F752-424F-8473-419E08DB0FFB}</Project>
       <Name>DataTransformationInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
+      <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
+      <Name>InMemoryStorageInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

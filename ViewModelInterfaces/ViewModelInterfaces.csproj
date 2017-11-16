@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IItemSelectionChangedEvent.cs" />
     <Compile Include="IItemViewModelDescription.cs" />
     <Compile Include="IMasterDetailsViewModel.cs" />
     <Compile Include="IItemViewModelImage.cs" />
@@ -119,6 +120,12 @@
     <Reference Include="DataTransformationInterfaces">
       <HintPath>..\DataTransformationInterfaces\bin\Debug\DataTransformationInterfaces.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CatalogInterfaces\CatalogInterfaces.csproj">
+      <Project>{833D4C2C-9C8E-407D-BE7A-89FA7CE521D8}</Project>
+      <Name>CatalogInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

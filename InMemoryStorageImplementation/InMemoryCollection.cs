@@ -35,16 +35,18 @@ namespace InMemoryStorage.Implementation
         /// <param name="obj">
         /// Object to insert.
         /// </param>
-        /// <param name="replaceKey">
-        /// Specifies if the Key value should be overwritten.
+        /// <param name="keyManagement">
+        /// Strategy for selecting the key for the new domain object
         /// </param>
-        public void Insert(T obj, bool replaceKey = true)
+        public int Insert(T obj, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
         {
-            if (replaceKey)
+            if (keyManagement == KeyManagementStrategyType.CollectionDecides)
             {
                 obj.Key = NextKey();
             }
             _collection.Add(obj.Key, obj);
+
+            return obj.Key;
         }
 
         /// <summary>
@@ -94,23 +96,27 @@ namespace InMemoryStorage.Implementation
         /// <param name="objects">
         /// Storable objects to insert.
         /// </param>
-        /// <param name="replaceKey">
-        /// Specifies if the Key value should be overwritten for each object.
+        /// <param name="keyManagement">
+        /// Strategy for selecting the keys for the new domain objects
         /// </param>
-        public void InsertAll(List<T> objects, bool replaceKey = true)
+        public void InsertAll(List<T> objects, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
         {
             foreach (var obj in objects)
             {
-                Insert(obj, replaceKey);
+                Insert(obj, keyManagement);
             }
         }
 
-        public void ReplaceAll(List<T> objects, bool replaceKey = true)
+        /// <summary>
+        /// Replaces all objects currently in the collection
+        /// with the provided set of objects.
+        /// </summary>
+        public void ReplaceAll(List<T> objects, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
         {
             RemoveAll();
             foreach (var obj in objects)
             {
-                Insert(obj, replaceKey);
+                Insert(obj, keyManagement);
             }
         }
 

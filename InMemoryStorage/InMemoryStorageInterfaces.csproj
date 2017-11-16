@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="IInMemoryCollection.cs" />
     <Compile Include="IStorable.cs" />
+    <Compile Include="KeyManagementStrategyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\InMemoryStorage.rd.xml" />
   </ItemGroup>

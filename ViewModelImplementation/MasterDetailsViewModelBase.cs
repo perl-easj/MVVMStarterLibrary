@@ -18,7 +18,7 @@ namespace ViewModel.Implementation
     /// a source for a data-releted operation, it implements
     /// the ITransformedDataWrapper interface.
     /// </summary>
-    public abstract class MasterDetailsViewModelBase<T, TVMO> : INotifyPropertyChanged, IDataWrapper<TVMO>, IMasterDetailsViewModel<TVMO>
+    public abstract class MasterDetailsViewModelBase<T, TVMO> : IDataWrapper<TVMO>, IMasterDetailsViewModel<TVMO>, IItemSelectionChangedEvent<TVMO>
         where TVMO : class, ITransformed<T>
     {
         #region Instance fields

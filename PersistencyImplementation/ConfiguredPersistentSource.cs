@@ -4,6 +4,14 @@ using Persistency.Interfaces;
 
 namespace Persistency.Implementation
 {
+    /// <summary>
+    /// Since a specific data source may not support all data
+    /// operations (CRUD + Load/Save), this class makes it 
+    /// possible to configure different data operations to be 
+    /// wired to different "strategies". A strategy will either
+    /// be the actual data source implementation, or a "stub"
+    /// object which can e.g. throw an exception.
+    /// </summary>
     public class ConfiguredPersistentSource<TDTO> : IPersistentSource<TDTO>
     {
         private IDataSourceCRUD<TDTO> _dataSourceCRUD;
@@ -38,7 +46,7 @@ namespace Persistency.Implementation
             return _dataSourceLoad.Load();
         }
 
-        public Task Create(TDTO obj)
+        public Task<int> Create(TDTO obj)
         {
             return _dataSourceCRUD.Create(obj);
         }

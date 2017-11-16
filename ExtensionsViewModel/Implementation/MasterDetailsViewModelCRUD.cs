@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Catalog.Implementation;
-using Catalog.Interfaces;
 using DataTransformation.Interfaces;
 using ExtensionsCommands.Implementation;
 using ExtensionsCommands.Types;
-using ExtensionsViewModel.Interfaces;
 using InMemoryStorage.Interfaces;
 using ViewModel.Interfaces;
+// ReSharper disable NotAccessedField.Local
 
 namespace ExtensionsViewModel.Implementation
 {
@@ -24,6 +23,8 @@ namespace ExtensionsViewModel.Implementation
         where T : class, IStorable 
         where TVMO : class, ITransformed<T>
     {
+        private MasterDetailsViewModelCRUDMediator<T, TVMO, TDTO> _mediator;
+
         protected MasterDetailsViewModelCRUD(
             IViewModelFactory<TVMO> viewModelFactory,
             PersistableCatalog<T, TVMO, TDTO> catalog,
@@ -48,27 +49,11 @@ namespace ExtensionsViewModel.Implementation
             DataCommandManager =  new CRUDCommandManagerViewStateDependent<T, TVMO>(this, catalog , this);
             StateCommandManager = new CRUDViewStateSelectCommandManager(ViewStateService);
 
-            // Finally initialise the Mediator
-            InitMediator(catalog, new MasterDetailsViewModelWithStateMediator<T, TVMO>(this, viewModelFactory));
-        }
-
-        private void InitMediator(IMonitorableCatalog catalog, IMasterDetailsViewModelWithStateMediator<TVMO> mediator)
-        {
-            Mediator = mediator;
-
-            // Let Mediator be notified when collection changes.
-            catalog.AddOnObjectCreatedCallback(Mediator.OnCatalogChanged);
-            catalog.AddOnObjectUpdatedCallback(Mediator.OnCatalogChanged);
-            catalog.AddOnObjectDeletedCallback(Mediator.OnCatalogChanged);
-
             // Set initial View state
             ViewStateService.ViewState = CRUDStates.ReadState;
 
-            // Let Mediator be notified when view state changes
-            ViewStateService.ViewStateChanged += Mediator.OnViewStateChanged;
-
-            // Let Mediator be notified when ítem selection changes
-            ItemSelectionChanged += Mediator.OnItemSelectionChanged;
+            // Set mediator to a state-aware implementation
+            _mediator = new MasterDetailsViewModelCRUDMediator<T, TVMO, TDTO>(this, catalog, viewModelFactory);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using DataTransformation.Interfaces;
 
 namespace ViewModel.Interfaces
@@ -8,7 +10,7 @@ namespace ViewModel.Interfaces
     /// ViewModel class. Only consists of three properties 
     /// relating to transformed data object types.
     /// </summary>
-    public interface IMasterDetailsViewModel<TVMO>
+    public interface IMasterDetailsViewModel<TVMO> : INotifyPropertyChanged
     {
         /// <summary>
         /// Collection of transformed data objects corresponding 
@@ -27,5 +29,7 @@ namespace ViewModel.Interfaces
         /// same item as ItemSelected refers to.
         /// </summary>
         IDataWrapper<TVMO> ItemDetails { get; set; }
+
+        void OnPropertyChanged([CallerMemberName] string propertyName = null);
     }
 }

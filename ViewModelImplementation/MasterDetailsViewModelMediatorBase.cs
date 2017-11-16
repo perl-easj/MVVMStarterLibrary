@@ -1,4 +1,5 @@
 ﻿using System;
+using Catalog.Interfaces;
 using DataTransformation.Interfaces;
 using ViewModel.Interfaces;
 
@@ -7,23 +8,32 @@ namespace ViewModel.Implementation
     /// <summary>
     /// This class implements a common mediation strategy, which can
     /// be extended in derived classes.
-    /// No assumtions about view states or control states are made.
+    /// No assumptions about view states or control states are made.
     /// </summary>
-    public abstract class MasterDetailsViewModelMediatorBase<T, TVMO> : IMasterDetailsViewModelMediator<TVMO> 
+    public abstract class MasterDetailsViewModelMediatorBase<T, TVMO> : 
+        IMasterDetailsViewModelMediator<TVMO>, ICatalogMediator
         where TVMO : class, ITransformed<T>
     {
         #region Instance fields
-        protected MasterDetailsViewModelBase<T, TVMO> MasterDetailsViewModel;
-        protected IViewModelFactory<TVMO> ViewModelFactory;
+        private MasterDetailsViewModelBase<T, TVMO> _masterDetailsViewModel;
+        private ICatalog<TVMO> _catalog;
+        private IViewModelFactory<TVMO> _viewModelFactory;
         #endregion
 
         #region Constructor
         protected MasterDetailsViewModelMediatorBase(
             MasterDetailsViewModelBase<T, TVMO> masterDetailsViewModel,
+            ICatalog<TVMO> catalog,
             IViewModelFactory<TVMO> viewModelFactory)
         {
-            MasterDetailsViewModel = masterDetailsViewModel ?? throw new ArgumentNullException(nameof(MasterDetailsViewModel));
-            ViewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(ViewModelFactory));
+            _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
+            _masterDetailsViewModel = masterDetailsViewModel ?? throw new ArgumentNullException(nameof(_masterDetailsViewModel));
+            _viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(_viewModelFactory));
+
+            // Subscribe to changes in item selection 
+            // (in Master/Details view model) and in catalog
+            _masterDetailsViewModel.ItemSelectionChanged += OnItemSelectionChanged;
+            _catalog.CatalogChanged += OnCatalogChanged;
         }
         #endregion
 
@@ -40,7 +50,7 @@ namespace ViewModel.Implementation
         {
             if (tdoWrapper == null)
             {
-                MasterDetailsViewModel.ItemDetails = null;
+                _masterDetailsViewModel.ItemDetails = null;
             }
             else
             {
@@ -58,10 +68,10 @@ namespace ViewModel.Implementation
         /// 3) Set Item Details, by calling abstract method (subclasses
         ///    must specify details for setting Item Details)
         /// </summary>
-        public virtual void OnCatalogChanged()
+        public virtual void OnCatalogChanged(int key)
         {
-            MasterDetailsViewModel.ItemSelected = null;
-            MasterDetailsViewModel.OnPropertyChanged(nameof(MasterDetailsViewModel.ItemCollection));
+            _masterDetailsViewModel.ItemSelected = null;
+            _masterDetailsViewModel.OnPropertyChanged(nameof(_masterDetailsViewModel.ItemCollection));
 
             SetItemDetailsOnCatalogChanged();
         }
