@@ -1,6 +1,7 @@
 ﻿using Catalog.Interfaces;
 using Command.Implementation;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace DataCommand.Implementation
 {
@@ -9,8 +10,8 @@ namespace DataCommand.Implementation
     /// Specific implementation of criteria for command execution
     /// are deferred to sub-classes.
     /// </summary>
-    public abstract class CRUDCommandManager<T, TVMO> : CommandManager 
-        where TVMO : class, ITransformed<T>
+    public abstract class CRUDCommandManager<TVMO> : CommandManager 
+        where TVMO : class, ICopyable, IStorable
     {
         private IDataWrapper<TVMO> _source;
 
@@ -24,8 +25,8 @@ namespace DataCommand.Implementation
             _source = source;
 
             AddCommand(CRUDCommands.CreateCommand, new CreateCommandBase<TVMO>(source, target, CanDoCreate));
-            AddCommand(CRUDCommands.UpdateCommand, new UpdateCommandBase<T, TVMO>(source, target, CanDoUpdate));
-            AddCommand(CRUDCommands.DeleteCommand, new DeleteCommandBase<T, TVMO>(source, target, CanDoDelete));
+            AddCommand(CRUDCommands.UpdateCommand, new UpdateCommandBase<TVMO>(source, target, CanDoUpdate));
+            AddCommand(CRUDCommands.DeleteCommand, new DeleteCommandBase<TVMO>(source, target, CanDoDelete));
         }
 
         /// <summary>

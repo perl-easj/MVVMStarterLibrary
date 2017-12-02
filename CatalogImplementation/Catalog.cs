@@ -17,29 +17,23 @@ namespace Catalog.Implementation
     /// <typeparam name="T">Domain class</typeparam>
     /// <typeparam name="TVMO">Domain View Model class</typeparam>
     /// <typeparam name="TDTO">Domain Data Transfer class</typeparam>
-    public class Catalog<T, TVMO, TDTO> : ICatalog<TVMO>
+    public abstract class Catalog<T, TVMO, TDTO> : ICatalog<TVMO>, IDTOTransform<T, TDTO>, IVMOTransform<T, TVMO>
         where T : IStorable
         where TVMO : IStorable
     {
         protected IInMemoryCollection<T> _collection;
         protected IPersistentSource<TDTO> _source;
-        protected IFactory<T, TVMO> _vmoFactory;
-        protected IFactory<T, TDTO> _dtoFactory;
         protected List<PersistencyOperations> _supportedOperations;
 
         public event Action<int> CatalogChanged;
 
-        public Catalog(
+        protected Catalog(
             IInMemoryCollection<T> collection,
             IPersistentSource<TDTO> source,
-            IFactory<T, TVMO> vmoFactory,
-            IFactory<T, TDTO> dtoFactory,
             List<PersistencyOperations> supportedOperations)
         {
             _collection = collection;
             _source = source;
-            _vmoFactory = vmoFactory;
-            _dtoFactory = dtoFactory;
             _supportedOperations = supportedOperations;
         }
 
@@ -53,7 +47,7 @@ namespace Catalog.Implementation
                 List<TVMO> transformedAll = new List<TVMO>();
                 foreach (T obj in _collection.All)
                 {
-                    transformedAll.Add(_vmoFactory.CreateTransformedObject(obj));
+                    transformedAll.Add(CreateVMO(obj));
                 }
                 return transformedAll;
             }
@@ -72,7 +66,7 @@ namespace Catalog.Implementation
         public void Create(TVMO vmObj, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
         {
             // Create the new domain object (this is where it happens :-)).
-            T obj = _vmoFactory.CreateDomainObject(vmObj);
+            T obj = CreateDomainObjectFromVMO(vmObj);
 
             // Strategy for key selection (DataSource decides)
             // 1) Throw exception if Create operation is not supported,
@@ -87,7 +81,7 @@ namespace Catalog.Implementation
                     throw new NotSupportedException("The referenced data source does not support Create.");
                 }
 
-                obj.Key = _source.Create(_dtoFactory.CreateTransformedObject(obj)).Result;
+                obj.Key = _source.Create(CreateDTO(obj)).Result;
                 _collection.Insert(obj, keyManagement);
             }
 
@@ -101,7 +95,7 @@ namespace Catalog.Implementation
             {
                 if (_supportedOperations.Contains(PersistencyOperations.Create))
                 {
-                    _source.Create(_dtoFactory.CreateTransformedObject(obj));
+                    _source.Create(CreateDTO(obj));
                 }
                 _collection.Insert(obj, keyManagement);
             }
@@ -118,7 +112,7 @@ namespace Catalog.Implementation
                 obj.Key = _collection.Insert(obj, keyManagement);
                 if (_supportedOperations.Contains(PersistencyOperations.Create))
                 {
-                    _source.Create(_dtoFactory.CreateTransformedObject(obj));
+                    _source.Create(CreateDTO(obj));
                 }
             }
 
@@ -133,7 +127,7 @@ namespace Catalog.Implementation
         /// </summary>
         public TVMO Read(int key)
         {
-            return _vmoFactory.CreateTransformedObject(_collection[key]);
+            return CreateVMO(_collection[key]);
         }
 
         /// <summary>
@@ -162,5 +156,29 @@ namespace Catalog.Implementation
 
             CatalogChanged?.Invoke(key);
         }
+
+        /// <summary>
+        /// Override this method in domain-specific catalog class, 
+        /// to define transformation from DTO to domain object.
+        /// </summary>
+        public abstract T CreateDomainObjectFromDTO(TDTO dtoObj);
+
+        /// <summary>
+        /// Override this method in domain-specific catalog class, 
+        /// to define transformation from VMO to domain object.
+        /// </summary>
+        public abstract T CreateDomainObjectFromVMO(TVMO vmObj);
+
+        /// <summary>
+        /// Override this method in domain-specific catalog class, 
+        /// to define transformation from domain object to DTO.
+        /// </summary>
+        public abstract TDTO CreateDTO(T obj);
+
+        /// <summary>
+        /// Override this method in domain-specific catalog class, 
+        /// to define transformation from domain object to VMO.
+        /// </summary>
+        public abstract TVMO CreateVMO(T obj);
     }
 }

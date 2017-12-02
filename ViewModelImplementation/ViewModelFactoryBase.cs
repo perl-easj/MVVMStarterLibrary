@@ -11,8 +11,8 @@ namespace ViewModel.Implementation
     /// ViewModel objects (Item and Details), based on 
     /// corresponding transformed data objects.
     /// </summary>
-    public abstract class ViewModelFactoryBase<T, TVMO> : IViewModelFactory<TVMO> 
-        where TVMO : class, ITransformed<T>, new()
+    public abstract class ViewModelFactoryBase<TVMO> : IViewModelFactory<TVMO> 
+        where TVMO : class, ICopyable, new()
     {
         /// <summary>
         /// Specific details for how to create a Details 
@@ -47,7 +47,7 @@ namespace ViewModel.Implementation
         /// </summary>
         public IDataWrapper<TVMO> CreateDetailsViewModelFromClonedVMO(TVMO obj)
         {
-            return CreateDetailsViewModel(obj.Clone() as TVMO);
+            return CreateDetailsViewModel(obj.Copy() as TVMO);
         }
 
         /// <summary>

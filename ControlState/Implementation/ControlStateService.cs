@@ -87,7 +87,7 @@ namespace ControlState.Implementation
                 _controlIDs.Add(controlState.ID);
             }
 
-            _controlStateMap[state].Add(controlState.ID, controlState);
+            _controlStateMap[state][controlState.ID] = controlState;
         }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace DataTransformation.Implementation
 {
+    /// <summary>
+    /// Base implementation of IDataWrapper
+    /// </summary>
     public class DataWrapper<TTDO> : IDataWrapper<TTDO>
     {
         /// <summary>

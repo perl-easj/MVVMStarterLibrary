@@ -18,8 +18,8 @@ namespace ViewModel.Implementation
     /// a source for a data-releted operation, it implements
     /// the ITransformedDataWrapper interface.
     /// </summary>
-    public abstract class MasterDetailsViewModelBase<T, TVMO> : IDataWrapper<TVMO>, IMasterDetailsViewModel<TVMO>, IItemSelectionChangedEvent<TVMO>
-        where TVMO : class, ITransformed<T>
+    public abstract class MasterDetailsViewModelBase<TVMO> : IDataWrapper<TVMO>, IMasterDetailsViewModel<TVMO>, IItemSelectionChangedEvent<TVMO>
+        where TVMO : class
     {
         #region Instance fields
         protected ICatalog<TVMO> Catalog;

@@ -1,13 +1,14 @@
 ﻿using Catalog.Interfaces;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace DataController.Implementation
 {
     /// <summary>
     /// Implementation of a generic Update operation.
     /// </summary>
-    public class UpdateControllerBase<T, TVMO> : CRUDControllerBase<TVMO>
-        where TVMO : class, ITransformed<T>
+    public class UpdateControllerBase<TVMO> : CRUDControllerBase<TVMO>
+        where TVMO : class, ICopyable, IStorable
     {
         public UpdateControllerBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
             : base(source, target)
@@ -21,7 +22,7 @@ namespace DataController.Implementation
         /// </summary>
         public override void Run()
         {
-            TVMO updateObj = Source.DataObject.Clone() as TVMO;
+            TVMO updateObj = Source.DataObject.Copy() as TVMO;
             Target.Update(updateObj, Source.DataObject.Key);
         }
     }

@@ -107,11 +107,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataWrapper.cs" />
-    <Compile Include="FactoryBase.cs" />
-    <Compile Include="IdenticalDataFactory.cs" />
-    <Compile Include="TransformedBase.cs" />
+    <Compile Include="CopyableBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransformedWithDefaultBase.cs" />
+    <Compile Include="CopyableWithDefaultValuesBase.cs" />
     <EmbeddedResource Include="Properties\DataTransformationImplementation.rd.xml" />
   </ItemGroup>
   <ItemGroup>

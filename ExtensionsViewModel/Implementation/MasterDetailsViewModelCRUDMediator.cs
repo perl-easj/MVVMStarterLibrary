@@ -15,18 +15,17 @@ namespace ExtensionsViewModel.Implementation
     /// between elements in a Master/Details ViewModel object, 
     /// with CRUD view state and CRUD operation support.
     /// </summary>
-    public class MasterDetailsViewModelCRUDMediator<T, TVMO, TDTO> : MasterDetailsViewModelMediatorBase<T, TVMO>, IViewStateMediator 
-        where TVMO : class, ITransformed<T> 
-        where T : class, IStorable
+    public class MasterDetailsViewModelCRUDMediator<TVMO> : MasterDetailsViewModelMediatorBase<TVMO>, IViewStateMediator 
+        where TVMO : class, ICopyable, IStorable
     {
         #region Instance fields
-        private MasterDetailsViewModelCRUD<T, TVMO, TDTO> _masterDetailsViewModelCRUD;
+        private MasterDetailsViewModelCRUD<TVMO> _masterDetailsViewModelCRUD;
         private IViewModelFactory<TVMO> _viewModelFactory;
         #endregion
 
         #region Constructor
         public MasterDetailsViewModelCRUDMediator(
-            MasterDetailsViewModelCRUD<T, TVMO, TDTO> masterDetailsViewModelCrud,
+            MasterDetailsViewModelCRUD<TVMO> masterDetailsViewModelCrud,
             ICatalog<TVMO> catalog,
             IViewModelFactory<TVMO> viewModelFactory) 
             : base(masterDetailsViewModelCrud, catalog, viewModelFactory)

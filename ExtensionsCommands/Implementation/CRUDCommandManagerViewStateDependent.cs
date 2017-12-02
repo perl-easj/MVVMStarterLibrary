@@ -3,6 +3,7 @@ using Catalog.Interfaces;
 using DataCommand.Implementation;
 using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
+using InMemoryStorage.Interfaces;
 using ViewState.Interfaces;
 
 namespace ExtensionsCommands.Implementation
@@ -13,8 +14,8 @@ namespace ExtensionsCommands.Implementation
     /// A manager of this type needs a reference 
     /// to an object implementing IHasViewState.
     /// </summary>
-    public class CRUDCommandManagerViewStateDependent<T, TVMO> : CRUDCommandManager<T, TVMO> 
-        where TVMO : class, ITransformed<T>
+    public class CRUDCommandManagerViewStateDependent<TVMO> : CRUDCommandManager<TVMO> 
+        where TVMO : class, ICopyable, IStorable
     {
         private IHasViewState _viewStateObject;
 

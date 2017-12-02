@@ -10,19 +10,19 @@ namespace ViewModel.Implementation
     /// be extended in derived classes.
     /// No assumptions about view states or control states are made.
     /// </summary>
-    public abstract class MasterDetailsViewModelMediatorBase<T, TVMO> : 
+    public abstract class MasterDetailsViewModelMediatorBase<TVMO> : 
         IMasterDetailsViewModelMediator<TVMO>, ICatalogMediator
-        where TVMO : class, ITransformed<T>
+        where TVMO : class, ICopyable
     {
         #region Instance fields
-        private MasterDetailsViewModelBase<T, TVMO> _masterDetailsViewModel;
+        private MasterDetailsViewModelBase<TVMO> _masterDetailsViewModel;
         private ICatalog<TVMO> _catalog;
         private IViewModelFactory<TVMO> _viewModelFactory;
         #endregion
 
         #region Constructor
         protected MasterDetailsViewModelMediatorBase(
-            MasterDetailsViewModelBase<T, TVMO> masterDetailsViewModel,
+            MasterDetailsViewModelBase<TVMO> masterDetailsViewModel,
             ICatalog<TVMO> catalog,
             IViewModelFactory<TVMO> viewModelFactory)
         {

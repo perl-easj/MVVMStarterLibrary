@@ -1,12 +1,14 @@
 ﻿namespace DataTransformation.Interfaces
 {
-    public interface IDataWrapper<out T>
+    /// <summary>
+    /// Interface for objects which "wrap" a data-carrying object.
+    /// This will typically be a transformed domain object.
+    /// </summary>
+    public interface IDataWrapper<out TTDO>
     {
         /// <summary>
-        /// Returns the wrapper transformed data object.
-        /// Note that the return type is ITransformedData,
-        /// i.e. not type-specific
+        /// Returns the wrapped transformed domain object.
         /// </summary>
-        T DataObject { get; }
+        TTDO DataObject { get; }
     }
 }

@@ -107,9 +107,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IDataWrapper.cs" />
-    <Compile Include="IFactory.cs" />
-    <Compile Include="ITransformed.cs" />
-    <Compile Include="ITransformedWithDefault.cs" />
+    <Compile Include="IDTOTransform.cs" />
+    <Compile Include="ICopyable.cs" />
+    <Compile Include="IDefaultValues.cs" />
+    <Compile Include="IVMOTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\DataTransformationInterfaces.rd.xml" />
   </ItemGroup>

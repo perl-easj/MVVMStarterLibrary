@@ -18,8 +18,8 @@ namespace ExtensionsViewModel.Implementation
     /// 4) State commands (commands for setting the view in a specific view state)
     /// Note that the class does not itself choose specific services/commands
     /// </summary>
-    public abstract class MasterDetailsViewModelWithState<T, TVMO> : MasterDetailsViewModelBase<T, TVMO>, IHasViewState 
-        where TVMO : class, ITransformed<T>
+    public abstract class MasterDetailsViewModelWithState<TVMO> : MasterDetailsViewModelBase<TVMO>, IHasViewState 
+        where TVMO : class, ICopyable
     {
         #region Instance fields
         private IControlStateService _controlStateService;

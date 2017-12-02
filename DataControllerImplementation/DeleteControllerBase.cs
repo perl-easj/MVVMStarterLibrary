@@ -1,13 +1,14 @@
 ﻿using Catalog.Interfaces;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 
 namespace DataController.Implementation
 {
     /// <summary>
     /// Implementation of a generic Delete operation.
     /// </summary>
-    public class DeleteControllerBase<T, TVMO> : CRUDControllerBase<TVMO>
-        where TVMO : class, ITransformed<T>
+    public class DeleteControllerBase<TVMO> : CRUDControllerBase<TVMO>
+        where TVMO : class, IStorable
     {
         public DeleteControllerBase(IDataWrapper<TVMO> source, ICatalog<TVMO> target)
             : base(source, target)

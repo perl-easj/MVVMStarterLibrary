@@ -15,13 +15,13 @@ namespace ExtensionsModel.Implementation
     ///    supporting Load + CRUD
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
-    public class WebAPIPersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
+    public abstract class WebAPIPersistableCatalog<T, TVMO, TDTO> : PersistableCatalog<T, TVMO, TDTO>
         where T : class, IStorable 
-        where TDTO : ITransformed<T>
+        where TDTO : ICopyable, IStorable
         where TVMO : IStorable
     {
-        public WebAPIPersistableCatalog(string url, string apiID, IFactory<T, TVMO> vmFactory, IFactory<T, TDTO> dtoFactory)
-            : base(new InMemoryCollection<T>(), new ConfiguredWebAPISource<TDTO>(url, apiID), vmFactory, dtoFactory,
+        protected WebAPIPersistableCatalog(string url, string apiID)
+            : base(new InMemoryCollection<T>(), new ConfiguredWebAPISource<TDTO>(url, apiID),
                    new List<PersistencyOperations>
                    {
                        PersistencyOperations.Load,
