@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Catalog.Implementation;
-using DataTransformation.Interfaces;
 using InMemoryStorage.Implementation;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
@@ -30,6 +29,14 @@ namespace ExtensionsModel.Implementation
                        PersistencyOperations.Update,
                        PersistencyOperations.Delete
                    })
+        {
+        }
+
+        /// <summary>
+        /// This type of catalog does not opt-in
+        /// in a management strategy.
+        /// </summary>
+        public override void Manage()
         {
         }
     }

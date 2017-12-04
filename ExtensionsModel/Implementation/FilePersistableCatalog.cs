@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Catalog.Implementation;
-using DataTransformation.Interfaces;
 using FilePersistency.Implementation;
 using InMemoryStorage.Implementation;
 using InMemoryStorage.Interfaces;
+using Persistency.Implementation;
 using Persistency.Interfaces;
 
 namespace ExtensionsModel.Implementation
@@ -25,6 +25,12 @@ namespace ExtensionsModel.Implementation
                    new ConfiguredFileSource<TDTO>(new FileStringPersistence(), new JSONConverter<TDTO>()),
                    new List<PersistencyOperations> {PersistencyOperations.Load, PersistencyOperations.Save})
         {
+        }
+
+        public override void Manage()
+        {
+            PersistencyManager.Instance.LoadDelegate += Load;
+            PersistencyManager.Instance.SaveDelegate += Save;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Catalog.Interfaces;
-using DataTransformation.Interfaces;
 using ExtensionsCommands.Types;
 using InMemoryStorage.Interfaces;
 using ViewModel.Implementation;

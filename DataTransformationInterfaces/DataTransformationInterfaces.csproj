@@ -108,7 +108,6 @@
   <ItemGroup>
     <Compile Include="IDataWrapper.cs" />
     <Compile Include="IDTOTransform.cs" />
-    <Compile Include="ICopyable.cs" />
     <Compile Include="IDefaultValues.cs" />
     <Compile Include="IVMOTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

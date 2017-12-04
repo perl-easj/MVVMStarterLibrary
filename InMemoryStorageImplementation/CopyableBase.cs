@@ -1,7 +1,6 @@
-﻿using DataTransformation.Interfaces;
-using InMemoryStorage.Implementation;
+﻿using InMemoryStorage.Interfaces;
 
-namespace DataTransformation.Implementation
+namespace InMemoryStorage.Implementation
 {
     /// <summary>
     /// Base implementation of ICopyable. Copy is simply

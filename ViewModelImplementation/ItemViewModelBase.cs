@@ -20,6 +20,10 @@ namespace ViewModel.Implementation
         IItemViewModelImage 
         where TVMO : class
     {
+        protected ItemViewModelBase(TVMO obj) : base(obj)
+        {
+        }
+
         #region Properties (override in model-specific item view model)
         /// <summary>
         /// Override this property to provide a string 
@@ -75,9 +79,5 @@ namespace ViewModel.Implementation
             get { return 80; }
         }
         #endregion
-
-        protected ItemViewModelBase(TVMO obj) : base(obj)
-        {
-        }
     }
 }

@@ -22,14 +22,14 @@ namespace Catalog.Implementation
         where TVMO : IStorable
     {
         protected IInMemoryCollection<T> _collection;
-        protected IPersistentSource<TDTO> _source;
+        protected IDataSourceCRUD<TDTO> _source;
         protected List<PersistencyOperations> _supportedOperations;
 
         public event Action<int> CatalogChanged;
 
         protected Catalog(
             IInMemoryCollection<T> collection,
-            IPersistentSource<TDTO> source,
+            IDataSourceCRUD<TDTO> source,
             List<PersistencyOperations> supportedOperations)
         {
             _collection = collection;

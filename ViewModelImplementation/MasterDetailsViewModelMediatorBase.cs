@@ -1,6 +1,7 @@
 ﻿using System;
 using Catalog.Interfaces;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation

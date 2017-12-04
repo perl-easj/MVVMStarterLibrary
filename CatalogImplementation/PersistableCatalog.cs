@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Catalog.Interfaces;
 using InMemoryStorage.Interfaces;
-using Persistency.Implementation;
 using Persistency.Interfaces;
 
 namespace Catalog.Implementation
@@ -16,6 +15,8 @@ namespace Catalog.Implementation
         where TVMO : IStorable 
         where T : IStorable
     {
+        private IPersistentSource<TDTO> _persistentSource;
+
         #region Constructor
         protected PersistableCatalog(
             IInMemoryCollection<T> collection,
@@ -23,6 +24,7 @@ namespace Catalog.Implementation
             List<PersistencyOperations> supportedOperations)
             : base(collection, source, supportedOperations)
         {
+            _persistentSource = source;
             Manage();
         }
         #endregion
@@ -37,7 +39,7 @@ namespace Catalog.Implementation
 
             if (_supportedOperations.Contains(PersistencyOperations.Load))
             {
-                List<TDTO> objects = await _source.Load();
+                List<TDTO> objects = await _persistentSource.Load();
                 _collection.ReplaceAll(CreateDomainObjects(objects), KeyManagementStrategyType.DataSourceDecides);
             }
             else
@@ -57,7 +59,7 @@ namespace Catalog.Implementation
         {
             if (_supportedOperations.Contains(PersistencyOperations.Save))
             {
-                await _source.Save(CreateDTOList(_collection.All));
+                await _persistentSource.Save(CreateDTOList(_collection.All));
             }
             else
             {
@@ -71,14 +73,10 @@ namespace Catalog.Implementation
 
         #region IManaged implementation
         /// <summary>
-        /// Catalog registers Load/Save methods 
-        /// at the PersistencyManager
+        /// Override in derived class to implement 
+        /// a specific persistency management strategy.
         /// </summary>
-        public virtual void Manage()
-        {
-            PersistencyManager.Instance.LoadDelegate += Load;
-            PersistencyManager.Instance.SaveDelegate += Save;
-        }
+        public abstract void Manage();
         #endregion
 
         #region Private helper methods

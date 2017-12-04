@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Catalog.Implementation;
 using InMemoryStorage.Implementation;
 using InMemoryStorage.Interfaces;
 using Persistency.Interfaces;
 
-namespace Catalog.Implementation
+namespace ExtensionsModel.Implementation
 {
     /// <summary>
     /// This is a minimal implementation of Catalog functionality,

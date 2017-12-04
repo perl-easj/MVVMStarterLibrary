@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 using ViewModel.Interfaces;
 
 namespace ViewModel.Implementation

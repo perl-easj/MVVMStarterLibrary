@@ -1,4 +1,4 @@
-﻿namespace DataTransformation.Interfaces
+﻿namespace InMemoryStorage.Interfaces
 {
     /// <summary>
     /// Interface for objects which are copyable.

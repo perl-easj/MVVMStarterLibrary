@@ -2,7 +2,7 @@
 using Catalog.Interfaces;
 using Command.Interfaces;
 using ControlState.Interfaces;
-using DataTransformation.Interfaces;
+using InMemoryStorage.Interfaces;
 using ViewModel.Implementation;
 using ViewModel.Interfaces;
 using ViewState.Interfaces;

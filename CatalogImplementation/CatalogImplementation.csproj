@@ -107,7 +107,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Catalog.cs" />
-    <Compile Include="InMemoryCatalog.cs" />
     <Compile Include="PersistableCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\CatalogImplementation.rd.xml" />
@@ -137,10 +136,6 @@
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorageInterfaces.csproj">
       <Project>{0B72A614-5927-4DB8-8B88-2C67F882E0F6}</Project>
       <Name>InMemoryStorageInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistencyImplementation\PersistencyImplementation.csproj">
-      <Project>{05E85605-BD0B-433F-B428-2A522845705F}</Project>
-      <Name>PersistencyImplementation</Name>
     </ProjectReference>
     <ProjectReference Include="..\PersistencyInterfaces\PersistencyInterfaces.csproj">
       <Project>{09DA2731-E192-4315-A99A-C3673578C5F1}</Project>

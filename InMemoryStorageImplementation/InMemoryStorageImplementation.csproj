@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyableBase.cs" />
     <Compile Include="InMemoryCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorableBase.cs" />
