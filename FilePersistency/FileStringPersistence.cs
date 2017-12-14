@@ -17,8 +17,8 @@ namespace FilePersistency.Implementation
     {
         /// <summary>
         /// Loads a string from the specified file. 
-        /// If the file is not found,
-        /// a new empty file is created.
+        /// If the file is not found, a new file is 
+        /// created, with an empty array.
         /// </summary>
         /// <param name="fileName">
         /// Name of file to load data from. Assumed to 
@@ -37,8 +37,8 @@ namespace FilePersistency.Implementation
                 }
                 catch (FileNotFoundException)
                 {
-                    await SaveAsync(fileName, "");
-                    return null;
+                    await SaveAsync(fileName, "[]");
+                    return "[]";
                 }
             }
         }
